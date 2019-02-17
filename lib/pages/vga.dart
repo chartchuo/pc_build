@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_cache_store/flutter_cache_store.dart';
 
 import 'package:pc_build/pages/vga_deail.dart';
+import 'package:pc_build/models/vga.dart';
 
 class VgaPage extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class VgaPage extends StatefulWidget {
 }
 
 class _VgaPageState extends State<VgaPage> {
+  List<Vga> vgas = [];
   @override
   void initState() {
     super.initState();
@@ -22,8 +24,14 @@ class _VgaPageState extends State<VgaPage> {
   loadData() async {
     final store = await CacheStore.getInstance();
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/vga');
-    // final jsonString = json.decode(file.readAsStringSync());
-    print(file.readAsStringSync());
+    final jsonString = json.decode(file.readAsStringSync());
+
+    setState(() {
+      jsonString.forEach((v) {
+        final vga = Vga.fromJson(v);
+        if (vga.advId != '') vgas.add(vga);
+      });
+    });
   }
 
   @override
@@ -33,7 +41,7 @@ class _VgaPageState extends State<VgaPage> {
         title: Text('PC Build'),
       ),
       body: ListView.builder(
-        itemCount: 3,
+        itemCount: vgas.length,
         itemBuilder: (context, i) {
           return GestureDetector(
             onTap: () => Navigator.push(
@@ -48,12 +56,17 @@ class _VgaPageState extends State<VgaPage> {
                   width: 150,
                   child: CachedNetworkImage(
                     imageUrl:
-                        "https://www.advice.co.th/pic-pc/vga/20160722-152517_1060asus.jpg",
-                    placeholder: CircularProgressIndicator(),
+                        "https://www.advice.co.th/pic-pc/vga/${vgas[i].vgaPicture}",
+                    // placeholder: CircularProgressIndicator(),
                     errorWidget: Icon(Icons.error),
                   ),
                 ),
-                Text('$i'),
+                Column(
+                  children: <Widget>[
+                    Text('${vgas[i].vgaBrand}'),
+                    Text('${vgas[i].vgaModel}'),
+                  ],
+                ),
               ],
             ),
           );
