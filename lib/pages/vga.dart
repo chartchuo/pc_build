@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_store/flutter_cache_store.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -14,6 +15,8 @@ class VgaPage extends StatefulWidget {
 
 class _VgaPageState extends State<VgaPage> {
   List<Vga> vgas = [];
+
+  String sortBy = 'latest'; //latest low2high high2low
 
   @override
   void initState() {
@@ -35,16 +38,44 @@ class _VgaPageState extends State<VgaPage> {
     });
   }
 
+  sortAction() {
+    setState(() {
+      if (sortBy == 'latest') {
+        sortBy = 'low2high';
+        vgas.sort((a, b) {
+          return a.vgaPriceAdv - b.vgaPriceAdv;
+        });
+      } else if (sortBy == 'low2high') {
+        sortBy = 'high2low';
+        vgas.sort((a, b) {
+          return b.vgaPriceAdv - a.vgaPriceAdv;
+        });
+      } else {
+        sortBy = 'latest';
+        vgas.sort((a, b) {
+          return b.id - a.id;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('PC Build'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.sort),
+            tooltip: 'Restitch it',
+            onPressed: () => sortAction(),
+          ),
+        ],
       ),
       body: ListView.builder(
         itemCount: vgas.length,
         itemBuilder: (context, i) {
-          var v = vgas[vgas.length - i - 1];
+          var v = vgas[i];
           return Card(
             elevation: 0,
             child: Container(
@@ -71,8 +102,9 @@ class _VgaPageState extends State<VgaPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text('${v.vgaBrand} ${v.vgaModel}'),
-                            Text('${v.vgaPriceAdv}'),
+                            Text('${v.vgaBrand}'),
+                            Text('${v.vgaModel}'),
+                            Text('${v.vgaPriceAdv} บาท'),
                           ],
                         ),
                       ),
