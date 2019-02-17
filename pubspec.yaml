@@ -21,6 +21,7 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   cached_network_image: ^0.5.1
+  flutter_cache_store: ^0.4.0
 
 
 

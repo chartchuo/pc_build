@@ -1,9 +1,31 @@
+import 'dart:io';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_cache_store/flutter_cache_store.dart';
 
 import 'package:pc_build/pages/vga_deail.dart';
 
-class VgaPage extends StatelessWidget {
+class VgaPage extends StatefulWidget {
+  @override
+  _VgaPageState createState() => _VgaPageState();
+}
+
+class _VgaPageState extends State<VgaPage> {
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  loadData() async {
+    final store = await CacheStore.getInstance();
+    File file = await store.getFile('https://www.advice.co.th/pc/get_comp/vga');
+    // final jsonString = json.decode(file.readAsStringSync());
+    print(file.readAsStringSync());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
