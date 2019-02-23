@@ -28,7 +28,6 @@ class _VgaPageState extends State<VgaPage> {
   void initState() {
     super.initState();
     loadData();
-    filterAction();
   }
 
   loadData() async {
@@ -42,13 +41,14 @@ class _VgaPageState extends State<VgaPage> {
           allVgas.add(vga);
         }
       });
+      vgaFilter.allBrands = allVgas.map((v) => v.vgaBrand).toSet();
+      vgaFilter.selectedBrands = allVgas.map((v) => v.vgaBrand).toSet();
     });
+    filterAction();
   }
 
   filterAction() {
     setState(() {
-      vgaFilter.allBrands = allVgas.map((v) => v.vgaBrand).toSet();
-      vgaFilter.selectedBrands = allVgas.map((v) => v.vgaBrand).toSet();
       filteredVgas.clear();
       // vgaFilter.selectedBrands.remove('GIGABYTE');
       allVgas.forEach((v) {
