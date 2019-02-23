@@ -18,7 +18,7 @@ class _VgaPageState extends State<VgaPage> {
 
   String sortBy = 'เรียงลำดับล่าสุด'; //latest low2high high2low
 
-  BuildContext _scaffoldContext;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -62,7 +62,7 @@ class _VgaPageState extends State<VgaPage> {
   }
 
   showMessage(String txt) {
-    Scaffold.of(_scaffoldContext).showSnackBar(SnackBar(
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
       content: Text(txt),
       duration: Duration(seconds: 1),
     ));
@@ -71,25 +71,22 @@ class _VgaPageState extends State<VgaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('PC Build'),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.sort),
-              tooltip: 'Restitch it',
-              onPressed: () {
-                sortAction();
-                showMessage(sortBy);
-              },
-            ),
-          ],
-        ),
-        body: Builder(
-          builder: (context) {
-            _scaffoldContext = context;
-            return bodyBuilder();
-          },
-        ));
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: Text('PC Build'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.sort),
+            tooltip: 'Restitch it',
+            onPressed: () {
+              sortAction();
+              showMessage(sortBy);
+            },
+          ),
+        ],
+      ),
+      body: bodyBuilder(),
+    );
   }
 
   Widget bodyBuilder() {
