@@ -7,6 +7,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:pc_build/models/vga.dart';
 import 'package:pc_build/pages/vga_deail.dart';
+import 'package:pc_build/pages/vga_filter.dart';
 
 class VgaPage extends StatefulWidget {
   @override
@@ -19,6 +20,7 @@ class _VgaPageState extends State<VgaPage> {
   String sortBy = 'เรียงลำดับล่าสุด'; //latest low2high high2low
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  VgaFilter vgaFilter = VgaFilter();
 
   @override
   void initState() {
@@ -75,6 +77,14 @@ class _VgaPageState extends State<VgaPage> {
       appBar: AppBar(
         title: Text('PC Build'),
         actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.tune),
+            tooltip: 'Filter',
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => VgaFilterPage()));
+            },
+          ),
           IconButton(
             icon: Icon(Icons.sort),
             tooltip: 'Sort',

@@ -1,3 +1,7 @@
+class VgaFilter {
+  List<String> vgaBrands;
+}
+
 class Vga {
   String cat;
   int id;
