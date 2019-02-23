@@ -121,15 +121,18 @@ class _VgaPageState extends State<VgaPage> {
   }
 
   navigate2filterPage(BuildContext context) async {
-    // vgaFilter.vgaBrands = ['ASUS'];
     VgaFilter result = await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => VgaFilterPage(
                   vgaFilter: vgaFilter,
                 )));
-    // print('out');
-    // print(result.selectedBrands);
+    if (result != null) {
+      setState(() {
+        vgaFilter.selectedBrands = result.selectedBrands;
+      });
+      filterAction();
+    }
   }
 
   Widget bodyBuilder() {

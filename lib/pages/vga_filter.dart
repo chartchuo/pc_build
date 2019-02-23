@@ -21,17 +21,67 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> allBrandList = filter.allBrands.toList()..sort();
     return Scaffold(
-      body: Center(
-        child: RaisedButton(
-          child: Text('Back'),
-          onPressed: () {
-            // print('in');
-            // print(filter.vgaBrands);
-            // filter.vgaBrands = ['GIGABYTE'];
-            Navigator.pop(context, filter);
-          },
-        ),
+      appBar: AppBar(
+        title: Text('Filter'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.check),
+            tooltip: 'OK',
+            onPressed: () {
+              Navigator.pop(context, filter);
+            },
+          ),
+        ],
+      ),
+      body: ListView(
+        children: <Widget>[
+          ListTile(
+            title: Text('Brands'),
+            trailing: allBrandList.length == filter.selectedBrands.length
+                ? FlatButton(
+                    child: Text('unselect all'),
+                    onPressed: () {
+                      setState(() {
+                        filter.selectedBrands.clear();
+                      });
+                    },
+                  )
+                : FlatButton(
+                    child: Text('select all'),
+                    onPressed: () {
+                      setState(() {
+                        allBrandList
+                            .forEach((b) => filter.selectedBrands.add(b));
+                      });
+                    },
+                  ),
+          ),
+          Wrap(
+            children: allBrandList.map((b) => filterChipMaker(b)).toList(),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget filterChipMaker(String b) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(2, 0, 2, 0),
+      child: FilterChip(
+        shape: Border.all(style: BorderStyle.none),
+        avatar: Text(' '),
+        label: Text(b),
+        selected: filter.selectedBrands.contains(b),
+        onSelected: (bool sel) {
+          setState(() {
+            if (sel)
+              filter.selectedBrands.add(b);
+            else
+              filter.selectedBrands.remove(b);
+          });
+        },
       ),
     );
   }
