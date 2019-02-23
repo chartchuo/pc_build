@@ -52,8 +52,7 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
                     child: Text('select all'),
                     onPressed: () {
                       setState(() {
-                        allBrandList
-                            .forEach((b) => filter.selectedBrands.add(b));
+                        filter.selectedBrands.addAll(allBrandList);
                       });
                     },
                   ),
