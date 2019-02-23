@@ -77,7 +77,7 @@ class _VgaPageState extends State<VgaPage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.sort),
-            tooltip: 'Restitch it',
+            tooltip: 'Sort',
             onPressed: () {
               sortAction();
               showMessage(sortBy);
