@@ -104,7 +104,7 @@ class _VgaPageState extends State<VgaPage> {
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => VgaDetailPage(v),
+                    builder: (context) => VgaDetailPage(vga: v),
                   )),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,

@@ -5,7 +5,7 @@ import 'package:pc_build/models/vga.dart';
 
 class VgaDetailPage extends StatelessWidget {
   final Vga vga;
-  VgaDetailPage(this.vga);
+  VgaDetailPage({Key key, this.vga}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
