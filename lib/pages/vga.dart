@@ -20,6 +20,7 @@ class _VgaPageState extends State<VgaPage> {
   String sortBy = 'เรียงลำดับล่าสุด'; //latest low2high high2low
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   VgaFilter vgaFilter = VgaFilter();
 
   @override
@@ -81,8 +82,7 @@ class _VgaPageState extends State<VgaPage> {
             icon: Icon(Icons.tune),
             tooltip: 'Filter',
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => VgaFilterPage()));
+              navigate2filterPage(context);
             },
           ),
           IconButton(
@@ -97,6 +97,18 @@ class _VgaPageState extends State<VgaPage> {
       ),
       body: bodyBuilder(),
     );
+  }
+
+  navigate2filterPage(BuildContext context) async {
+    vgaFilter.vgaBrands = ['ASUS'];
+    VgaFilter result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => VgaFilterPage(
+                  vgaFilter: vgaFilter,
+                )));
+    print('out');
+    print(result.vgaBrands);
   }
 
   Widget bodyBuilder() {
