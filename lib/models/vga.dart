@@ -1,5 +1,6 @@
 class VgaFilter {
-  List<String> vgaBrands;
+  Set<String> allBrands;
+  Set<String> selectedBrands;
 }
 
 class Vga {
