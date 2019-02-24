@@ -2,22 +2,40 @@ class VgaFilter {
   Set<String> vgaBrand;
   Set<String> vgaChipset;
   Set<String> vgaSeries;
+  int minPrice;
+  int maxPrice;
+
   VgaFilter() {
     vgaBrand = Set<String>();
     vgaChipset = Set<String>();
     vgaSeries = Set<String>();
+    minPrice = 0;
+    maxPrice = 1000000;
   }
   VgaFilter.fromVgas(List<Vga> vgas) {
     vgaBrand = vgas.map((v) => v.vgaBrand).toSet();
     vgaChipset = vgas.map((v) => v.vgaChipset).toSet();
     vgaSeries = vgas.map((v) => v.vgaSeries).toSet();
+    if (vgas.length > 0) {
+      minPrice = vgas.map((v) => v.vgaPriceAdv).reduce((a, b) => a < b ? a : b);
+      maxPrice = vgas.map((v) => v.vgaPriceAdv).reduce((a, b) => a > b ? a : b);
+      minPrice = minPrice ~/ 1000 * 1000;
+      maxPrice = maxPrice ~/ 1000 * 1000 + 1000;
+    } else {
+      minPrice = 0;
+      maxPrice = 1000000;
+    }
   }
   VgaFilter.clone(VgaFilter vgaFilter) {
     vgaBrand = Set<String>()..addAll(vgaFilter.vgaBrand);
     vgaChipset = Set<String>()..addAll(vgaFilter.vgaChipset);
     vgaSeries = Set<String>()..addAll(vgaFilter.vgaSeries);
+    minPrice = vgaFilter.minPrice;
+    maxPrice = vgaFilter.maxPrice;
   }
   bool filter(Vga vga) {
+    if (vga.vgaPriceAdv < minPrice) return false;
+    if (vga.vgaPriceAdv > maxPrice) return false;
     if (vgaBrand.length != 0 && !vgaBrand.contains(vga.vgaBrand)) return false;
     if (vgaChipset.length != 0 && !vgaChipset.contains(vga.vgaChipset))
       return false;

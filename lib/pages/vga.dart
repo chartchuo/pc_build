@@ -9,6 +9,12 @@ import 'package:pc_build/models/vga.dart';
 import 'package:pc_build/pages/vga_deail.dart';
 import 'package:pc_build/pages/vga_filter.dart';
 
+enum Sort {
+  latest,
+  lowPrice,
+  highPrice,
+}
+
 class VgaPage extends StatefulWidget {
   @override
   _VgaPageState createState() => _VgaPageState();
@@ -17,8 +23,6 @@ class VgaPage extends StatefulWidget {
 class _VgaPageState extends State<VgaPage> {
   List<Vga> allVgas = [];
   List<Vga> filteredVgas = [];
-
-  String sortBy = 'เรียงลำดับล่าสุด'; //latest low2high high2low
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -51,20 +55,17 @@ class _VgaPageState extends State<VgaPage> {
     });
   }
 
-  sortAction() {
+  sort(Sort sort) {
     setState(() {
-      if (sortBy == 'เรียงลำดับล่าสุด') {
-        sortBy = 'เรียงลำดับถูกไปแพง';
+      if (sort == Sort.lowPrice) {
         filteredVgas.sort((a, b) {
           return a.vgaPriceAdv - b.vgaPriceAdv;
         });
-      } else if (sortBy == 'เรียงลำดับถูกไปแพง') {
-        sortBy = 'เรียงลำดับแพงไปถูก';
+      } else if (sort == Sort.highPrice) {
         filteredVgas.sort((a, b) {
           return b.vgaPriceAdv - a.vgaPriceAdv;
         });
       } else {
-        sortBy = 'เรียงลำดับล่าสุด';
         filteredVgas.sort((a, b) {
           return b.id - a.id;
         });
@@ -86,13 +87,6 @@ class _VgaPageState extends State<VgaPage> {
       appBar: AppBar(
         title: Text('PC Build'),
         actions: <Widget>[
-          // IconButton(
-          //   icon: Icon(Icons.refresh),
-          //   tooltip: 'tempory call filter action',
-          //   onPressed: () {
-          //     filterAction();
-          //   },
-          // ),
           IconButton(
             icon: Icon(Icons.tune),
             tooltip: 'Filter',
@@ -100,12 +94,24 @@ class _VgaPageState extends State<VgaPage> {
               navigate2filterPage(context);
             },
           ),
-          IconButton(
+          PopupMenuButton(
+            onSelected: (v) => sort(v),
             icon: Icon(Icons.sort),
-            tooltip: 'Sort',
-            onPressed: () {
-              sortAction();
-              showMessage(sortBy);
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  child: Text('Latest'),
+                  value: Sort.latest,
+                ),
+                PopupMenuItem(
+                  child: Text('Low price'),
+                  value: Sort.lowPrice,
+                ),
+                PopupMenuItem(
+                  child: Text('High price'),
+                  value: Sort.highPrice,
+                ),
+              ];
             },
           ),
         ],
