@@ -43,20 +43,17 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
         children: <Widget>[
           ListTile(
             title: Text('Brands'),
-            trailing:
-                selectAllMaker(allFilter.vgaBrand, selectedFilter.vgaBrand),
+            trailing: clearAllMaker(selectedFilter.vgaBrand),
           ),
           filterChipMaker(allFilter.vgaBrand, selectedFilter.vgaBrand),
           ListTile(
-            title: Text('vgaChipset'),
-            trailing:
-                selectAllMaker(allFilter.vgaChipset, selectedFilter.vgaChipset),
+            title: Text('Chipset'),
+            trailing: clearAllMaker(selectedFilter.vgaChipset),
           ),
           filterChipMaker(allFilter.vgaChipset, selectedFilter.vgaChipset),
           ListTile(
-            title: Text('vgaSeries'),
-            trailing:
-                selectAllMaker(allFilter.vgaSeries, selectedFilter.vgaSeries),
+            title: Text('Series'),
+            trailing: clearAllMaker(selectedFilter.vgaSeries),
           ),
           filterChipMaker(allFilter.vgaSeries, selectedFilter.vgaSeries),
         ],
@@ -64,25 +61,15 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
     );
   }
 
-  Widget selectAllMaker(Set<String> all, Set<String> selected) {
-    if (all.length == selected.length)
-      return FlatButton(
-        child: Text('clear all'),
-        onPressed: () {
-          setState(() {
-            selected.clear();
-          });
-        },
-      );
-    else
-      return FlatButton(
-        child: Text('select all'),
-        onPressed: () {
-          setState(() {
-            selected.addAll(all);
-          });
-        },
-      );
+  Widget clearAllMaker(Set<String> selected) {
+    return FlatButton(
+      child: Text('clear all'),
+      onPressed: () {
+        setState(() {
+          selected.clear();
+        });
+      },
+    );
   }
 
   Widget filterChipMaker(Set<String> all, Set<String> s) {
@@ -90,8 +77,8 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
       return Container(
         margin: EdgeInsets.fromLTRB(2, 0, 2, 0),
         child: FilterChip(
-          shape: Border.all(style: BorderStyle.none),
-          avatar: Text(' '),
+          // shape: Border.all(style: BorderStyle.none),
+          // avatar: Text(' '),
           label: Text(b),
           selected: s.contains(b),
           onSelected: (bool sel) {
