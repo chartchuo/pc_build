@@ -102,7 +102,8 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
             trailing: clearAllMaker(selectedFilter.vgaSeries),
           ),
           filterChipMaker(allFilter.vgaSeries, validFilter.vgaSeries,
-              selectedFilter.vgaSeries),
+              selectedFilter.vgaSeries,
+              showInvalid: false),
         ],
       ),
     );
@@ -122,8 +123,10 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
     );
   }
 
-  Widget filterChipMaker(Set<String> all, Set<String> valid, Set<String> s) {
+  Widget filterChipMaker(Set<String> all, Set<String> valid, Set<String> s,
+      {bool showInvalid = true}) {
     List<String> allList = all.toList()..sort();
+    if (!showInvalid) allList.removeWhere((v) => !valid.contains(v));
     return Wrap(
       children: allList.map((b) {
         return FilterChip(
