@@ -42,24 +42,16 @@ class _VgaPageState extends State<VgaPage> {
           allVgas.add(vga);
         }
       });
-      allFilter.vgaBrand = allVgas.map((v) => v.vgaBrand).toSet();
-      allFilter.vgaChipset = allVgas.map((v) => v.vgaChipset).toSet();
-      allFilter.vgaSeries = allVgas.map((v) => v.vgaSeries).toSet();
 
-      print(allFilter.vgaBrand);
-      selectedFilter.vgaBrand.addAll(allFilter.vgaBrand);
-      selectedFilter.vgaChipset.addAll(allFilter.vgaChipset);
-      selectedFilter.vgaSeries.addAll(allFilter.vgaSeries);
+      allFilter = VgaFilter.fromVgas(allVgas);
+      selectedFilter = VgaFilter.fromVgas(allVgas);
     });
     filterAction();
   }
 
   filterAction() {
     setState(() {
-      filteredVgas.clear();
-      allVgas.forEach((v) {
-        if (selectedFilter.vgaBrand.contains(v.vgaBrand)) filteredVgas.add(v);
-      });
+      filteredVgas = selectedFilter.filters(allVgas);
     });
   }
 

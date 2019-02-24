@@ -7,6 +7,26 @@ class VgaFilter {
     vgaChipset = Set<String>();
     vgaSeries = Set<String>();
   }
+  VgaFilter.fromVgas(List<Vga> vgas) {
+    vgaBrand = vgas.map((v) => v.vgaBrand).toSet();
+    vgaChipset = vgas.map((v) => v.vgaChipset).toSet();
+    vgaSeries = vgas.map((v) => v.vgaSeries).toSet();
+  }
+  bool filter(Vga vga) {
+    if (!vgaBrand.contains(vga.vgaBrand)) return false;
+    if (!vgaChipset.contains(vga.vgaChipset)) return false;
+    if (!vgaSeries.contains(vga.vgaSeries)) return false;
+    return true;
+  }
+
+  List<Vga> filters(List<Vga> vgas) {
+    List<Vga> result = [];
+    vgas.forEach((v) {
+      if (filter(v)) result.add(v);
+    });
+
+    return result;
+  }
 }
 
 class Vga {

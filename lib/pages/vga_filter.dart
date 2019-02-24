@@ -25,7 +25,7 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> allBrandList = allFilter.vgaBrand.toList()..sort();
+    // List<String> allBrandList = allFilter.vgaBrand.toList()..sort();
     return Scaffold(
       appBar: AppBar(
         title: Text('Filter'),
@@ -43,49 +43,72 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
         children: <Widget>[
           ListTile(
             title: Text('Brands'),
-            trailing: allBrandList.length == selectedFilter.vgaBrand.length
-                ? FlatButton(
-                    child: Text('unselect all'),
-                    onPressed: () {
-                      setState(() {
-                        selectedFilter.vgaBrand.clear();
-                      });
-                    },
-                  )
-                : FlatButton(
-                    child: Text('select all'),
-                    onPressed: () {
-                      setState(() {
-                        selectedFilter.vgaBrand.addAll(allBrandList);
-                      });
-                    },
-                  ),
+            trailing:
+                selectAllMaker(allFilter.vgaBrand, selectedFilter.vgaBrand),
           ),
-          Wrap(
-            children: allBrandList.map((b) => filterChipMaker(b)).toList(),
-          )
+          filterChipMaker(allFilter.vgaBrand, selectedFilter.vgaBrand),
+          ListTile(
+            title: Text('vgaChipset'),
+            trailing:
+                selectAllMaker(allFilter.vgaChipset, selectedFilter.vgaChipset),
+          ),
+          filterChipMaker(allFilter.vgaChipset, selectedFilter.vgaChipset),
+          ListTile(
+            title: Text('vgaSeries'),
+            trailing:
+                selectAllMaker(allFilter.vgaSeries, selectedFilter.vgaSeries),
+          ),
+          filterChipMaker(allFilter.vgaSeries, selectedFilter.vgaSeries),
         ],
       ),
     );
   }
 
-  Widget filterChipMaker(String b) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(2, 0, 2, 0),
-      child: FilterChip(
-        shape: Border.all(style: BorderStyle.none),
-        avatar: Text(' '),
-        label: Text(b),
-        selected: selectedFilter.vgaBrand.contains(b),
-        onSelected: (bool sel) {
+  Widget selectAllMaker(Set<String> all, Set<String> selected) {
+    if (all.length == selected.length)
+      return FlatButton(
+        child: Text('clear all'),
+        onPressed: () {
           setState(() {
-            if (sel)
-              selectedFilter.vgaBrand.add(b);
-            else
-              selectedFilter.vgaBrand.remove(b);
+            selected.clear();
           });
         },
-      ),
+      );
+    else
+      return FlatButton(
+        child: Text('select all'),
+        onPressed: () {
+          setState(() {
+            selected.addAll(all);
+          });
+        },
+      );
+  }
+
+  Widget filterChipMaker(Set<String> all, Set<String> s) {
+    Widget internalMaker(String b) {
+      return Container(
+        margin: EdgeInsets.fromLTRB(2, 0, 2, 0),
+        child: FilterChip(
+          shape: Border.all(style: BorderStyle.none),
+          avatar: Text(' '),
+          label: Text(b),
+          selected: s.contains(b),
+          onSelected: (bool sel) {
+            setState(() {
+              if (sel)
+                s.add(b);
+              else
+                s.remove(b);
+            });
+          },
+        ),
+      );
+    }
+
+    List<String> allList = all.toList()..sort();
+    return Wrap(
+      children: allList.map((b) => internalMaker(b)).toList(),
     );
   }
 }
