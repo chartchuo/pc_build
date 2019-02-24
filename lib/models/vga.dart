@@ -1,6 +1,12 @@
 class VgaFilter {
-  Set<String> allBrands;
-  Set<String> selectedBrands;
+  Set<String> vgaBrand;
+  Set<String> vgaChipset;
+  Set<String> vgaSeries;
+  VgaFilter() {
+    vgaBrand = Set<String>();
+    vgaChipset = Set<String>();
+    vgaSeries = Set<String>();
+  }
 }
 
 class Vga {

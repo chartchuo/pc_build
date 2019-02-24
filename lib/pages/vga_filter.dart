@@ -2,26 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:pc_build/models/vga.dart';
 
 class VgaFilterPage extends StatefulWidget {
-  final VgaFilter vgaFilter;
+  final VgaFilter allFilter;
+  final VgaFilter selectedFilter;
 
-  VgaFilterPage({Key key, this.vgaFilter}) : super(key: key);
+  VgaFilterPage({Key key, this.allFilter, this.selectedFilter})
+      : super(key: key);
 
   @override
   _VgaFilterPageState createState() => _VgaFilterPageState();
 }
 
 class _VgaFilterPageState extends State<VgaFilterPage> {
-  VgaFilter filter;
+  VgaFilter allFilter;
+  VgaFilter selectedFilter;
 
   @override
   void initState() {
     super.initState();
-    filter = widget.vgaFilter;
+    allFilter = widget.allFilter;
+    selectedFilter = widget.selectedFilter;
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> allBrandList = filter.allBrands.toList()..sort();
+    List<String> allBrandList = allFilter.vgaBrand.toList()..sort();
     return Scaffold(
       appBar: AppBar(
         title: Text('Filter'),
@@ -30,7 +34,7 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
             icon: Icon(Icons.check),
             tooltip: 'OK',
             onPressed: () {
-              Navigator.pop(context, filter);
+              Navigator.pop(context, selectedFilter);
             },
           ),
         ],
@@ -39,12 +43,12 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
         children: <Widget>[
           ListTile(
             title: Text('Brands'),
-            trailing: allBrandList.length == filter.selectedBrands.length
+            trailing: allBrandList.length == selectedFilter.vgaBrand.length
                 ? FlatButton(
                     child: Text('unselect all'),
                     onPressed: () {
                       setState(() {
-                        filter.selectedBrands.clear();
+                        selectedFilter.vgaBrand.clear();
                       });
                     },
                   )
@@ -52,7 +56,7 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
                     child: Text('select all'),
                     onPressed: () {
                       setState(() {
-                        filter.selectedBrands.addAll(allBrandList);
+                        selectedFilter.vgaBrand.addAll(allBrandList);
                       });
                     },
                   ),
@@ -72,13 +76,13 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
         shape: Border.all(style: BorderStyle.none),
         avatar: Text(' '),
         label: Text(b),
-        selected: filter.selectedBrands.contains(b),
+        selected: selectedFilter.vgaBrand.contains(b),
         onSelected: (bool sel) {
           setState(() {
             if (sel)
-              filter.selectedBrands.add(b);
+              selectedFilter.vgaBrand.add(b);
             else
-              filter.selectedBrands.remove(b);
+              selectedFilter.vgaBrand.remove(b);
           });
         },
       ),
