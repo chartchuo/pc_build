@@ -23,7 +23,7 @@ class CpuDetailPage extends StatelessWidget {
                 width: 300,
                 child: CachedNetworkImage(
                   imageUrl:
-                      'https://www.advice.co.th/pic-pc/vga/${v.vgaPicture}',
+                      'https://www.advice.co.th/pic-pc/cpu/${v.cpuPicture}',
                 ),
               ),
             ),

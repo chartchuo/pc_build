@@ -1,24 +1,27 @@
 class CpuFilter {
-  Set<String> vgaBrand;
-  Set<String> vgaChipset;
-  Set<String> vgaSeries;
+  Set<String> cpuBrand;
+  Set<String> cpuSeries;
+  Set<String> cpuModel;
+  Set<String> cpuSocket;
   int minPrice;
   int maxPrice;
 
   CpuFilter() {
-    vgaBrand = Set<String>();
-    vgaChipset = Set<String>();
-    vgaSeries = Set<String>();
+    cpuBrand = Set<String>();
+    cpuSeries = Set<String>();
+    cpuModel = Set<String>();
+    cpuSocket = Set<String>();
     minPrice = 0;
     maxPrice = 1000000;
   }
   CpuFilter.fromVgas(List<Cpu> cpus) {
-    vgaBrand = cpus.map((v) => v.vgaBrand).toSet();
-    vgaChipset = cpus.map((v) => v.vgaChipset).toSet();
-    vgaSeries = cpus.map((v) => v.vgaSeries).toSet();
+    cpuBrand = cpus.map((v) => v.cpuBrand).toSet();
+    cpuSeries = cpus.map((v) => v.cpuSeries).toSet();
+    cpuModel = cpus.map((v) => v.cpuModel).toSet();
+    cpuSocket = cpus.map((v) => v.cpuSocket).toSet();
     if (cpus.length > 0) {
-      minPrice = cpus.map((v) => v.vgaPriceAdv).reduce((a, b) => a < b ? a : b);
-      maxPrice = cpus.map((v) => v.vgaPriceAdv).reduce((a, b) => a > b ? a : b);
+      minPrice = cpus.map((v) => v.cpuPriceAdv).reduce((a, b) => a < b ? a : b);
+      maxPrice = cpus.map((v) => v.cpuPriceAdv).reduce((a, b) => a > b ? a : b);
       minPrice = minPrice ~/ 1000 * 1000;
       maxPrice = maxPrice ~/ 1000 * 1000 + 1000;
     } else {
@@ -27,19 +30,21 @@ class CpuFilter {
     }
   }
   CpuFilter.clone(CpuFilter filter) {
-    vgaBrand = Set<String>()..addAll(filter.vgaBrand);
-    vgaChipset = Set<String>()..addAll(filter.vgaChipset);
-    vgaSeries = Set<String>()..addAll(filter.vgaSeries);
+    cpuBrand = Set<String>()..addAll(filter.cpuBrand);
+    cpuSeries = Set<String>()..addAll(filter.cpuSeries);
+    cpuModel = Set<String>()..addAll(filter.cpuModel);
+    cpuSocket = Set<String>()..addAll(filter.cpuSocket);
     minPrice = filter.minPrice;
     maxPrice = filter.maxPrice;
   }
   bool filter(Cpu cpu) {
-    if (cpu.vgaPriceAdv < minPrice) return false;
-    if (cpu.vgaPriceAdv > maxPrice) return false;
-    if (vgaBrand.length != 0 && !vgaBrand.contains(cpu.vgaBrand)) return false;
-    if (vgaChipset.length != 0 && !vgaChipset.contains(cpu.vgaChipset))
+    if (cpu.cpuPriceAdv < minPrice) return false;
+    if (cpu.cpuPriceAdv > maxPrice) return false;
+    if (cpuBrand.length != 0 && !cpuBrand.contains(cpu.cpuBrand)) return false;
+    if (cpuSeries.length != 0 && !cpuSeries.contains(cpu.cpuSeries))
       return false;
-    if (vgaSeries.length != 0 && !vgaSeries.contains(cpu.vgaSeries))
+    if (cpuModel.length != 0 && !cpuModel.contains(cpu.cpuModel)) return false;
+    if (cpuSocket.length != 0 && !cpuSocket.contains(cpu.cpuSocket))
       return false;
     return true;
   }
@@ -62,64 +67,51 @@ class Cpu {
   int lastweek;
   int last2week;
   int lastupdate;
-  int vgaId;
-  String vgaBrand;
-  String vgaModel;
-  String vgaCodeName;
-  String vgaBusType;
-  String vgaChipset;
-  String vgaSeries;
-  String vgaTech;
-  String vgaClock;
-  dynamic vgaShader;
-  dynamic vgaShaderUnit;
-  dynamic vgaMemSpeed;
-  String vgaMemSize;
-  String vgaMemType;
-  String vgaBit;
-  String vgaMaxReso;
-  dynamic vgaDirectx;
-  String vgaCfSli;
-  String vga3d;
-  dynamic vgaCooling;
-  int vgaDsub;
-  int vgaDvi;
-  int vgaHdmi;
-  int vgaMhdmi;
-  int vgaDisplayport;
-  int vgaMdisplayport;
-  String vgaOptionPort;
-  String vgaPower;
-  String vgaPsuRequire;
-  dynamic vgaFeature;
-  int vgaWaranty;
-  int vgaScore;
+  int cpuId;
+  String cpuBrand;
+  String cpuSeries;
+  String cpuModel;
+  String cpuSocket;
+  String cpuCt;
+  dynamic cpuFrequency;
+  dynamic cpuTurbo;
+  String cpuBus;
+  dynamic cpuArchitec;
+  String cpuL2;
+  String cpuL3;
+  int cpuVgaChip;
+  dynamic cpuPower;
+  int cpuWaranty;
+  int cpuScore;
   int score3D11;
-  int vgaPriceAdv;
-  int vgaPriceBan;
-  int vgaPriceJib;
-  int vgaPriceTk;
-  int vgaPriceJedi;
-  int vgaPriceCommore;
-  int vgaPriceHwh;
-  int vgaPriceBusitek;
-  int vgaPriceEtc;
-  String vgaPicture;
-  dynamic advId;
-  dynamic tkId;
+  int cpuPriceAdv;
+  int cpuPriceBan;
+  int cpuPriceJib;
+  int cpuPriceTk;
+  int cpuPriceJedi;
+  int cpuPriceCommore;
+  int cpuPriceHwh;
+  int cpuPriceBusitek;
+  int cpuPriceEtc;
+  int priceMark;
+  String cpuPicture;
   dynamic jediId;
+  dynamic tkId;
   int soldout;
   String when;
   int tmpClose;
   String timestampTmpClose;
-  dynamic commoreId;
+  dynamic advId;
   dynamic jibId;
-  int bananaId;
+  dynamic commoreId;
+  dynamic bananaId;
   int isHighlight;
-  dynamic vgaPriceTopvalue;
   dynamic topvalueId;
+  dynamic cpuPriceTopvalue;
+  int advSoldout;
+  String advPath;
+  int priceAdv;
   int lowestPrice;
-  String vgaMemModel;
 
   Cpu(
       {this.cat,
@@ -129,64 +121,51 @@ class Cpu {
       this.lastweek,
       this.last2week,
       this.lastupdate,
-      this.vgaId,
-      this.vgaBrand,
-      this.vgaModel,
-      this.vgaCodeName,
-      this.vgaBusType,
-      this.vgaChipset,
-      this.vgaSeries,
-      this.vgaTech,
-      this.vgaClock,
-      this.vgaShader,
-      this.vgaShaderUnit,
-      this.vgaMemSpeed,
-      this.vgaMemSize,
-      this.vgaMemType,
-      this.vgaBit,
-      this.vgaMaxReso,
-      this.vgaDirectx,
-      this.vgaCfSli,
-      this.vga3d,
-      this.vgaCooling,
-      this.vgaDsub,
-      this.vgaDvi,
-      this.vgaHdmi,
-      this.vgaMhdmi,
-      this.vgaDisplayport,
-      this.vgaMdisplayport,
-      this.vgaOptionPort,
-      this.vgaPower,
-      this.vgaPsuRequire,
-      this.vgaFeature,
-      this.vgaWaranty,
-      this.vgaScore,
+      this.cpuId,
+      this.cpuBrand,
+      this.cpuSeries,
+      this.cpuModel,
+      this.cpuSocket,
+      this.cpuCt,
+      this.cpuFrequency,
+      this.cpuTurbo,
+      this.cpuBus,
+      this.cpuArchitec,
+      this.cpuL2,
+      this.cpuL3,
+      this.cpuVgaChip,
+      this.cpuPower,
+      this.cpuWaranty,
+      this.cpuScore,
       this.score3D11,
-      this.vgaPriceAdv,
-      this.vgaPriceBan,
-      this.vgaPriceJib,
-      this.vgaPriceTk,
-      this.vgaPriceJedi,
-      this.vgaPriceCommore,
-      this.vgaPriceHwh,
-      this.vgaPriceBusitek,
-      this.vgaPriceEtc,
-      this.vgaPicture,
-      this.advId,
-      this.tkId,
+      this.cpuPriceAdv,
+      this.cpuPriceBan,
+      this.cpuPriceJib,
+      this.cpuPriceTk,
+      this.cpuPriceJedi,
+      this.cpuPriceCommore,
+      this.cpuPriceHwh,
+      this.cpuPriceBusitek,
+      this.cpuPriceEtc,
+      this.priceMark,
+      this.cpuPicture,
       this.jediId,
+      this.tkId,
       this.soldout,
       this.when,
       this.tmpClose,
       this.timestampTmpClose,
-      this.commoreId,
+      this.advId,
       this.jibId,
+      this.commoreId,
       this.bananaId,
       this.isHighlight,
-      this.vgaPriceTopvalue,
       this.topvalueId,
-      this.lowestPrice,
-      this.vgaMemModel});
+      this.cpuPriceTopvalue,
+      this.advSoldout,
+      this.advPath,
+      this.priceAdv,
+      this.lowestPrice});
 
   Cpu.fromJson(Map<String, dynamic> json) {
     cat = json['cat'];
@@ -196,64 +175,51 @@ class Cpu {
     lastweek = json['lastweek'];
     last2week = json['last2week'];
     lastupdate = json['lastupdate'];
-    vgaId = json['vga_id'];
-    vgaBrand = json['vga_brand'];
-    vgaModel = json['vga_model'];
-    vgaCodeName = json['vga_code_name'];
-    vgaBusType = json['vga_bus_type'];
-    vgaChipset = json['vga_chipset'];
-    vgaSeries = json['vga_series'];
-    vgaTech = json['vga_tech'];
-    vgaClock = json['vga_clock'];
-    vgaShader = json['vga_shader'];
-    vgaShaderUnit = json['vga_shader_unit'];
-    vgaMemSpeed = json['vga_mem_speed'];
-    vgaMemSize = json['vga_mem_size'];
-    vgaMemType = json['vga_mem_type'];
-    vgaBit = json['vga_bit'];
-    vgaMaxReso = json['vga_max_reso'];
-    vgaDirectx = json['vga_directx'];
-    vgaCfSli = json['vga_cf_sli'];
-    vga3d = json['vga_3d'];
-    vgaCooling = json['vga_cooling'];
-    vgaDsub = json['vga_dsub'];
-    vgaDvi = json['vga_dvi'];
-    vgaHdmi = json['vga_hdmi'];
-    vgaMhdmi = json['vga_mhdmi'];
-    vgaDisplayport = json['vga_displayport'];
-    vgaMdisplayport = json['vga_mdisplayport'];
-    vgaOptionPort = json['vga_option_port'];
-    vgaPower = json['vga_power'];
-    vgaPsuRequire = json['vga_psu_require'];
-    vgaFeature = json['vga_feature'];
-    vgaWaranty = json['vga_waranty'];
-    vgaScore = json['vga_score'];
+    cpuId = json['cpu_id'];
+    cpuBrand = json['cpu_brand'];
+    cpuSeries = json['cpu_series'];
+    cpuModel = json['cpu_model'];
+    cpuSocket = json['cpu_socket'];
+    cpuCt = json['cpu_ct'];
+    cpuFrequency = json['cpu_frequency'];
+    cpuTurbo = json['cpu_turbo'];
+    cpuBus = json['cpu_bus'];
+    cpuArchitec = json['cpu_architec'];
+    cpuL2 = json['cpu_L2'];
+    cpuL3 = json['cpu_L3'];
+    cpuVgaChip = json['cpu_vga_chip'];
+    cpuPower = json['cpu_power'];
+    cpuWaranty = json['cpu_waranty'];
+    cpuScore = json['cpu_score'];
     score3D11 = json['score3D11'];
-    vgaPriceAdv = json['vga_price_adv'];
-    vgaPriceBan = json['vga_price_ban'];
-    vgaPriceJib = json['vga_price_jib'];
-    vgaPriceTk = json['vga_price_tk'];
-    vgaPriceJedi = json['vga_price_jedi'];
-    vgaPriceCommore = json['vga_price_commore'];
-    vgaPriceHwh = json['vga_price_hwh'];
-    vgaPriceBusitek = json['vga_price_busitek'];
-    vgaPriceEtc = json['vga_price_etc'];
-    vgaPicture = json['vga_picture'];
-    advId = json['adv_id'];
-    tkId = json['tk_id'];
+    cpuPriceAdv = json['cpu_price_adv'];
+    cpuPriceBan = json['cpu_price_ban'];
+    cpuPriceJib = json['cpu_price_jib'];
+    cpuPriceTk = json['cpu_price_tk'];
+    cpuPriceJedi = json['cpu_price_jedi'];
+    cpuPriceCommore = json['cpu_price_commore'];
+    cpuPriceHwh = json['cpu_price_hwh'];
+    cpuPriceBusitek = json['cpu_price_busitek'];
+    cpuPriceEtc = json['cpu_price_etc'];
+    priceMark = json['price_mark'];
+    cpuPicture = json['cpu_picture'];
     jediId = json['jedi_id'];
+    tkId = json['tk_id'];
     soldout = json['soldout'];
     when = json['when'];
     tmpClose = json['tmp_close'];
     timestampTmpClose = json['timestamp_tmp_close'];
-    commoreId = json['commore_id'];
+    advId = json['adv_id'];
     jibId = json['jib_id'];
+    commoreId = json['commore_id'];
     bananaId = json['banana_id'];
     isHighlight = json['is_highlight'];
-    vgaPriceTopvalue = json['vga_price_topvalue'];
     topvalueId = json['topvalue_id'];
+    cpuPriceTopvalue = json['cpu_price_topvalue'];
+    advSoldout = json['adv_soldout'];
+    advPath = json['adv_path'];
+    priceAdv = json['price_adv'];
     lowestPrice = json['lowest_price'];
-    vgaMemModel = json['vga_mem_model'];
   }
 
   Map<String, dynamic> toJson() {
@@ -265,64 +231,51 @@ class Cpu {
     data['lastweek'] = this.lastweek;
     data['last2week'] = this.last2week;
     data['lastupdate'] = this.lastupdate;
-    data['vga_id'] = this.vgaId;
-    data['vga_brand'] = this.vgaBrand;
-    data['vga_model'] = this.vgaModel;
-    data['vga_code_name'] = this.vgaCodeName;
-    data['vga_bus_type'] = this.vgaBusType;
-    data['vga_chipset'] = this.vgaChipset;
-    data['vga_series'] = this.vgaSeries;
-    data['vga_tech'] = this.vgaTech;
-    data['vga_clock'] = this.vgaClock;
-    data['vga_shader'] = this.vgaShader;
-    data['vga_shader_unit'] = this.vgaShaderUnit;
-    data['vga_mem_speed'] = this.vgaMemSpeed;
-    data['vga_mem_size'] = this.vgaMemSize;
-    data['vga_mem_type'] = this.vgaMemType;
-    data['vga_bit'] = this.vgaBit;
-    data['vga_max_reso'] = this.vgaMaxReso;
-    data['vga_directx'] = this.vgaDirectx;
-    data['vga_cf_sli'] = this.vgaCfSli;
-    data['vga_3d'] = this.vga3d;
-    data['vga_cooling'] = this.vgaCooling;
-    data['vga_dsub'] = this.vgaDsub;
-    data['vga_dvi'] = this.vgaDvi;
-    data['vga_hdmi'] = this.vgaHdmi;
-    data['vga_mhdmi'] = this.vgaMhdmi;
-    data['vga_displayport'] = this.vgaDisplayport;
-    data['vga_mdisplayport'] = this.vgaMdisplayport;
-    data['vga_option_port'] = this.vgaOptionPort;
-    data['vga_power'] = this.vgaPower;
-    data['vga_psu_require'] = this.vgaPsuRequire;
-    data['vga_feature'] = this.vgaFeature;
-    data['vga_waranty'] = this.vgaWaranty;
-    data['vga_score'] = this.vgaScore;
+    data['cpu_id'] = this.cpuId;
+    data['cpu_brand'] = this.cpuBrand;
+    data['cpu_series'] = this.cpuSeries;
+    data['cpu_model'] = this.cpuModel;
+    data['cpu_socket'] = this.cpuSocket;
+    data['cpu_ct'] = this.cpuCt;
+    data['cpu_frequency'] = this.cpuFrequency;
+    data['cpu_turbo'] = this.cpuTurbo;
+    data['cpu_bus'] = this.cpuBus;
+    data['cpu_architec'] = this.cpuArchitec;
+    data['cpu_L2'] = this.cpuL2;
+    data['cpu_L3'] = this.cpuL3;
+    data['cpu_vga_chip'] = this.cpuVgaChip;
+    data['cpu_power'] = this.cpuPower;
+    data['cpu_waranty'] = this.cpuWaranty;
+    data['cpu_score'] = this.cpuScore;
     data['score3D11'] = this.score3D11;
-    data['vga_price_adv'] = this.vgaPriceAdv;
-    data['vga_price_ban'] = this.vgaPriceBan;
-    data['vga_price_jib'] = this.vgaPriceJib;
-    data['vga_price_tk'] = this.vgaPriceTk;
-    data['vga_price_jedi'] = this.vgaPriceJedi;
-    data['vga_price_commore'] = this.vgaPriceCommore;
-    data['vga_price_hwh'] = this.vgaPriceHwh;
-    data['vga_price_busitek'] = this.vgaPriceBusitek;
-    data['vga_price_etc'] = this.vgaPriceEtc;
-    data['vga_picture'] = this.vgaPicture;
-    data['adv_id'] = this.advId;
-    data['tk_id'] = this.tkId;
+    data['cpu_price_adv'] = this.cpuPriceAdv;
+    data['cpu_price_ban'] = this.cpuPriceBan;
+    data['cpu_price_jib'] = this.cpuPriceJib;
+    data['cpu_price_tk'] = this.cpuPriceTk;
+    data['cpu_price_jedi'] = this.cpuPriceJedi;
+    data['cpu_price_commore'] = this.cpuPriceCommore;
+    data['cpu_price_hwh'] = this.cpuPriceHwh;
+    data['cpu_price_busitek'] = this.cpuPriceBusitek;
+    data['cpu_price_etc'] = this.cpuPriceEtc;
+    data['price_mark'] = this.priceMark;
+    data['cpu_picture'] = this.cpuPicture;
     data['jedi_id'] = this.jediId;
+    data['tk_id'] = this.tkId;
     data['soldout'] = this.soldout;
     data['when'] = this.when;
     data['tmp_close'] = this.tmpClose;
     data['timestamp_tmp_close'] = this.timestampTmpClose;
-    data['commore_id'] = this.commoreId;
+    data['adv_id'] = this.advId;
     data['jib_id'] = this.jibId;
+    data['commore_id'] = this.commoreId;
     data['banana_id'] = this.bananaId;
     data['is_highlight'] = this.isHighlight;
-    data['vga_price_topvalue'] = this.vgaPriceTopvalue;
     data['topvalue_id'] = this.topvalueId;
+    data['cpu_price_topvalue'] = this.cpuPriceTopvalue;
+    data['adv_soldout'] = this.advSoldout;
+    data['adv_path'] = this.advPath;
+    data['price_adv'] = this.priceAdv;
     data['lowest_price'] = this.lowestPrice;
-    data['vga_mem_model'] = this.vgaMemModel;
     return data;
   }
 }

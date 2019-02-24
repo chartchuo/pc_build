@@ -50,32 +50,27 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
       validFilter = CpuFilter.clone(allFilter);
       var tmpFilter = CpuFilter.clone(allFilter);
 
-      //calculate valid by price
+      //import price
       tmpFilter.minPrice = selectedFilter.minPrice;
       tmpFilter.maxPrice = selectedFilter.maxPrice;
+
+      //filter valid brand
       var tmpVgas = tmpFilter.filters(widget.allCpus);
       var resultFilter = CpuFilter.fromVgas(tmpVgas);
-      validFilter.vgaBrand = resultFilter.vgaBrand;
-      selectedFilter.vgaBrand =
-          selectedFilter.vgaBrand.intersection(validFilter.vgaBrand);
+      validFilter.cpuBrand = resultFilter.cpuBrand;
+      selectedFilter.cpuBrand =
+          selectedFilter.cpuBrand.intersection(validFilter.cpuBrand);
 
-      //caclulate valid by brand
-      tmpFilter.vgaBrand =
-          allFilter.vgaBrand.intersection(selectedFilter.vgaBrand);
+      //import brand
+      tmpFilter.cpuBrand =
+          allFilter.cpuBrand.intersection(selectedFilter.cpuBrand);
+
+      //filter valid series
       tmpVgas = tmpFilter.filters(widget.allCpus);
       resultFilter = CpuFilter.fromVgas(tmpVgas);
-      validFilter.vgaChipset = resultFilter.vgaChipset;
-      selectedFilter.vgaChipset =
-          selectedFilter.vgaChipset.intersection(validFilter.vgaChipset);
-
-      //caclulate valid by chipset
-      tmpFilter.vgaChipset =
-          allFilter.vgaChipset.intersection(selectedFilter.vgaChipset);
-      tmpVgas = tmpFilter.filters(widget.allCpus);
-      resultFilter = CpuFilter.fromVgas(tmpVgas);
-      validFilter.vgaSeries = resultFilter.vgaSeries;
-      selectedFilter.vgaSeries =
-          selectedFilter.vgaSeries.intersection(validFilter.vgaSeries);
+      validFilter.cpuSeries = resultFilter.cpuSeries;
+      selectedFilter.cpuSeries =
+          selectedFilter.cpuSeries.intersection(validFilter.cpuSeries);
     });
   }
 
@@ -125,23 +120,16 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
           ),
           ListTile(
             title: Text('Brands'),
-            trailing: clearAllMaker(selectedFilter.vgaBrand),
+            trailing: clearAllMaker(selectedFilter.cpuBrand),
           ),
-          filterChipMaker(allFilter.vgaBrand, validFilter.vgaBrand,
-              selectedFilter.vgaBrand),
-          ListTile(
-            title: Text('Chipset'),
-            trailing: clearAllMaker(selectedFilter.vgaChipset),
-          ),
-          filterChipMaker(allFilter.vgaChipset, validFilter.vgaChipset,
-              selectedFilter.vgaChipset),
+          filterChipMaker(allFilter.cpuBrand, validFilter.cpuBrand,
+              selectedFilter.cpuBrand),
           ListTile(
             title: Text('Series'),
-            trailing: clearAllMaker(selectedFilter.vgaSeries),
+            trailing: clearAllMaker(selectedFilter.cpuSeries),
           ),
-          filterChipMaker(allFilter.vgaSeries, validFilter.vgaSeries,
-              selectedFilter.vgaSeries,
-              showInvalid: false),
+          filterChipMaker(allFilter.cpuSeries, validFilter.cpuSeries,
+              selectedFilter.cpuSeries),
         ],
       ),
     );

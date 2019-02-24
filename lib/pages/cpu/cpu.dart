@@ -44,7 +44,7 @@ class _CpuPageState extends State<CpuPage> {
   searchListener() {
     setState(() {
       if (searchController.text != null) {
-        if (searchController.text.length > 2) {
+        if (searchController.text.length > 1) {
           searchString = searchController.text;
         } else {
           searchString = '';
@@ -56,12 +56,12 @@ class _CpuPageState extends State<CpuPage> {
 
   loadData() async {
     final store = await CacheStore.getInstance();
-    File file = await store.getFile('https://www.advice.co.th/pc/get_comp/vga');
+    File file = await store.getFile('https://www.advice.co.th/pc/get_comp/cpu');
     final jsonString = json.decode(file.readAsStringSync());
     setState(() {
       jsonString.forEach((v) {
         final vga = Cpu.fromJson(v);
-        if (vga.advId != '' && vga.vgaPriceAdv != 0) {
+        if (vga.advId != '' && vga.cpuPriceAdv != 0) {
           allCpus.add(vga);
         }
       });
@@ -74,9 +74,9 @@ class _CpuPageState extends State<CpuPage> {
       filteredCpus = filter.filters(allCpus);
       if (searchString != '')
         filteredCpus = filteredCpus.where((v) {
-          if (v.vgaBrand.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.cpuBrand.toLowerCase().contains(searchString.toLowerCase()))
             return true;
-          if (v.vgaModel.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.cpuModel.toLowerCase().contains(searchString.toLowerCase()))
             return true;
           return false;
         }).toList();
@@ -89,11 +89,11 @@ class _CpuPageState extends State<CpuPage> {
       sort = s;
       if (sort == Sort.lowPrice) {
         filteredCpus.sort((a, b) {
-          return a.vgaPriceAdv - b.vgaPriceAdv;
+          return a.cpuPriceAdv - b.cpuPriceAdv;
         });
       } else if (sort == Sort.highPrice) {
         filteredCpus.sort((a, b) {
-          return b.vgaPriceAdv - a.vgaPriceAdv;
+          return b.cpuPriceAdv - a.cpuPriceAdv;
         });
       } else {
         filteredCpus.sort((a, b) {
@@ -228,7 +228,7 @@ class _CpuPageState extends State<CpuPage> {
                     width: 100,
                     child: CachedNetworkImage(
                       imageUrl:
-                          'https://www.advice.co.th/pic-pc/vga/${v.vgaPicture}',
+                          'https://www.advice.co.th/pic-pc/cpu/${v.cpuPicture}',
                     ),
                   ),
                   Expanded(
@@ -237,9 +237,9 @@ class _CpuPageState extends State<CpuPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text('${v.vgaBrand}'),
-                          Text('${v.vgaModel}'),
-                          Text('${v.vgaPriceAdv} บาท'),
+                          Text('${v.cpuBrand}'),
+                          Text('${v.cpuModel}'),
+                          Text('${v.cpuPriceAdv} บาท'),
                         ],
                       ),
                     ),
