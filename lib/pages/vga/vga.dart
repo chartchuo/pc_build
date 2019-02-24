@@ -6,8 +6,8 @@ import 'package:flutter_cache_store/flutter_cache_store.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:pc_build/models/vga.dart';
-import 'package:pc_build/pages/vga_deail.dart';
-import 'package:pc_build/pages/vga_filter.dart';
+import 'vga_deail.dart';
+import 'vga_filter.dart';
 
 enum Sort {
   latest,
@@ -121,7 +121,7 @@ class _VgaPageState extends State<VgaPage> {
 
   AppBar appBarBuilder(BuildContext context) {
     return AppBar(
-      title: Text('PC Build'),
+      title: Text('VGA'),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),
