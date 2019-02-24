@@ -13,9 +13,11 @@ class VgaFilter {
     vgaSeries = vgas.map((v) => v.vgaSeries).toSet();
   }
   bool filter(Vga vga) {
-    if (!vgaBrand.contains(vga.vgaBrand)) return false;
-    if (!vgaChipset.contains(vga.vgaChipset)) return false;
-    if (!vgaSeries.contains(vga.vgaSeries)) return false;
+    if (vgaBrand.length != 0 && !vgaBrand.contains(vga.vgaBrand)) return false;
+    if (vgaChipset.length != 0 && !vgaChipset.contains(vga.vgaChipset))
+      return false;
+    if (vgaSeries.length != 0 && !vgaSeries.contains(vga.vgaSeries))
+      return false;
     return true;
   }
 

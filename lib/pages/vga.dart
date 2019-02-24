@@ -44,7 +44,6 @@ class _VgaPageState extends State<VgaPage> {
       });
 
       allFilter = VgaFilter.fromVgas(allVgas);
-      selectedFilter = VgaFilter.fromVgas(allVgas);
     });
     filterAction();
   }
