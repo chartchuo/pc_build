@@ -23,6 +23,7 @@ class VgaPage extends StatefulWidget {
 class _VgaPageState extends State<VgaPage> {
   List<Vga> allVgas = [];
   List<Vga> filteredVgas = [];
+  Sort sort = Sort.latest;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -46,17 +47,19 @@ class _VgaPageState extends State<VgaPage> {
         }
       });
     });
-    filterAction();
+    doFilter();
   }
 
-  filterAction() {
+  doFilter() {
     setState(() {
       filteredVgas = filter.filters(allVgas);
     });
+    doSort(sort);
   }
 
-  sort(Sort sort) {
+  doSort(Sort s) {
     setState(() {
+      sort = s;
       if (sort == Sort.lowPrice) {
         filteredVgas.sort((a, b) {
           return a.vgaPriceAdv - b.vgaPriceAdv;
@@ -95,8 +98,13 @@ class _VgaPageState extends State<VgaPage> {
             },
           ),
           PopupMenuButton(
-            onSelected: (v) => sort(v),
-            icon: Icon(Icons.sort),
+            onSelected: (v) => doSort(v),
+            // icon: Icon(Icons.sort),
+            icon: sort == Sort.highPrice
+                ? Icon(Icons.arrow_upward)
+                : sort == Sort.lowPrice
+                    ? Icon(Icons.arrow_downward)
+                    : Icon(Icons.sort),
             itemBuilder: (context) {
               return [
                 PopupMenuItem(
@@ -132,7 +140,7 @@ class _VgaPageState extends State<VgaPage> {
       setState(() {
         filter = result;
       });
-      filterAction();
+      doFilter();
     }
   }
 
