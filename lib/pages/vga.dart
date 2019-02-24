@@ -22,8 +22,7 @@ class _VgaPageState extends State<VgaPage> {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  VgaFilter selectedFilter = VgaFilter();
-  VgaFilter allFilter = VgaFilter();
+  VgaFilter filter = VgaFilter();
 
   @override
   void initState() {
@@ -42,15 +41,13 @@ class _VgaPageState extends State<VgaPage> {
           allVgas.add(vga);
         }
       });
-
-      allFilter = VgaFilter.fromVgas(allVgas);
     });
     filterAction();
   }
 
   filterAction() {
     setState(() {
-      filteredVgas = selectedFilter.filters(allVgas);
+      filteredVgas = filter.filters(allVgas);
     });
   }
 
@@ -89,13 +86,13 @@ class _VgaPageState extends State<VgaPage> {
       appBar: AppBar(
         title: Text('PC Build'),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.refresh),
-            tooltip: 'tempory call filter action',
-            onPressed: () {
-              filterAction();
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.refresh),
+          //   tooltip: 'tempory call filter action',
+          //   onPressed: () {
+          //     filterAction();
+          //   },
+          // ),
           IconButton(
             icon: Icon(Icons.tune),
             tooltip: 'Filter',
@@ -122,12 +119,12 @@ class _VgaPageState extends State<VgaPage> {
         context,
         MaterialPageRoute(
             builder: (context) => VgaFilterPage(
-                  allFilter: allFilter,
-                  selectedFilter: selectedFilter,
+                  selectedFilter: filter,
+                  allVgas: allVgas,
                 )));
     if (result != null) {
       setState(() {
-        selectedFilter = result;
+        filter = result;
       });
       filterAction();
     }

@@ -12,6 +12,11 @@ class VgaFilter {
     vgaChipset = vgas.map((v) => v.vgaChipset).toSet();
     vgaSeries = vgas.map((v) => v.vgaSeries).toSet();
   }
+  VgaFilter.clone(VgaFilter vgaFilter) {
+    vgaBrand = Set<String>()..addAll(vgaFilter.vgaBrand);
+    vgaChipset = Set<String>()..addAll(vgaFilter.vgaChipset);
+    vgaSeries = Set<String>()..addAll(vgaFilter.vgaSeries);
+  }
   bool filter(Vga vga) {
     if (vgaBrand.length != 0 && !vgaBrand.contains(vga.vgaBrand)) return false;
     if (vgaChipset.length != 0 && !vgaChipset.contains(vga.vgaChipset))
