@@ -29,10 +29,29 @@ class _VgaPageState extends State<VgaPage> {
 
   VgaFilter filter = VgaFilter();
 
+  TextEditingController searchController = new TextEditingController();
+  String searchString = '';
+  String lastSearchString = '';
+  bool showSearch = false;
+
   @override
   void initState() {
     super.initState();
+    searchController.addListener(searchListener);
     loadData();
+  }
+
+  searchListener() {
+    setState(() {
+      if (searchController.text != null) {
+        if (searchController.text.length > 2) {
+          searchString = searchController.text;
+        } else {
+          searchString = '';
+        }
+        doFilter();
+      }
+    });
   }
 
   loadData() async {
@@ -53,6 +72,14 @@ class _VgaPageState extends State<VgaPage> {
   doFilter() {
     setState(() {
       filteredVgas = filter.filters(allVgas);
+      if (searchString != '')
+        filteredVgas = filteredVgas.where((v) {
+          if (v.vgaBrand.toLowerCase().contains(searchString.toLowerCase()))
+            return true;
+          if (v.vgaModel.toLowerCase().contains(searchString.toLowerCase()))
+            return true;
+          return false;
+        }).toList();
     });
     doSort(sort);
   }
@@ -87,44 +114,63 @@ class _VgaPageState extends State<VgaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text('PC Build'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.tune),
-            tooltip: 'Filter',
-            onPressed: () {
-              navigate2filterPage(context);
-            },
-          ),
-          PopupMenuButton(
-            onSelected: (v) => doSort(v),
-            // icon: Icon(Icons.sort),
-            icon: sort == Sort.highPrice
-                ? Icon(Icons.arrow_upward)
-                : sort == Sort.lowPrice
-                    ? Icon(Icons.arrow_downward)
-                    : Icon(Icons.sort),
-            itemBuilder: (context) {
-              return [
-                PopupMenuItem(
-                  child: Text('Latest'),
-                  value: Sort.latest,
-                ),
-                PopupMenuItem(
-                  child: Text('Low price'),
-                  value: Sort.lowPrice,
-                ),
-                PopupMenuItem(
-                  child: Text('High price'),
-                  value: Sort.highPrice,
-                ),
-              ];
-            },
-          ),
-        ],
-      ),
+      appBar: appBarBuilder(context),
       body: bodyBuilder(),
+    );
+  }
+
+  AppBar appBarBuilder(BuildContext context) {
+    return AppBar(
+      title: Text('PC Build'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.search),
+          tooltip: 'Search',
+          onPressed: () {
+            setState(() {
+              showSearch = !showSearch;
+              if (!showSearch) {
+                lastSearchString = searchString;
+                searchController.clear();
+              } else {
+                searchController.text = lastSearchString;
+              }
+            });
+          },
+        ),
+        IconButton(
+          icon: Icon(Icons.tune),
+          tooltip: 'Filter',
+          onPressed: () {
+            navigate2filterPage(context);
+          },
+        ),
+        PopupMenuButton(
+          onSelected: (v) => doSort(v),
+          // icon: Icon(Icons.sort),
+          icon: sort == Sort.highPrice
+              ? Icon(Icons.arrow_upward)
+              : sort == Sort.lowPrice
+                  ? Icon(Icons.arrow_downward)
+                  : Icon(Icons.sort),
+          itemBuilder: (context) {
+            return [
+              PopupMenuItem(
+                child: Text('Latest'),
+                value: Sort.latest,
+              ),
+              PopupMenuItem(
+                child: Text('Low price'),
+                value: Sort.lowPrice,
+              ),
+              PopupMenuItem(
+                child: Text('High price'),
+                value: Sort.highPrice,
+              ),
+            ];
+          },
+        ),
+      ],
     );
   }
 
@@ -145,6 +191,22 @@ class _VgaPageState extends State<VgaPage> {
   }
 
   Widget bodyBuilder() {
+    return Column(
+      children: <Widget>[
+        showSearch
+            ? TextField(
+                decoration: InputDecoration(labelText: 'Search'),
+                controller: searchController,
+              )
+            : SizedBox(),
+        Expanded(
+          child: listBuilder(),
+        ),
+      ],
+    );
+  }
+
+  Widget listBuilder() {
     return ListView.builder(
       itemCount: filteredVgas.length,
       itemBuilder: (context, i) {
