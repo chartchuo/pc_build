@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_range_slider/flutter_range_slider.dart';
 
 import 'package:pc_build/models/cpu.dart';
-import '../common/common.dart';
 
 class CpuFilterPage extends StatefulWidget {
   final CpuFilter selectedFilter;
@@ -170,6 +169,7 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
     );
   }
 
+  //Todo will extract to stateful widget as custom UI
   Widget filterChipMaker(
       Set<String> all, Set<String> valid, Set<String> selected,
       {bool showInvalid = false}) {

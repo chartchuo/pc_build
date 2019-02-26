@@ -160,6 +160,7 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
     );
   }
 
+//Todo will extract to stateful widget as custom UI
   Widget filterChipMaker(
       Set<String> all, Set<String> valid, Set<String> selected,
       {bool showInvalid = false}) {

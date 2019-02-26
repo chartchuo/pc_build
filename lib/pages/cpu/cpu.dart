@@ -26,6 +26,7 @@ class _CpuPageState extends State<CpuPage> {
   Sort sort = Sort.latest;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _refreshIndicatorKey = GlobalKey<ScaffoldState>();
 
   CpuFilter filter = CpuFilter();
 
@@ -54,16 +55,15 @@ class _CpuPageState extends State<CpuPage> {
     });
   }
 
-  loadData() async {
+  Future<void> loadData() async {
     final store = await CacheStore.getInstance();
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/cpu');
     final jsonString = json.decode(file.readAsStringSync());
     setState(() {
+      allCpus.clear();
       jsonString.forEach((v) {
-        final vga = Cpu.fromJson(v);
-        // if (vga.advId != '' && vga.cpuPriceAdv != 0) {
-        allCpus.add(vga);
-        // }
+        final cpu = Cpu.fromJson(v);
+        allCpus.add(cpu);
       });
     });
     doFilter();
@@ -207,49 +207,53 @@ class _CpuPageState extends State<CpuPage> {
   }
 
   Widget listBuilder() {
-    return ListView.builder(
-      itemCount: filteredCpus.length,
-      itemBuilder: (context, i) {
-        var v = filteredCpus[i];
-        return Card(
-          elevation: 0,
-          child: Container(
-            child: InkWell(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CpuDetailPage(cpu: v),
-                  )),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    height: 100,
-                    width: 100,
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          'https://www.advice.co.th/pic-pc/cpu/${v.cpuPicture}',
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('${v.cpuBrand}'),
-                          Text('${v.cpuModel}'),
-                          Text('${v.lowestPrice} บาท'),
-                        ],
+    return RefreshIndicator(
+      key: _refreshIndicatorKey,
+      onRefresh: loadData,
+      child: ListView.builder(
+        itemCount: filteredCpus.length,
+        itemBuilder: (context, i) {
+          var v = filteredCpus[i];
+          return Card(
+            elevation: 0,
+            child: Container(
+              child: InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CpuDetailPage(cpu: v),
+                    )),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      height: 100,
+                      width: 100,
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            'https://www.advice.co.th/pic-pc/cpu/${v.cpuPicture}',
                       ),
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('${v.cpuBrand}'),
+                            Text('${v.cpuModel}'),
+                            Text('${v.lowestPrice} บาท'),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
