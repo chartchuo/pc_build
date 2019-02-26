@@ -61,9 +61,9 @@ class _CpuPageState extends State<CpuPage> {
     setState(() {
       jsonString.forEach((v) {
         final vga = Cpu.fromJson(v);
-        if (vga.advId != '' && vga.cpuPriceAdv != 0) {
-          allCpus.add(vga);
-        }
+        // if (vga.advId != '' && vga.cpuPriceAdv != 0) {
+        allCpus.add(vga);
+        // }
       });
     });
     doFilter();
@@ -89,11 +89,11 @@ class _CpuPageState extends State<CpuPage> {
       sort = s;
       if (sort == Sort.lowPrice) {
         filteredCpus.sort((a, b) {
-          return a.cpuPriceAdv - b.cpuPriceAdv;
+          return a.lowestPrice - b.lowestPrice;
         });
       } else if (sort == Sort.highPrice) {
         filteredCpus.sort((a, b) {
-          return b.cpuPriceAdv - a.cpuPriceAdv;
+          return b.lowestPrice - a.lowestPrice;
         });
       } else {
         filteredCpus.sort((a, b) {
@@ -239,7 +239,7 @@ class _CpuPageState extends State<CpuPage> {
                         children: <Widget>[
                           Text('${v.cpuBrand}'),
                           Text('${v.cpuModel}'),
-                          Text('${v.cpuPriceAdv} บาท'),
+                          Text('${v.lowestPrice} บาท'),
                         ],
                       ),
                     ),

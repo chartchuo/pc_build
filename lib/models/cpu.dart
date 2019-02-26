@@ -1,7 +1,6 @@
 class CpuFilter {
   Set<String> cpuBrand;
   Set<String> cpuSeries;
-  Set<String> cpuModel;
   Set<String> cpuSocket;
   int minPrice;
   int maxPrice;
@@ -9,7 +8,6 @@ class CpuFilter {
   CpuFilter() {
     cpuBrand = Set<String>();
     cpuSeries = Set<String>();
-    cpuModel = Set<String>();
     cpuSocket = Set<String>();
     minPrice = 0;
     maxPrice = 1000000;
@@ -17,11 +15,10 @@ class CpuFilter {
   CpuFilter.fromVgas(List<Cpu> cpus) {
     cpuBrand = cpus.map((v) => v.cpuBrand).toSet();
     cpuSeries = cpus.map((v) => v.cpuSeries).toSet();
-    cpuModel = cpus.map((v) => v.cpuModel).toSet();
     cpuSocket = cpus.map((v) => v.cpuSocket).toSet();
     if (cpus.length > 0) {
-      minPrice = cpus.map((v) => v.cpuPriceAdv).reduce((a, b) => a < b ? a : b);
-      maxPrice = cpus.map((v) => v.cpuPriceAdv).reduce((a, b) => a > b ? a : b);
+      minPrice = cpus.map((v) => v.lowestPrice).reduce((a, b) => a < b ? a : b);
+      maxPrice = cpus.map((v) => v.lowestPrice).reduce((a, b) => a > b ? a : b);
       minPrice = minPrice ~/ 1000 * 1000;
       maxPrice = maxPrice ~/ 1000 * 1000 + 1000;
     } else {
@@ -32,18 +29,16 @@ class CpuFilter {
   CpuFilter.clone(CpuFilter filter) {
     cpuBrand = Set<String>()..addAll(filter.cpuBrand);
     cpuSeries = Set<String>()..addAll(filter.cpuSeries);
-    cpuModel = Set<String>()..addAll(filter.cpuModel);
     cpuSocket = Set<String>()..addAll(filter.cpuSocket);
     minPrice = filter.minPrice;
     maxPrice = filter.maxPrice;
   }
   bool filter(Cpu cpu) {
-    if (cpu.cpuPriceAdv < minPrice) return false;
-    if (cpu.cpuPriceAdv > maxPrice) return false;
+    if (cpu.lowestPrice < minPrice) return false;
+    if (cpu.lowestPrice > maxPrice) return false;
     if (cpuBrand.length != 0 && !cpuBrand.contains(cpu.cpuBrand)) return false;
     if (cpuSeries.length != 0 && !cpuSeries.contains(cpu.cpuSeries))
       return false;
-    if (cpuModel.length != 0 && !cpuModel.contains(cpu.cpuModel)) return false;
     if (cpuSocket.length != 0 && !cpuSocket.contains(cpu.cpuSocket))
       return false;
     return true;

@@ -61,9 +61,9 @@ class _VgaPageState extends State<VgaPage> {
     setState(() {
       jsonString.forEach((v) {
         final vga = Vga.fromJson(v);
-        if (vga.advId != '' && vga.vgaPriceAdv != 0) {
-          allVgas.add(vga);
-        }
+        // if (vga.advId != '' && vga.vgaPriceAdv != 0) {
+        allVgas.add(vga);
+        // }
       });
     });
     doFilter();
@@ -89,11 +89,11 @@ class _VgaPageState extends State<VgaPage> {
       sort = s;
       if (sort == Sort.lowPrice) {
         filteredVgas.sort((a, b) {
-          return a.vgaPriceAdv - b.vgaPriceAdv;
+          return a.lowestPrice - b.lowestPrice;
         });
       } else if (sort == Sort.highPrice) {
         filteredVgas.sort((a, b) {
-          return b.vgaPriceAdv - a.vgaPriceAdv;
+          return b.lowestPrice - a.lowestPrice;
         });
       } else {
         filteredVgas.sort((a, b) {
@@ -239,7 +239,7 @@ class _VgaPageState extends State<VgaPage> {
                         children: <Widget>[
                           Text('${v.vgaBrand}'),
                           Text('${v.vgaModel}'),
-                          Text('${v.vgaPriceAdv} บาท'),
+                          Text('${v.lowestPrice} บาท'),
                         ],
                       ),
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:pc_build/pages/pc/pc.dart';
 import 'package:pc_build/pages/cpu/cpu.dart';
 import 'package:pc_build/pages/vga/vga.dart';
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: CpuPage(),
+      home: PcPage(),
     );
   }
 }

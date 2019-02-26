@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_range_slider/flutter_range_slider.dart';
 
 import 'package:pc_build/models/cpu.dart';
+import '../common/common.dart';
 
 class CpuFilterPage extends StatefulWidget {
   final CpuFilter selectedFilter;
@@ -65,6 +66,17 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
       tmpFilter.cpuBrand =
           allFilter.cpuBrand.intersection(selectedFilter.cpuBrand);
 
+      //filter valid socket
+      tmpVgas = tmpFilter.filters(widget.allCpus);
+      resultFilter = CpuFilter.fromVgas(tmpVgas);
+      validFilter.cpuSocket = resultFilter.cpuSocket;
+      selectedFilter.cpuSocket =
+          selectedFilter.cpuSocket.intersection(validFilter.cpuSocket);
+
+      //import cpuSocket
+      tmpFilter.cpuSocket =
+          allFilter.cpuSocket.intersection(selectedFilter.cpuSocket);
+
       //filter valid series
       tmpVgas = tmpFilter.filters(widget.allCpus);
       resultFilter = CpuFilter.fromVgas(tmpVgas);
@@ -125,11 +137,20 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
           filterChipMaker(allFilter.cpuBrand, validFilter.cpuBrand,
               selectedFilter.cpuBrand),
           ListTile(
+            title: Text('Socket'),
+            trailing: clearAllMaker(selectedFilter.cpuSocket),
+          ),
+          filterChipMaker(allFilter.cpuSocket, validFilter.cpuSocket,
+              selectedFilter.cpuSocket),
+          ListTile(
             title: Text('Series'),
             trailing: clearAllMaker(selectedFilter.cpuSeries),
           ),
-          filterChipMaker(allFilter.cpuSeries, validFilter.cpuSeries,
-              selectedFilter.cpuSeries),
+          filterChipMaker(
+            allFilter.cpuSeries,
+            validFilter.cpuSeries,
+            selectedFilter.cpuSeries,
+          ),
         ],
       ),
     );
@@ -151,7 +172,7 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
 
   Widget filterChipMaker(
       Set<String> all, Set<String> valid, Set<String> selected,
-      {bool showInvalid = true}) {
+      {bool showInvalid = false}) {
     List<String> allList = all.toList()..sort();
     if (!showInvalid) allList.removeWhere((v) => !valid.contains(v));
     return Container(
