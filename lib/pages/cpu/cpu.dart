@@ -26,7 +26,7 @@ class _CpuPageState extends State<CpuPage> {
   Sort sort = Sort.latest;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _refreshIndicatorKey = GlobalKey<ScaffoldState>();
+  final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
   CpuFilter filter = CpuFilter();
 
@@ -39,6 +39,8 @@ class _CpuPageState extends State<CpuPage> {
   void initState() {
     super.initState();
     searchController.addListener(searchListener);
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     loadData();
   }
 
