@@ -23,6 +23,7 @@ dependencies:
   cached_network_image: ^0.5.1
   flutter_cache_store: ^0.4.0
   flutter_range_slider: ^1.1.0
+  shared_preferences: ^0.4.0
 
 dev_dependencies:
   flutter_test:

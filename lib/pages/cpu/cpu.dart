@@ -3,11 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_store/flutter_cache_store.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:pc_build/models/cpu.dart';
-import 'cpu_deail.dart';
 import 'cpu_filter.dart';
+import 'package:pc_build/widgets/widgets.dart';
 
 enum Sort {
   latest,
@@ -35,6 +35,7 @@ class _CpuPageState extends State<CpuPage> {
   String lastSearchString = '';
   bool showSearch = false;
 
+  SharedPreferences prefs;
   @override
   void initState() {
     super.initState();
@@ -42,6 +43,12 @@ class _CpuPageState extends State<CpuPage> {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     loadData();
+  }
+
+  @override
+  void dispose() {
+    saveData();
+    super.dispose();
   }
 
   searchListener() {
@@ -57,7 +64,28 @@ class _CpuPageState extends State<CpuPage> {
     });
   }
 
+  saveData() {
+    prefs.setInt('cpuFilter.maxPrice', filter.maxPrice);
+    prefs.setInt('cpuFilter.minprice', filter.minPrice);
+    prefs.setStringList('cpuFilter.cpuBrand', filter.cpuBrand.toList());
+    prefs.setStringList('cpuFilter.cpuSocket', filter.cpuSocket.toList());
+    prefs.setStringList('cpuFilter.cpuSeries', filter.cpuSeries.toList());
+  }
+
   Future<void> loadData() async {
+    prefs = await SharedPreferences.getInstance();
+    var maxPrice = prefs.getInt('cpuFilter.maxPrice');
+    var minPrice = prefs.getInt('cpuFilter.minprice');
+    if (maxPrice != null) filter.maxPrice = maxPrice;
+    if (minPrice != null) filter.minPrice = minPrice;
+
+    var cpuBrand = prefs.getStringList('cpuFilter.cpuBrand');
+    var cpuSocket = prefs.getStringList('cpuFilter.cpuSocket');
+    var cpuSeries = prefs.getStringList('cpuFilter.cpuSeries');
+    if (cpuBrand != null) filter.cpuBrand = cpuBrand.toSet();
+    if (cpuSocket != null) filter.cpuSocket = cpuSocket.toSet();
+    if (cpuSeries != null) filter.cpuSeries = cpuSeries.toSet();
+
     final store = await CacheStore.getInstance();
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/cpu');
     final jsonString = json.decode(file.readAsStringSync());
@@ -216,43 +244,11 @@ class _CpuPageState extends State<CpuPage> {
         itemCount: filteredCpus.length,
         itemBuilder: (context, i) {
           var v = filteredCpus[i];
-          return Card(
-            elevation: 0,
-            child: Container(
-              child: InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CpuDetailPage(cpu: v),
-                    )),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      height: 100,
-                      width: 100,
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            'https://www.advice.co.th/pic-pc/cpu/${v.cpuPicture}',
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.all(8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text('${v.cpuBrand}'),
-                            Text('${v.cpuModel}'),
-                            Text('${v.lowestPrice} บาท'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+          return DeviceTile(
+            image: 'https://www.advice.co.th/pic-pc/cpu/${v.cpuPicture}',
+            title: v.cpuBrand,
+            subTitle: v.cpuModel,
+            price: v.lowestPrice,
           );
         },
       ),
