@@ -12,7 +12,7 @@ class CpuFilter {
     minPrice = 0;
     maxPrice = 1000000;
   }
-  CpuFilter.fromVgas(List<Cpu> cpus) {
+  CpuFilter.fromList(List<Cpu> cpus) {
     cpuBrand = cpus.map((v) => v.cpuBrand).toSet();
     cpuSeries = cpus.map((v) => v.cpuSeries).toSet();
     cpuSocket = cpus.map((v) => v.cpuSocket).toSet();

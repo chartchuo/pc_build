@@ -4,6 +4,7 @@ import 'package:pc_build/models/pc.dart';
 
 import 'package:pc_build/widgets/widgets.dart';
 import 'package:pc_build/pages/cpu/cpu.dart';
+import 'package:pc_build/pages/mb/mb.dart';
 import 'package:pc_build/pages/vga/vga.dart';
 
 import './pc_part.dart';
@@ -39,7 +40,7 @@ class _PcPageState extends State<PcPage> {
               subTitle: 'subtitle',
               price: '10,000 บาท',
             ),
-            // onTap: () => navigate2VgaPage(context),
+            onTap: () => navigate2MbPage(context),
           ),
           InkWell(
             child: PcPart(
@@ -113,6 +114,12 @@ class _PcPageState extends State<PcPage> {
   navigate2CpuPage(BuildContext context) async {
     CpuFilter result = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => CpuPage()));
+    if (result != null) {}
+  }
+
+  navigate2MbPage(BuildContext context) async {
+    CpuFilter result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MbPage()));
     if (result != null) {}
   }
 

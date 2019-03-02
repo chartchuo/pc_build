@@ -2,22 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_range_slider/flutter_range_slider.dart';
 
 import 'package:pc_build/widgets/widgets.dart';
-import 'package:pc_build/models/vga.dart';
 
-class VgaFilterPage extends StatefulWidget {
-  final VgaFilter selectedFilter;
-  final List<Vga> allVgas;
+import 'package:pc_build/models/mb.dart';
 
-  VgaFilterPage({Key key, this.selectedFilter, this.allVgas}) : super(key: key);
+class MbFilterPage extends StatefulWidget {
+  final MbFilter selectedFilter;
+  final List<Mb> allMbs;
+
+  MbFilterPage({Key key, this.selectedFilter, this.allMbs}) : super(key: key);
 
   @override
-  _VgaFilterPageState createState() => _VgaFilterPageState();
+  _MbFilterPageState createState() => _MbFilterPageState();
 }
 
-class _VgaFilterPageState extends State<VgaFilterPage> {
-  VgaFilter allFilter;
-  VgaFilter validFilter;
-  VgaFilter selectedFilter;
+class _MbFilterPageState extends State<MbFilterPage> {
+  MbFilter allFilter;
+  MbFilter validFilter;
+  MbFilter selectedFilter;
 
   @override
   void initState() {
@@ -26,7 +27,7 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
   }
 
   initData() {
-    allFilter = VgaFilter.fromList(widget.allVgas);
+    allFilter = MbFilter.fromList(widget.allMbs);
     validFilter = allFilter;
     selectedFilter = widget.selectedFilter;
     if (selectedFilter.maxPrice > allFilter.maxPrice)
@@ -38,9 +39,9 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
 
   resetData() {
     setState(() {
-      allFilter = VgaFilter.fromList(widget.allVgas);
+      allFilter = MbFilter.fromList(widget.allMbs);
       validFilter = allFilter;
-      selectedFilter = VgaFilter();
+      selectedFilter = MbFilter();
       selectedFilter.minPrice = allFilter.minPrice;
       selectedFilter.maxPrice = allFilter.maxPrice;
     });
@@ -48,35 +49,52 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
 
   recalFilter() {
     setState(() {
-      validFilter = VgaFilter.clone(allFilter);
-      var tmpFilter = VgaFilter.clone(allFilter);
+      validFilter = MbFilter.clone(allFilter);
+      var tmpFilter = MbFilter.clone(allFilter);
 
-      //calculate valid by price
+      //import price
       tmpFilter.minPrice = selectedFilter.minPrice;
       tmpFilter.maxPrice = selectedFilter.maxPrice;
-      var tmpList = tmpFilter.filters(widget.allVgas);
-      var resultFilter = VgaFilter.fromList(tmpList);
-      validFilter.vgaBrand = resultFilter.vgaBrand;
-      selectedFilter.vgaBrand =
-          selectedFilter.vgaBrand.intersection(validFilter.vgaBrand);
 
-      //caclulate valid by brand
-      tmpFilter.vgaBrand =
-          allFilter.vgaBrand.intersection(selectedFilter.vgaBrand);
-      tmpList = tmpFilter.filters(widget.allVgas);
-      resultFilter = VgaFilter.fromList(tmpList);
-      validFilter.vgaChipset = resultFilter.vgaChipset;
-      selectedFilter.vgaChipset =
-          selectedFilter.vgaChipset.intersection(validFilter.vgaChipset);
+      //filter valid brand
+      var tmpList = tmpFilter.filters(widget.allMbs);
+      var resultFilter = MbFilter.fromList(tmpList);
+      validFilter.mbBrand = resultFilter.mbBrand;
+      selectedFilter.mbBrand =
+          selectedFilter.mbBrand.intersection(validFilter.mbBrand);
 
-      //caclulate valid by chipset
-      tmpFilter.vgaChipset =
-          allFilter.vgaChipset.intersection(selectedFilter.vgaChipset);
-      tmpList = tmpFilter.filters(widget.allVgas);
-      resultFilter = VgaFilter.fromList(tmpList);
-      validFilter.vgaSeries = resultFilter.vgaSeries;
-      selectedFilter.vgaSeries =
-          selectedFilter.vgaSeries.intersection(validFilter.vgaSeries);
+      //import brand
+      tmpFilter.mbBrand =
+          allFilter.mbBrand.intersection(selectedFilter.mbBrand);
+
+      //filter valid form factor
+      tmpList = tmpFilter.filters(widget.allMbs);
+      resultFilter = MbFilter.fromList(tmpList);
+      validFilter.mbFactor = resultFilter.mbFactor;
+      selectedFilter.mbFactor =
+          selectedFilter.mbFactor.intersection(validFilter.mbFactor);
+
+      //import form factor
+      tmpFilter.mbFactor =
+          allFilter.mbFactor.intersection(selectedFilter.mbFactor);
+
+      //filter valid socket
+      tmpList = tmpFilter.filters(widget.allMbs);
+      resultFilter = MbFilter.fromList(tmpList);
+      validFilter.mbSocket = resultFilter.mbSocket;
+      selectedFilter.mbSocket =
+          selectedFilter.mbSocket.intersection(validFilter.mbSocket);
+
+      //import mbSocket
+      tmpFilter.mbSocket =
+          allFilter.mbSocket.intersection(selectedFilter.mbSocket);
+
+      //filter valid Chipset
+      tmpList = tmpFilter.filters(widget.allMbs);
+      resultFilter = MbFilter.fromList(tmpList);
+      validFilter.mbChipset = resultFilter.mbChipset;
+      selectedFilter.mbChipset =
+          selectedFilter.mbChipset.intersection(validFilter.mbChipset);
     });
   }
 
@@ -124,12 +142,18 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
               });
             },
           ),
-          filterChipMaker('Brands', allFilter.vgaBrand, validFilter.vgaBrand,
-              selectedFilter.vgaBrand),
-          filterChipMaker('Chipset', allFilter.vgaChipset,
-              validFilter.vgaChipset, selectedFilter.vgaChipset),
-          filterChipMaker('Series', allFilter.vgaSeries, validFilter.vgaSeries,
-              selectedFilter.vgaSeries),
+          filterChipMaker('Brands', allFilter.mbBrand, validFilter.mbBrand,
+              selectedFilter.mbBrand),
+          filterChipMaker('Form factor', allFilter.mbFactor,
+              validFilter.mbFactor, selectedFilter.mbFactor),
+          filterChipMaker('Socket', allFilter.mbSocket, validFilter.mbSocket,
+              selectedFilter.mbSocket),
+          filterChipMaker(
+            'Chipset',
+            allFilter.mbChipset,
+            validFilter.mbChipset,
+            selectedFilter.mbChipset,
+          ),
         ],
       ),
     );

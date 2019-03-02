@@ -12,7 +12,7 @@ class VgaFilter {
     minPrice = 0;
     maxPrice = 1000000;
   }
-  VgaFilter.fromVgas(List<Vga> vgas) {
+  VgaFilter.fromList(List<Vga> vgas) {
     vgaBrand = vgas.map((v) => v.vgaBrand).toSet();
     vgaChipset = vgas.map((v) => v.vgaChipset).toSet();
     vgaSeries = vgas.map((v) => v.vgaSeries).toSet();

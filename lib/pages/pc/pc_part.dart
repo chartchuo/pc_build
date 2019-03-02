@@ -9,12 +9,12 @@ class PcPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
+    return Container(
         margin: const EdgeInsets.symmetric(
           vertical: 16.0,
           horizontal: 24.0,
         ),
-        child: new Stack(
+        child: Stack(
           children: <Widget>[
             pcCard(),
             pcThumbnail(),
@@ -24,18 +24,18 @@ class PcPart extends StatelessWidget {
 
   Widget pcCard() {
     return Container(
-      // constraints: new BoxConstraints.expand(),
+      // constraints: BoxConstraints.expand(),
       height: 124.0,
-      margin: new EdgeInsets.only(left: 46.0),
-      decoration: new BoxDecoration(
-        color: new Color(0xFF333366),
+      margin: EdgeInsets.only(left: 46.0),
+      decoration: BoxDecoration(
+        color: Color(0xFF333366),
         shape: BoxShape.rectangle,
-        borderRadius: new BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(8.0),
         boxShadow: <BoxShadow>[
-          new BoxShadow(
+          BoxShadow(
             color: Colors.black12,
             blurRadius: 10.0,
-            offset: new Offset(0.0, 10.0),
+            offset: Offset(0.0, 10.0),
           ),
         ],
       ),
@@ -47,28 +47,28 @@ class PcPart extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 16.0),
       alignment: FractionalOffset.centerLeft,
-      child: CircleAvatar(
-        backgroundImage: image == null ? null : NetworkImage(image),
-        maxRadius: 46,
-        minRadius: 46,
-      ),
+      // child: CircleAvatar(
+      //   backgroundImage: image == null ? null : NetworkImage(image),
+      //   maxRadius: 46,
+      //   minRadius: 46,
+      // ),
     );
   }
 
   Widget pcCardContent() {
     return Container(
-      margin: new EdgeInsets.fromLTRB(76.0, 16.0, 16.0, 16.0),
-      constraints: new BoxConstraints.expand(),
-      child: new Column(
+      margin: EdgeInsets.fromLTRB(76.0, 16.0, 16.0, 16.0),
+      constraints: BoxConstraints.expand(),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          new Container(height: 4.0),
-          new Text(
+          Container(height: 4.0),
+          Text(
             title == null ? '' : title,
             style: headerTextStyle,
           ),
-          new Container(height: 10.0),
-          new Text(subTitle == null ? '' : subTitle, style: subHeaderTextStyle),
+          Container(height: 10.0),
+          Text(subTitle == null ? '' : subTitle, style: subHeaderTextStyle),
         ],
       ),
     );
