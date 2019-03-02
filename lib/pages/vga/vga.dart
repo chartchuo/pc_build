@@ -3,12 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_store/flutter_cache_store.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:pc_build/models/vga.dart';
-import 'vga_deail.dart';
 import 'vga_filter.dart';
+import 'package:pc_build/widgets/widgets.dart';
 
 enum Sort {
   latest,
@@ -35,11 +34,19 @@ class _VgaPageState extends State<VgaPage> {
   String lastSearchString = '';
   bool showSearch = false;
 
+  SharedPreferences prefs;
+
   @override
   void initState() {
     super.initState();
     searchController.addListener(searchListener);
     loadData();
+  }
+
+  @override
+  void dispose() {
+    saveData();
+    super.dispose();
   }
 
   searchListener() {
@@ -55,7 +62,28 @@ class _VgaPageState extends State<VgaPage> {
     });
   }
 
+  saveData() {
+    prefs.setInt('vgaFilter.maxPrice', filter.maxPrice);
+    prefs.setInt('vgaFilter.minprice', filter.minPrice);
+    prefs.setStringList('vgaFilter.vgaBrand', filter.vgaBrand.toList());
+    prefs.setStringList('vgaFilter.vgaChipset', filter.vgaChipset.toList());
+    prefs.setStringList('vgaFilter.vgaSeries', filter.vgaSeries.toList());
+  }
+
   loadData() async {
+    prefs = await SharedPreferences.getInstance();
+    var maxPrice = prefs.getInt('vgaFilter.maxPrice');
+    var minPrice = prefs.getInt('vgaFilter.minprice');
+    if (maxPrice != null) filter.maxPrice = maxPrice;
+    if (minPrice != null) filter.minPrice = minPrice;
+
+    var vgaBrand = prefs.getStringList('vgaFilter.vgaBrand');
+    var vgaChipset = prefs.getStringList('vgaFilter.vgaChipset');
+    var vgaSeries = prefs.getStringList('vgaFilter.vgaSeries');
+    if (vgaBrand != null) filter.vgaBrand = vgaBrand.toSet();
+    if (vgaChipset != null) filter.vgaChipset = vgaChipset.toSet();
+    if (vgaSeries != null) filter.vgaSeries = vgaSeries.toSet();
+
     final store = await CacheStore.getInstance();
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/vga');
     final jsonString = json.decode(file.readAsStringSync());
@@ -212,43 +240,11 @@ class _VgaPageState extends State<VgaPage> {
       itemCount: filteredVgas.length,
       itemBuilder: (context, i) {
         var v = filteredVgas[i];
-        return Card(
-          elevation: 0,
-          child: Container(
-            child: InkWell(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => VgaDetailPage(vga: v),
-                  )),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    height: 100,
-                    width: 100,
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          'https://www.advice.co.th/pic-pc/vga/${v.vgaPicture}',
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('${v.vgaBrand}'),
-                          Text('${v.vgaModel}'),
-                          Text('${v.lowestPrice} บาท'),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+        return DeviceTile(
+          image: 'https://www.advice.co.th/pic-pc/vga/${v.vgaPicture}',
+          title: v.vgaBrand,
+          subTitle: v.vgaModel,
+          price: v.lowestPrice,
         );
       },
     );

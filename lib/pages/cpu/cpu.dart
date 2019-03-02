@@ -36,6 +36,7 @@ class _CpuPageState extends State<CpuPage> {
   bool showSearch = false;
 
   SharedPreferences prefs;
+
   @override
   void initState() {
     super.initState();
