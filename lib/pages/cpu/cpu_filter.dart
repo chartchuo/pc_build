@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_range_slider/flutter_range_slider.dart';
 
+import 'package:pc_build/widgets/widgets.dart';
+
 import 'package:pc_build/models/cpu.dart';
 
 class CpuFilterPage extends StatefulWidget {
@@ -129,23 +131,12 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
               });
             },
           ),
-          ListTile(
-            title: Text('Brands'),
-            trailing: clearAllMaker(selectedFilter.cpuBrand),
-          ),
-          filterChipMaker(allFilter.cpuBrand, validFilter.cpuBrand,
+          filterChipMaker('Brands', allFilter.cpuBrand, validFilter.cpuBrand,
               selectedFilter.cpuBrand),
-          ListTile(
-            title: Text('Socket'),
-            trailing: clearAllMaker(selectedFilter.cpuSocket),
-          ),
-          filterChipMaker(allFilter.cpuSocket, validFilter.cpuSocket,
+          filterChipMaker('Socket', allFilter.cpuSocket, validFilter.cpuSocket,
               selectedFilter.cpuSocket),
-          ListTile(
-            title: Text('Series'),
-            trailing: clearAllMaker(selectedFilter.cpuSeries),
-          ),
           filterChipMaker(
+            'Series',
             allFilter.cpuSeries,
             validFilter.cpuSeries,
             selectedFilter.cpuSeries,
@@ -169,35 +160,38 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
     );
   }
 
-  //Todo will extract to stateful widget as custom UI
   Widget filterChipMaker(
-      Set<String> all, Set<String> valid, Set<String> selected,
-      {bool showInvalid = false}) {
-    List<String> allList = all.toList()..sort();
-    if (!showInvalid) allList.removeWhere((v) => !valid.contains(v));
-    return Container(
-      margin: EdgeInsets.fromLTRB(8, 0, 8, 8),
-      child: Wrap(
-        children: allList.map((b) {
-          return FilterChip(
-            label: Text(b),
-            selected: selected.contains(b),
-            onSelected: !valid.contains(b)
-                ? null
-                : (bool sel) {
-                    setState(() {
-                      if (sel) {
-                        selected.add(b);
-                        recalFilter();
-                      } else {
-                        selected.remove(b);
-                        recalFilter();
-                      }
-                    });
-                  },
-          );
-        }).toList(),
-      ),
+    String label,
+    Set<String> all,
+    Set<String> valid,
+    Set<String> selected,
+  ) {
+    return Column(
+      children: <Widget>[
+        ListTile(
+          title: Text(label),
+          trailing: clearAllMaker(selected),
+        ),
+        FilterChips(
+          all: all,
+          valid: valid,
+          selected: selected,
+          onSelected: (str) {
+            print(str);
+            setState(() {
+              selected.add(str);
+              recalFilter();
+            });
+          },
+          onDeselected: (str) {
+            print(str);
+            setState(() {
+              selected.remove(str);
+              recalFilter();
+            });
+          },
+        ),
+      ],
     );
   }
 }

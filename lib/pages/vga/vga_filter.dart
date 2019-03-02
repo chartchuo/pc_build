@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_range_slider/flutter_range_slider.dart';
 
+import 'package:pc_build/widgets/widgets.dart';
 import 'package:pc_build/models/vga.dart';
 
 class VgaFilterPage extends StatefulWidget {
@@ -123,23 +124,11 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
               });
             },
           ),
-          ListTile(
-            title: Text('Brands'),
-            trailing: clearAllMaker(selectedFilter.vgaBrand),
-          ),
-          filterChipMaker(allFilter.vgaBrand, validFilter.vgaBrand,
+          filterChipMaker('Brands', allFilter.vgaBrand, validFilter.vgaBrand,
               selectedFilter.vgaBrand),
-          ListTile(
-            title: Text('Chipset'),
-            trailing: clearAllMaker(selectedFilter.vgaChipset),
-          ),
-          filterChipMaker(allFilter.vgaChipset, validFilter.vgaChipset,
-              selectedFilter.vgaChipset),
-          ListTile(
-            title: Text('Series'),
-            trailing: clearAllMaker(selectedFilter.vgaSeries),
-          ),
-          filterChipMaker(allFilter.vgaSeries, validFilter.vgaSeries,
+          filterChipMaker('Chipset', allFilter.vgaChipset,
+              validFilter.vgaChipset, selectedFilter.vgaChipset),
+          filterChipMaker('Series', allFilter.vgaSeries, validFilter.vgaSeries,
               selectedFilter.vgaSeries),
         ],
       ),
@@ -160,35 +149,38 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
     );
   }
 
-//Todo will extract to stateful widget as custom UI
   Widget filterChipMaker(
-      Set<String> all, Set<String> valid, Set<String> selected,
-      {bool showInvalid = false}) {
-    List<String> allList = all.toList()..sort();
-    if (!showInvalid) allList.removeWhere((v) => !valid.contains(v));
-    return Container(
-      margin: EdgeInsets.fromLTRB(8, 0, 8, 8),
-      child: Wrap(
-        children: allList.map((b) {
-          return FilterChip(
-            label: Text(b),
-            selected: selected.contains(b),
-            onSelected: !valid.contains(b)
-                ? null
-                : (bool sel) {
-                    setState(() {
-                      if (sel) {
-                        selected.add(b);
-                        recalFilter();
-                      } else {
-                        selected.remove(b);
-                        recalFilter();
-                      }
-                    });
-                  },
-          );
-        }).toList(),
-      ),
+    String label,
+    Set<String> all,
+    Set<String> valid,
+    Set<String> selected,
+  ) {
+    return Column(
+      children: <Widget>[
+        ListTile(
+          title: Text(label),
+          trailing: clearAllMaker(selected),
+        ),
+        FilterChips(
+          all: all,
+          valid: valid,
+          selected: selected,
+          onSelected: (str) {
+            print(str);
+            setState(() {
+              selected.add(str);
+              recalFilter();
+            });
+          },
+          onDeselected: (str) {
+            print(str);
+            setState(() {
+              selected.remove(str);
+              recalFilter();
+            });
+          },
+        ),
+      ],
     );
   }
 }
