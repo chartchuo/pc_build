@@ -86,7 +86,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PC Builder'),
+        title: Text('PC Builder (total ${pc.totalPriceStr()})'),
         backgroundColor: Colors.purple,
       ),
       body: Container(

@@ -9,6 +9,8 @@ export 'case.dart';
 export 'cooling.dart';
 export 'mon.dart';
 
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
+
 class Pc {
   PcPart cpu, mb, vga, ram, hdd, ssd, psu, cas, cooling, mon;
   Pc() {
@@ -23,6 +25,30 @@ class Pc {
     cooling = PcPart();
     mon = PcPart();
     initTitle();
+  }
+
+  int totalPrice() {
+    int t = 0;
+    t += cpu.price ?? 0;
+    t += mb.price ?? 0;
+    t += vga.price ?? 0;
+    t += ram.price ?? 0;
+    t += hdd.price ?? 0;
+    t += ssd.price ?? 0;
+    t += psu.price ?? 0;
+    t += cas.price ?? 0;
+    t += cooling.price ?? 0;
+    t += mon.price ?? 0;
+
+    return t;
+  }
+
+  String totalPriceStr() {
+    var total = totalPrice();
+    return FlutterMoneyFormatter(amount: total.toDouble())
+            .output
+            .withoutFractionDigits +
+        ' บาท';
   }
 
   initTitle() {
