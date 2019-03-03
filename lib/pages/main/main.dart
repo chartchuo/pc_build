@@ -9,12 +9,12 @@ import 'package:pc_build/pages/vga/vga.dart';
 
 import './pc_part.dart';
 
-class PcPage extends StatefulWidget {
+class MainPage extends StatefulWidget {
   @override
-  _PcPageState createState() => _PcPageState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _PcPageState extends State<PcPage> {
+class _MainPageState extends State<MainPage> {
   Pc pc;
 
   @override

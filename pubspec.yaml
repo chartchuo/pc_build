@@ -24,6 +24,7 @@ dependencies:
   flutter_cache_store: ^0.4.0
   flutter_range_slider: ^1.1.0
   shared_preferences: ^0.4.0
+  flutter_money_formatter: ^0.7.3
 
 dev_dependencies:
   flutter_test:

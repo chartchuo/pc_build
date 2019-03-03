@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
+
 import 'package:pc_build/widgets/widgets.dart';
 
 class PartTile extends StatelessWidget {
@@ -72,7 +74,13 @@ class PartTile extends StatelessWidget {
           Text(subTitle == null ? '' : subTitle, style: myTextStyle.subHeader),
           Container(height: 10.0),
           Text(
-            price == null ? '' : '$price บาท',
+            // price == null ? '' : '$price บาท',
+            price == null
+                ? ''
+                : FlutterMoneyFormatter(amount: price.toDouble())
+                        .output
+                        .withoutFractionDigits +
+                    ' บาท',
             style: myTextStyle.price,
           )
         ],
