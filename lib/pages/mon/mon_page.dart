@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_store/flutter_cache_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:pc_build/models/mb.dart';
-import 'mb_filter.dart';
+import 'package:pc_build/models/mon.dart';
+import 'mon_filter.dart';
 import 'package:pc_build/widgets/widgets.dart';
 
 enum Sort {
@@ -15,20 +15,20 @@ enum Sort {
   highPrice,
 }
 
-class MbPage extends StatefulWidget {
+class MonPage extends StatefulWidget {
   @override
-  _MbPageState createState() => _MbPageState();
+  _MonPageState createState() => _MonPageState();
 }
 
-class _MbPageState extends State<MbPage> {
-  List<Mb> all = [];
-  List<Mb> filtered = [];
+class _MonPageState extends State<MonPage> {
+  List<Mon> all = [];
+  List<Mon> filtered = [];
   Sort sort = Sort.latest;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
-  MbFilter filter = MbFilter();
+  MonFilter filter = MonFilter();
 
   TextEditingController searchController = new TextEditingController();
   String searchString = '';
@@ -66,38 +66,35 @@ class _MbPageState extends State<MbPage> {
   }
 
   saveData() {
-    prefs.setInt('mbFilter.maxPrice', filter.maxPrice);
-    prefs.setInt('mbFilter.minprice', filter.minPrice);
-    prefs.setStringList('mbFilter.mbBrand', filter.mbBrand.toList());
-    prefs.setStringList('mbFilter.mbFactor', filter.mbFactor.toList());
-    prefs.setStringList('mbFilter.mbSocket', filter.mbSocket.toList());
-    prefs.setStringList('mbFilter.mbChipset', filter.mbChipset.toList());
+    prefs.setInt('monFilter.maxPrice', filter.maxPrice);
+    prefs.setInt('monFilter.minprice', filter.minPrice);
+    prefs.setStringList('monFilter.monBrand', filter.monBrand.toList());
+    prefs.setStringList('monFilter.monPanel2', filter.monPanel2.toList());
+    prefs.setStringList('monFilter.monSize', filter.monSize.toList());
   }
 
   Future<void> loadData() async {
     prefs = await SharedPreferences.getInstance();
-    var maxPrice = prefs.getInt('mbFilter.maxPrice');
-    var minPrice = prefs.getInt('mbFilter.minprice');
+    var maxPrice = prefs.getInt('monFilter.maxPrice');
+    var minPrice = prefs.getInt('monFilter.minprice');
     if (maxPrice != null) filter.maxPrice = maxPrice;
     if (minPrice != null) filter.minPrice = minPrice;
 
-    var mbBrand = prefs.getStringList('mbFilter.mbBrand');
-    var mbFactor = prefs.getStringList('mbFilter.mbFactor');
-    var mbSocket = prefs.getStringList('mbFilter.mbSocket');
-    var mbChipset = prefs.getStringList('mbFilter.mbChipset');
-    if (mbBrand != null) filter.mbBrand = mbBrand.toSet();
-    if (mbFactor != null) filter.mbFactor = mbFactor.toSet();
-    if (mbSocket != null) filter.mbSocket = mbSocket.toSet();
-    if (mbChipset != null) filter.mbChipset = mbChipset.toSet();
+    var monBrand = prefs.getStringList('monFilter.monBrand');
+    var monPanel2 = prefs.getStringList('monFilter.monPanel2');
+    var monSize = prefs.getStringList('monFilter.monSize');
+    if (monBrand != null) filter.monBrand = monBrand.toSet();
+    if (monPanel2 != null) filter.monPanel2 = monPanel2.toSet();
+    if (monSize != null) filter.monSize = monSize.toSet();
 
     final store = await CacheStore.getInstance();
-    File file = await store.getFile('https://www.advice.co.th/pc/get_comp/mb');
+    File file = await store.getFile('https://www.advice.co.th/pc/get_comp/mon');
     final jsonString = json.decode(file.readAsStringSync());
     setState(() {
       all.clear();
       jsonString.forEach((v) {
-        final mb = Mb.fromJson(v);
-        all.add(mb);
+        final mon = Mon.fromJson(v);
+        all.add(mon);
       });
     });
     doFilter();
@@ -108,9 +105,9 @@ class _MbPageState extends State<MbPage> {
       filtered = filter.filters(all);
       if (searchString != '')
         filtered = filtered.where((v) {
-          if (v.mbBrand.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.monBrand.toLowerCase().contains(searchString.toLowerCase()))
             return true;
-          if (v.mbModel.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.monModel.toLowerCase().contains(searchString.toLowerCase()))
             return true;
           return false;
         }).toList();
@@ -160,7 +157,7 @@ class _MbPageState extends State<MbPage> {
 
   AppBar appBarBuilder(BuildContext context) {
     return AppBar(
-      title: Text('Mainboard'),
+      title: Text('Monitor'),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),
@@ -217,10 +214,10 @@ class _MbPageState extends State<MbPage> {
   }
 
   navigate2filterPage(BuildContext context) async {
-    MbFilter result = await Navigator.push(
+    MonFilter result = await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => MbFilterPage(
+            builder: (context) => MonFilterPage(
                   selectedFilter: filter,
                   all: all,
                 )));
@@ -254,9 +251,9 @@ class _MbPageState extends State<MbPage> {
         itemBuilder: (context, i) {
           var v = filtered[i];
           return PartTile(
-            image: 'https://www.advice.co.th/pic-pc/mb/${v.mbPicture}',
-            title: v.mbBrand,
-            subTitle: v.mbModel,
+            image: 'https://www.advice.co.th/pic-pc/mon/${v.monPicture}',
+            title: v.monBrand,
+            subTitle: v.monModel,
             price: v.lowestPrice,
             index: i,
             onAdd: (i) {

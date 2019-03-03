@@ -13,6 +13,8 @@ import 'package:pc_build/pages/hdd/hdd_page.dart';
 import 'package:pc_build/pages/ssd/ssd_page.dart';
 import 'package:pc_build/pages/psu/psu_page.dart';
 import 'package:pc_build/pages/case/case_page.dart';
+import 'package:pc_build/pages/cooling/cooling_page.dart';
+import 'package:pc_build/pages/mon/mon_page.dart';
 
 import 'pc_part.dart';
 
@@ -129,11 +131,11 @@ class _MainPageState extends State<MainPage> {
             ),
             InkWell(
               child: PcPartCard(part: pc.cooling),
-              // onTap: () => navigate2CoolingPage(context),
+              onTap: () => navigate2CoolingPage(context),
             ),
             InkWell(
               child: PcPartCard(part: pc.mon),
-              // onTap: () => navigate2MonPage(context),
+              onTap: () => navigate2MonPage(context),
             ),
           ],
         ),
@@ -256,6 +258,36 @@ class _MainPageState extends State<MainPage> {
         pc.cas.picture =
             'https://www.advice.co.th/pic-pc/case/${result.casePicture}';
         pc.cas.price = result.lowestPrice;
+        saveData();
+      });
+    }
+  }
+
+  navigate2CoolingPage(BuildContext context) async {
+    Cooling result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => CoolingPage()));
+    if (result != null) {
+      setState(() {
+        pc.cooling.id = result.id;
+        pc.cooling.brandModel = result.brand + ' ' + result.model;
+        pc.cooling.picture =
+            'https://www.advice.co.th/pic-pc/cooling/${result.picture}';
+        pc.cooling.price = result.lowestPrice;
+        saveData();
+      });
+    }
+  }
+
+  navigate2MonPage(BuildContext context) async {
+    Mon result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MonPage()));
+    if (result != null) {
+      setState(() {
+        pc.mon.id = result.id;
+        pc.mon.brandModel = result.monBrand + ' ' + result.monModel;
+        pc.mon.picture =
+            'https://www.advice.co.th/pic-pc/mon/${result.monPicture}';
+        pc.mon.price = result.lowestPrice;
         saveData();
       });
     }

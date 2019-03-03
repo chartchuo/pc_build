@@ -27,7 +27,7 @@ class Pc {
 
   initTitle() {
     cpu.title = 'CPU';
-    mb.title = 'Main Board';
+    mb.title = 'Mainboard';
     vga.title = 'VGA';
     ram.title = 'Memory';
     hdd.title = 'Harddisk';

@@ -158,7 +158,7 @@ class _CasePageState extends State<CasePage> {
 
   AppBar appBarBuilder(BuildContext context) {
     return AppBar(
-      title: Text('SSD'),
+      title: Text('Case'),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_store/flutter_cache_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:pc_build/models/mb.dart';
-import 'mb_filter.dart';
+import 'package:pc_build/models/cooling.dart';
+import 'cooling_filter.dart';
 import 'package:pc_build/widgets/widgets.dart';
 
 enum Sort {
@@ -15,20 +15,20 @@ enum Sort {
   highPrice,
 }
 
-class MbPage extends StatefulWidget {
+class CoolingPage extends StatefulWidget {
   @override
-  _MbPageState createState() => _MbPageState();
+  _CoolingPageState createState() => _CoolingPageState();
 }
 
-class _MbPageState extends State<MbPage> {
-  List<Mb> all = [];
-  List<Mb> filtered = [];
+class _CoolingPageState extends State<CoolingPage> {
+  List<Cooling> all = [];
+  List<Cooling> filtered = [];
   Sort sort = Sort.latest;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
-  MbFilter filter = MbFilter();
+  CoolingFilter filter = CoolingFilter();
 
   TextEditingController searchController = new TextEditingController();
   String searchString = '';
@@ -66,38 +66,33 @@ class _MbPageState extends State<MbPage> {
   }
 
   saveData() {
-    prefs.setInt('mbFilter.maxPrice', filter.maxPrice);
-    prefs.setInt('mbFilter.minprice', filter.minPrice);
-    prefs.setStringList('mbFilter.mbBrand', filter.mbBrand.toList());
-    prefs.setStringList('mbFilter.mbFactor', filter.mbFactor.toList());
-    prefs.setStringList('mbFilter.mbSocket', filter.mbSocket.toList());
-    prefs.setStringList('mbFilter.mbChipset', filter.mbChipset.toList());
+    prefs.setInt('coolingFilter.maxPrice', filter.maxPrice);
+    prefs.setInt('coolingFilter.minprice', filter.minPrice);
+    prefs.setStringList('coolingFilter.brand', filter.brand.toList());
+    prefs.setStringList('coolingFilter.type', filter.type.toList());
   }
 
   Future<void> loadData() async {
     prefs = await SharedPreferences.getInstance();
-    var maxPrice = prefs.getInt('mbFilter.maxPrice');
-    var minPrice = prefs.getInt('mbFilter.minprice');
+    var maxPrice = prefs.getInt('coolingFilter.maxPrice');
+    var minPrice = prefs.getInt('coolingFilter.minprice');
     if (maxPrice != null) filter.maxPrice = maxPrice;
     if (minPrice != null) filter.minPrice = minPrice;
 
-    var mbBrand = prefs.getStringList('mbFilter.mbBrand');
-    var mbFactor = prefs.getStringList('mbFilter.mbFactor');
-    var mbSocket = prefs.getStringList('mbFilter.mbSocket');
-    var mbChipset = prefs.getStringList('mbFilter.mbChipset');
-    if (mbBrand != null) filter.mbBrand = mbBrand.toSet();
-    if (mbFactor != null) filter.mbFactor = mbFactor.toSet();
-    if (mbSocket != null) filter.mbSocket = mbSocket.toSet();
-    if (mbChipset != null) filter.mbChipset = mbChipset.toSet();
+    var brand = prefs.getStringList('coolingFilter.brand');
+    var type = prefs.getStringList('coolingFilter.type');
+    if (brand != null) filter.brand = brand.toSet();
+    if (type != null) filter.type = type.toSet();
 
     final store = await CacheStore.getInstance();
-    File file = await store.getFile('https://www.advice.co.th/pc/get_comp/mb');
+    File file =
+        await store.getFile('https://www.advice.co.th/pc/get_comp/cooling');
     final jsonString = json.decode(file.readAsStringSync());
     setState(() {
       all.clear();
       jsonString.forEach((v) {
-        final mb = Mb.fromJson(v);
-        all.add(mb);
+        final cpu = Cooling.fromJson(v);
+        all.add(cpu);
       });
     });
     doFilter();
@@ -108,9 +103,9 @@ class _MbPageState extends State<MbPage> {
       filtered = filter.filters(all);
       if (searchString != '')
         filtered = filtered.where((v) {
-          if (v.mbBrand.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.brand.toLowerCase().contains(searchString.toLowerCase()))
             return true;
-          if (v.mbModel.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.model.toLowerCase().contains(searchString.toLowerCase()))
             return true;
           return false;
         }).toList();
@@ -160,7 +155,7 @@ class _MbPageState extends State<MbPage> {
 
   AppBar appBarBuilder(BuildContext context) {
     return AppBar(
-      title: Text('Mainboard'),
+      title: Text('CPU Cooler'),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),
@@ -217,10 +212,10 @@ class _MbPageState extends State<MbPage> {
   }
 
   navigate2filterPage(BuildContext context) async {
-    MbFilter result = await Navigator.push(
+    CoolingFilter result = await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => MbFilterPage(
+            builder: (context) => CoolingFilterPage(
                   selectedFilter: filter,
                   all: all,
                 )));
@@ -254,9 +249,9 @@ class _MbPageState extends State<MbPage> {
         itemBuilder: (context, i) {
           var v = filtered[i];
           return PartTile(
-            image: 'https://www.advice.co.th/pic-pc/mb/${v.mbPicture}',
-            title: v.mbBrand,
-            subTitle: v.mbModel,
+            image: 'https://www.advice.co.th/pic-pc/cooling/${v.picture}',
+            title: v.brand,
+            subTitle: v.model,
             price: v.lowestPrice,
             index: i,
             onAdd: (i) {
