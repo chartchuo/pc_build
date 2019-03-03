@@ -9,6 +9,8 @@ import 'package:pc_build/pages/cpu/cpu_page.dart';
 import 'package:pc_build/pages/mb/mb_page.dart';
 import 'package:pc_build/pages/vga/vga_page.dart';
 import 'package:pc_build/pages/ram/ram_page.dart';
+import 'package:pc_build/pages/hdd/hdd_page.dart';
+import 'package:pc_build/pages/ssd/ssd_page.dart';
 
 import 'pc_part.dart';
 
@@ -109,11 +111,11 @@ class _MainPageState extends State<MainPage> {
             ),
             InkWell(
               child: PcPartCard(part: pc.hdd),
-              // onTap: () => navigate2HddPage(context),
+              onTap: () => navigate2HddPage(context),
             ),
             InkWell(
               child: PcPartCard(part: pc.ssd),
-              // onTap: () => navigate2SsdPage(context),
+              onTap: () => navigate2SsdPage(context),
             ),
             InkWell(
               child: PcPartCard(part: pc.psu),
@@ -192,6 +194,36 @@ class _MainPageState extends State<MainPage> {
         pc.ram.picture =
             'https://www.advice.co.th/pic-pc/ram/${result.ramPicture}';
         pc.ram.price = result.lowestPrice;
+        saveData();
+      });
+    }
+  }
+
+  navigate2HddPage(BuildContext context) async {
+    Hdd result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => HddPage()));
+    if (result != null) {
+      setState(() {
+        pc.hdd.id = result.id;
+        pc.hdd.brandModel = result.hddBrand + ' ' + result.hddModel;
+        pc.hdd.picture =
+            'https://www.advice.co.th/pic-pc/hdd/${result.hddPicture}';
+        pc.hdd.price = result.lowestPrice;
+        saveData();
+      });
+    }
+  }
+
+  navigate2SsdPage(BuildContext context) async {
+    Ssd result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SsdPage()));
+    if (result != null) {
+      setState(() {
+        pc.ssd.id = result.id;
+        pc.ssd.brandModel = result.ssdBrand + ' ' + result.ssdModel;
+        pc.ssd.picture =
+            'https://www.advice.co.th/pic-pc/ssd/${result.ssdPicture}';
+        pc.ssd.price = result.lowestPrice;
         saveData();
       });
     }
