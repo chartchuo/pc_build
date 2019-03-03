@@ -257,6 +257,10 @@ class _VgaPageState extends State<VgaPage> {
             title: v.vgaBrand,
             subTitle: v.vgaModel,
             price: v.lowestPrice,
+            index: i,
+            onAdd: (i) {
+              Navigator.pop(context, v);
+            },
           );
         },
       ),

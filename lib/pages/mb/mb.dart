@@ -258,6 +258,10 @@ class _MbPageState extends State<MbPage> {
             title: v.mbBrand,
             subTitle: v.mbModel,
             price: v.lowestPrice,
+            index: i,
+            onAdd: (i) {
+              Navigator.pop(context, v);
+            },
           );
         },
       ),

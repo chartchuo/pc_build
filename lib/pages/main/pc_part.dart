@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
+
 import 'package:pc_build/widgets/widgets.dart';
+import 'package:pc_build/models/pc.dart';
 
-class PcPart extends StatelessWidget {
-  final String image, title, subTitle, price;
+class PcPartCard extends StatelessWidget {
+  final PcPart part;
 
-  PcPart({Key key, this.image, this.title, this.subTitle, this.price})
-      : super(key: key);
+  PcPartCard({Key key, this.part}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Stack(
       children: <Widget>[
-        pcThumbnail(),
         pcCard(),
+        pcThumbnail(),
+        pcCardTitle(),
+        pcCardContent(),
       ],
     ));
   }
@@ -22,7 +28,7 @@ class PcPart extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: Color(0xbb333366),
+        color: Color(0x88333366),
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: <BoxShadow>[
@@ -33,31 +39,54 @@ class PcPart extends StatelessWidget {
           ),
         ],
       ),
-      child: pcCardContent(),
     );
   }
 
   Widget pcThumbnail() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 16),
-      alignment: FractionalOffset.centerLeft,
+      alignment: FractionalOffset.center,
+      margin: EdgeInsets.symmetric(vertical: 48),
+      child: part.picture == null
+          ? null
+          : CachedNetworkImage(imageUrl: part.picture),
     );
   }
 
   Widget pcCardContent() {
+    return Container(
+      margin: EdgeInsets.fromLTRB(8, 8, 8, 8),
+      constraints: BoxConstraints.expand(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Text(part.brandModel == null ? '' : part.brandModel,
+              style: myTextStyle.subHeader.copyWith(color: Colors.white70)),
+          Text(
+            part.price == null
+                ? ''
+                : FlutterMoneyFormatter(amount: part.price.toDouble())
+                        .output
+                        .withoutFractionDigits +
+                    ' บาท',
+            style: myTextStyle.price,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget pcCardTitle() {
     return Container(
       margin: EdgeInsets.fromLTRB(16, 16, 16, 16),
       constraints: BoxConstraints.expand(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(height: 4.0),
           Text(
-            title == null ? '' : title,
+            part.title == null ? '' : part.title,
             style: myTextStyle.header,
           ),
-          Container(height: 10.0),
-          Text(subTitle == null ? '' : subTitle, style: myTextStyle.subHeader),
         ],
       ),
     );

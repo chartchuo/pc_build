@@ -255,6 +255,10 @@ class _CpuPageState extends State<CpuPage> {
             title: v.cpuBrand,
             subTitle: v.cpuModel,
             price: v.lowestPrice,
+            index: i,
+            onAdd: (i) {
+              Navigator.pop(context, v);
+            },
           );
         },
       ),

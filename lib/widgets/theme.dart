@@ -16,9 +16,8 @@ class MyTextStyle {
     header = base.copyWith(fontSize: 18.0, fontWeight: FontWeight.w600);
     subHeader = base.copyWith(fontWeight: FontWeight.w400);
 
-    price = base.copyWith(
-        color: Color.fromARGB(0xff, 0x88, 0x22, 0x33),
-        fontWeight: FontWeight.w600);
+    price =
+        base.copyWith(color: Color(0xffffff00), fontWeight: FontWeight.w600);
   }
 
   MyTextStyle() {
