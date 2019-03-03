@@ -11,6 +11,7 @@ import 'package:pc_build/pages/vga/vga_page.dart';
 import 'package:pc_build/pages/ram/ram_page.dart';
 import 'package:pc_build/pages/hdd/hdd_page.dart';
 import 'package:pc_build/pages/ssd/ssd_page.dart';
+import 'package:pc_build/pages/psu/psu_page.dart';
 
 import 'pc_part.dart';
 
@@ -119,7 +120,7 @@ class _MainPageState extends State<MainPage> {
             ),
             InkWell(
               child: PcPartCard(part: pc.psu),
-              // onTap: () => navigate2PsuPage(context),
+              onTap: () => navigate2PsuPage(context),
             ),
             InkWell(
               child: PcPartCard(part: pc.cas),
@@ -224,6 +225,21 @@ class _MainPageState extends State<MainPage> {
         pc.ssd.picture =
             'https://www.advice.co.th/pic-pc/ssd/${result.ssdPicture}';
         pc.ssd.price = result.lowestPrice;
+        saveData();
+      });
+    }
+  }
+
+  navigate2PsuPage(BuildContext context) async {
+    Psu result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => PsuPage()));
+    if (result != null) {
+      setState(() {
+        pc.psu.id = result.id;
+        pc.psu.brandModel = result.psuBrand + ' ' + result.psuModel;
+        pc.psu.picture =
+            'https://www.advice.co.th/pic-pc/psu/${result.psuPicture}';
+        pc.psu.price = result.lowestPrice;
         saveData();
       });
     }

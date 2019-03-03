@@ -3,22 +3,22 @@ import 'package:flutter_range_slider/flutter_range_slider.dart';
 
 import 'package:pc_build/widgets/widgets.dart';
 
-import 'package:pc_build/models/ram.dart';
+import 'package:pc_build/models/psu.dart';
 
-class RamFilterPage extends StatefulWidget {
-  final RamFilter selectedFilter;
-  final List<Ram> all;
+class PsuFilterPage extends StatefulWidget {
+  final PsuFilter selectedFilter;
+  final List<Psu> all;
 
-  RamFilterPage({Key key, this.selectedFilter, this.all}) : super(key: key);
+  PsuFilterPage({Key key, this.selectedFilter, this.all}) : super(key: key);
 
   @override
-  _RamFilterPageState createState() => _RamFilterPageState();
+  _PsuFilterPageState createState() => _PsuFilterPageState();
 }
 
-class _RamFilterPageState extends State<RamFilterPage> {
-  RamFilter allFilter;
-  RamFilter validFilter;
-  RamFilter selectedFilter;
+class _PsuFilterPageState extends State<PsuFilterPage> {
+  PsuFilter allFilter;
+  PsuFilter validFilter;
+  PsuFilter selectedFilter;
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class _RamFilterPageState extends State<RamFilterPage> {
   }
 
   initData() {
-    allFilter = RamFilter.fromList(widget.all);
+    allFilter = PsuFilter.fromList(widget.all);
     validFilter = allFilter;
     selectedFilter = widget.selectedFilter;
     if (selectedFilter.maxPrice > allFilter.maxPrice)
@@ -39,9 +39,9 @@ class _RamFilterPageState extends State<RamFilterPage> {
 
   resetData() {
     setState(() {
-      allFilter = RamFilter.fromList(widget.all);
+      allFilter = PsuFilter.fromList(widget.all);
       validFilter = allFilter;
-      selectedFilter = RamFilter();
+      selectedFilter = PsuFilter();
       selectedFilter.minPrice = allFilter.minPrice;
       selectedFilter.maxPrice = allFilter.maxPrice;
     });
@@ -49,8 +49,8 @@ class _RamFilterPageState extends State<RamFilterPage> {
 
   recalFilter() {
     setState(() {
-      validFilter = RamFilter.clone(allFilter);
-      var tmpFilter = RamFilter.clone(allFilter);
+      validFilter = PsuFilter.clone(allFilter);
+      var tmpFilter = PsuFilter.clone(allFilter);
 
       //import price
       tmpFilter.minPrice = selectedFilter.minPrice;
@@ -58,43 +58,43 @@ class _RamFilterPageState extends State<RamFilterPage> {
 
       //filter valid brand
       var tmpList = tmpFilter.filters(widget.all);
-      var resultFilter = RamFilter.fromList(tmpList);
-      validFilter.ramBrand = resultFilter.ramBrand;
-      selectedFilter.ramBrand =
-          selectedFilter.ramBrand.intersection(validFilter.ramBrand);
+      var resultFilter = PsuFilter.fromList(tmpList);
+      validFilter.psuBrand = resultFilter.psuBrand;
+      selectedFilter.psuBrand =
+          selectedFilter.psuBrand.intersection(validFilter.psuBrand);
 
       //import brand
-      tmpFilter.ramBrand =
-          allFilter.ramBrand.intersection(selectedFilter.ramBrand);
+      tmpFilter.psuBrand =
+          allFilter.psuBrand.intersection(selectedFilter.psuBrand);
 
-      //filter valid type
+      //filter valid modular
       tmpList = tmpFilter.filters(widget.all);
-      resultFilter = RamFilter.fromList(tmpList);
-      validFilter.ramType = resultFilter.ramType;
-      selectedFilter.ramType =
-          selectedFilter.ramType.intersection(validFilter.ramType);
+      resultFilter = PsuFilter.fromList(tmpList);
+      validFilter.psuModular = resultFilter.psuModular;
+      selectedFilter.psuModular =
+          selectedFilter.psuModular.intersection(validFilter.psuModular);
 
-      //import type
-      tmpFilter.ramType =
-          allFilter.ramType.intersection(selectedFilter.ramType);
+      //import modular
+      tmpFilter.psuModular =
+          allFilter.psuModular.intersection(selectedFilter.psuModular);
 
-      //filter valid capa
+      //filter valid psuEnergyEff
       tmpList = tmpFilter.filters(widget.all);
-      resultFilter = RamFilter.fromList(tmpList);
-      validFilter.ramCapa = resultFilter.ramCapa;
-      selectedFilter.ramCapa =
-          selectedFilter.ramCapa.intersection(validFilter.ramCapa);
+      resultFilter = PsuFilter.fromList(tmpList);
+      validFilter.psuEnergyEff = resultFilter.psuEnergyEff;
+      selectedFilter.psuEnergyEff =
+          selectedFilter.psuEnergyEff.intersection(validFilter.psuEnergyEff);
 
-      //import capa
-      tmpFilter.ramCapa =
-          allFilter.ramCapa.intersection(selectedFilter.ramCapa);
+      //import psuEnergyEff
+      tmpFilter.psuEnergyEff =
+          allFilter.psuEnergyEff.intersection(selectedFilter.psuEnergyEff);
 
-      //filter valid bus
+      //filter valid maxpower
       tmpList = tmpFilter.filters(widget.all);
-      resultFilter = RamFilter.fromList(tmpList);
-      validFilter.ramBus = resultFilter.ramBus;
-      selectedFilter.ramBus =
-          selectedFilter.ramBus.intersection(validFilter.ramBus);
+      resultFilter = PsuFilter.fromList(tmpList);
+      validFilter.psuMaxPw = resultFilter.psuMaxPw;
+      selectedFilter.psuMaxPw =
+          selectedFilter.psuMaxPw.intersection(validFilter.psuMaxPw);
     });
   }
 
@@ -144,14 +144,14 @@ class _RamFilterPageState extends State<RamFilterPage> {
                 });
               },
             ),
-            filterChipMaker('Brands', allFilter.ramBrand, validFilter.ramBrand,
-                selectedFilter.ramBrand),
-            filterChipMaker('Type', allFilter.ramType, validFilter.ramType,
-                selectedFilter.ramType),
-            filterChipMaker('Capacity', allFilter.ramCapa, validFilter.ramCapa,
-                selectedFilter.ramCapa),
-            filterChipMaker('Bus', allFilter.ramBus, validFilter.ramBus,
-                selectedFilter.ramBus),
+            filterChipMaker('Brands', allFilter.psuBrand, validFilter.psuBrand,
+                selectedFilter.psuBrand),
+            filterChipMaker('Modular', allFilter.psuModular,
+                validFilter.psuModular, selectedFilter.psuModular),
+            filterChipMaker('Energy Efficiency', allFilter.psuEnergyEff,
+                validFilter.psuEnergyEff, selectedFilter.psuEnergyEff),
+            filterChipMaker('Power', allFilter.psuMaxPw, validFilter.psuMaxPw,
+                selectedFilter.psuMaxPw),
           ],
         ),
       ),
