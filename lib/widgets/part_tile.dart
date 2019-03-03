@@ -39,7 +39,7 @@ class PartTile extends StatelessWidget {
 
   Widget deviceCard() {
     return Container(
-      height: 130.0,
+      height: 140.0,
       margin: EdgeInsets.only(left: 46.0),
       padding: EdgeInsets.only(right: 32.0),
       decoration: BoxDecoration(
@@ -60,7 +60,7 @@ class PartTile extends StatelessWidget {
 
   Widget addIcon() {
     return Container(
-      height: 130,
+      height: 140,
       alignment: FractionalOffset.centerRight,
       child: IconButton(
         tooltip: 'Add',
@@ -77,7 +77,7 @@ class PartTile extends StatelessWidget {
 
   Widget deviceThumbnail() {
     return Container(
-      height: 130,
+      height: 140,
       alignment: FractionalOffset.centerLeft,
       child: CachedNetworkImage(
         imageUrl: image,

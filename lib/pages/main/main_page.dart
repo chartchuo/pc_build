@@ -39,12 +39,12 @@ class _MainPageState extends State<MainPage> {
     prefs.setString('pc.mb', jsonEncode(pc.mb));
     prefs.setString('pc.vga', jsonEncode(pc.vga));
     prefs.setString('pc.ram', jsonEncode(pc.ram));
-    prefs.setString('pc.hd', jsonEncode(pc.hd));
+    prefs.setString('pc.hdd', jsonEncode(pc.hdd));
     prefs.setString('pc.ssd', jsonEncode(pc.ssd));
-    prefs.setString('pc.ps', jsonEncode(pc.ps));
-    prefs.setString('pc.pc_case', jsonEncode(pc.pcCase));
-    prefs.setString('pc.cpu_cooler', jsonEncode(pc.cpuCooler));
-    prefs.setString('pc.monitor', jsonEncode(pc.monitor));
+    prefs.setString('pc.psu', jsonEncode(pc.psu));
+    prefs.setString('pc.cas', jsonEncode(pc.cas));
+    prefs.setString('pc.cooling', jsonEncode(pc.cooling));
+    prefs.setString('pc.mon', jsonEncode(pc.mon));
   }
 
   PcPart loadPart(SharedPreferences prefs, String key) {
@@ -64,12 +64,12 @@ class _MainPageState extends State<MainPage> {
       pc.mb = loadPart(prefs, 'pc.mb');
       pc.vga = loadPart(prefs, 'pc.vga');
       pc.ram = loadPart(prefs, 'pc.ram');
-      pc.hd = loadPart(prefs, 'pc.hd');
+      pc.hdd = loadPart(prefs, 'pc.hdd');
       pc.ssd = loadPart(prefs, 'pc.ssd');
-      pc.ps = loadPart(prefs, 'pc.ps');
-      pc.pcCase = loadPart(prefs, 'pc.pc_case');
-      pc.cpuCooler = loadPart(prefs, 'pc.cpu_cooler');
-      pc.monitor = loadPart(prefs, 'pc.monitor');
+      pc.psu = loadPart(prefs, 'pc.psu');
+      pc.cas = loadPart(prefs, 'pc.cas');
+      pc.cooling = loadPart(prefs, 'pc.cooling');
+      pc.mon = loadPart(prefs, 'pc.mon');
 
       pc.initTitle();
     });
@@ -104,31 +104,31 @@ class _MainPageState extends State<MainPage> {
             ),
             InkWell(
               child: PcPartCard(part: pc.ram),
-              // onTap: () => navigate2VgaPage(context),
+              // onTap: () => navigate2RamPage(context),
             ),
             InkWell(
-              child: PcPartCard(part: pc.hd),
-              // onTap: () => navigate2VgaPage(context),
+              child: PcPartCard(part: pc.hdd),
+              // onTap: () => navigate2HddPage(context),
             ),
             InkWell(
               child: PcPartCard(part: pc.ssd),
-              // onTap: () => navigate2VgaPage(context),
+              // onTap: () => navigate2SsdPage(context),
             ),
             InkWell(
-              child: PcPartCard(part: pc.ps),
-              // onTap: () => navigate2VgaPage(context),
+              child: PcPartCard(part: pc.psu),
+              // onTap: () => navigate2PsuPage(context),
             ),
             InkWell(
-              child: PcPartCard(part: pc.pcCase),
-              // onTap: () => navigate2VgaPage(context),
+              child: PcPartCard(part: pc.cas),
+              // onTap: () => navigate2CasPage(context),
             ),
             InkWell(
-              child: PcPartCard(part: pc.cpuCooler),
-              // onTap: () => navigate2VgaPage(context),
+              child: PcPartCard(part: pc.cooling),
+              // onTap: () => navigate2CoolingPage(context),
             ),
             InkWell(
-              child: PcPartCard(part: pc.monitor),
-              // onTap: () => navigate2VgaPage(context),
+              child: PcPartCard(part: pc.mon),
+              // onTap: () => navigate2MonPage(context),
             ),
           ],
         ),

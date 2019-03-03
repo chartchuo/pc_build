@@ -177,7 +177,12 @@ class _VgaPageState extends State<VgaPage> {
           },
         ),
         IconButton(
-          icon: Icon(Icons.tune),
+          icon: Icon(
+            Icons.tune,
+            color: filteredVgas.length == allVgas.length
+                ? Colors.white
+                : Colors.pink,
+          ),
           tooltip: 'Filter',
           onPressed: () {
             navigate2filterPage(context);
@@ -232,10 +237,7 @@ class _VgaPageState extends State<VgaPage> {
     return Column(
       children: <Widget>[
         showSearch
-            ? TextField(
-                decoration: InputDecoration(labelText: 'Search'),
-                controller: searchController,
-              )
+            ? SearchField(searchController: searchController)
             : SizedBox(),
         Expanded(
           child: listBuilder(),

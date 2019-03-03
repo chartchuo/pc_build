@@ -178,7 +178,12 @@ class _MbPageState extends State<MbPage> {
           },
         ),
         IconButton(
-          icon: Icon(Icons.tune),
+          icon: Icon(
+            Icons.tune,
+            color: filteredMbs.length == allMbs.length
+                ? Colors.white
+                : Colors.pink,
+          ),
           tooltip: 'Filter',
           onPressed: () {
             navigate2filterPage(context);
@@ -233,10 +238,7 @@ class _MbPageState extends State<MbPage> {
     return Column(
       children: <Widget>[
         showSearch
-            ? TextField(
-                decoration: InputDecoration(labelText: 'Search'),
-                controller: searchController,
-              )
+            ? SearchField(searchController: searchController)
             : SizedBox(),
         Expanded(
           child: listBuilder(),

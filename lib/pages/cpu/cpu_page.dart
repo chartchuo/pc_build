@@ -175,7 +175,12 @@ class _CpuPageState extends State<CpuPage> {
           },
         ),
         IconButton(
-          icon: Icon(Icons.tune),
+          icon: Icon(
+            Icons.tune,
+            color: filteredCpus.length == allCpus.length
+                ? Colors.white
+                : Colors.pink,
+          ),
           tooltip: 'Filter',
           onPressed: () {
             navigate2filterPage(context);
@@ -230,10 +235,7 @@ class _CpuPageState extends State<CpuPage> {
     return Column(
       children: <Widget>[
         showSearch
-            ? TextField(
-                decoration: InputDecoration(labelText: 'Search'),
-                controller: searchController,
-              )
+            ? SearchField(searchController: searchController)
             : SizedBox(),
         Expanded(
           child: listBuilder(),
