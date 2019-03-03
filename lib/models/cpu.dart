@@ -12,13 +12,13 @@ class CpuFilter {
     minPrice = 0;
     maxPrice = 1000000;
   }
-  CpuFilter.fromList(List<Cpu> cpus) {
-    cpuBrand = cpus.map((v) => v.cpuBrand).toSet();
-    cpuSeries = cpus.map((v) => v.cpuSeries).toSet();
-    cpuSocket = cpus.map((v) => v.cpuSocket).toSet();
-    if (cpus.length > 0) {
-      minPrice = cpus.map((v) => v.lowestPrice).reduce((a, b) => a < b ? a : b);
-      maxPrice = cpus.map((v) => v.lowestPrice).reduce((a, b) => a > b ? a : b);
+  CpuFilter.fromList(List<Cpu> list) {
+    cpuBrand = list.map((v) => v.cpuBrand).toSet();
+    cpuSeries = list.map((v) => v.cpuSeries).toSet();
+    cpuSocket = list.map((v) => v.cpuSocket).toSet();
+    if (list.length > 0) {
+      minPrice = list.map((v) => v.lowestPrice).reduce((a, b) => a < b ? a : b);
+      maxPrice = list.map((v) => v.lowestPrice).reduce((a, b) => a > b ? a : b);
       minPrice = minPrice ~/ 1000 * 1000;
       maxPrice = maxPrice ~/ 1000 * 1000 + 1000;
     } else {
@@ -33,20 +33,21 @@ class CpuFilter {
     minPrice = filter.minPrice;
     maxPrice = filter.maxPrice;
   }
-  bool filter(Cpu cpu) {
-    if (cpu.lowestPrice < minPrice) return false;
-    if (cpu.lowestPrice > maxPrice) return false;
-    if (cpuBrand.length != 0 && !cpuBrand.contains(cpu.cpuBrand)) return false;
-    if (cpuSeries.length != 0 && !cpuSeries.contains(cpu.cpuSeries))
+  bool filter(Cpu device) {
+    if (device.lowestPrice < minPrice) return false;
+    if (device.lowestPrice > maxPrice) return false;
+    if (cpuBrand.length != 0 && !cpuBrand.contains(device.cpuBrand))
       return false;
-    if (cpuSocket.length != 0 && !cpuSocket.contains(cpu.cpuSocket))
+    if (cpuSeries.length != 0 && !cpuSeries.contains(device.cpuSeries))
+      return false;
+    if (cpuSocket.length != 0 && !cpuSocket.contains(device.cpuSocket))
       return false;
     return true;
   }
 
-  List<Cpu> filters(List<Cpu> cpus) {
+  List<Cpu> filters(List<Cpu> list) {
     List<Cpu> result = [];
-    cpus.forEach((v) {
+    list.forEach((v) {
       if (filter(v)) result.add(v);
     });
 

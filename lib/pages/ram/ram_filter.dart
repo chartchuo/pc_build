@@ -3,22 +3,22 @@ import 'package:flutter_range_slider/flutter_range_slider.dart';
 
 import 'package:pc_build/widgets/widgets.dart';
 
-import 'package:pc_build/models/mb.dart';
+import 'package:pc_build/models/ram.dart';
 
-class MbFilterPage extends StatefulWidget {
-  final MbFilter selectedFilter;
-  final List<Mb> all;
+class RamFilterPage extends StatefulWidget {
+  final RamFilter selectedFilter;
+  final List<Ram> all;
 
-  MbFilterPage({Key key, this.selectedFilter, this.all}) : super(key: key);
+  RamFilterPage({Key key, this.selectedFilter, this.all}) : super(key: key);
 
   @override
-  _MbFilterPageState createState() => _MbFilterPageState();
+  _RamFilterPageState createState() => _RamFilterPageState();
 }
 
-class _MbFilterPageState extends State<MbFilterPage> {
-  MbFilter allFilter;
-  MbFilter validFilter;
-  MbFilter selectedFilter;
+class _RamFilterPageState extends State<RamFilterPage> {
+  RamFilter allFilter;
+  RamFilter validFilter;
+  RamFilter selectedFilter;
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class _MbFilterPageState extends State<MbFilterPage> {
   }
 
   initData() {
-    allFilter = MbFilter.fromList(widget.all);
+    allFilter = RamFilter.fromList(widget.all);
     validFilter = allFilter;
     selectedFilter = widget.selectedFilter;
     if (selectedFilter.maxPrice > allFilter.maxPrice)
@@ -39,9 +39,9 @@ class _MbFilterPageState extends State<MbFilterPage> {
 
   resetData() {
     setState(() {
-      allFilter = MbFilter.fromList(widget.all);
+      allFilter = RamFilter.fromList(widget.all);
       validFilter = allFilter;
-      selectedFilter = MbFilter();
+      selectedFilter = RamFilter();
       selectedFilter.minPrice = allFilter.minPrice;
       selectedFilter.maxPrice = allFilter.maxPrice;
     });
@@ -49,8 +49,8 @@ class _MbFilterPageState extends State<MbFilterPage> {
 
   recalFilter() {
     setState(() {
-      validFilter = MbFilter.clone(allFilter);
-      var tmpFilter = MbFilter.clone(allFilter);
+      validFilter = RamFilter.clone(allFilter);
+      var tmpFilter = RamFilter.clone(allFilter);
 
       //import price
       tmpFilter.minPrice = selectedFilter.minPrice;
@@ -58,43 +58,43 @@ class _MbFilterPageState extends State<MbFilterPage> {
 
       //filter valid brand
       var tmpList = tmpFilter.filters(widget.all);
-      var resultFilter = MbFilter.fromList(tmpList);
-      validFilter.mbBrand = resultFilter.mbBrand;
-      selectedFilter.mbBrand =
-          selectedFilter.mbBrand.intersection(validFilter.mbBrand);
+      var resultFilter = RamFilter.fromList(tmpList);
+      validFilter.ramBrand = resultFilter.ramBrand;
+      selectedFilter.ramBrand =
+          selectedFilter.ramBrand.intersection(validFilter.ramBrand);
 
       //import brand
-      tmpFilter.mbBrand =
-          allFilter.mbBrand.intersection(selectedFilter.mbBrand);
+      tmpFilter.ramBrand =
+          allFilter.ramBrand.intersection(selectedFilter.ramBrand);
 
-      //filter valid form factor
+      //filter valid type
       tmpList = tmpFilter.filters(widget.all);
-      resultFilter = MbFilter.fromList(tmpList);
-      validFilter.mbFactor = resultFilter.mbFactor;
-      selectedFilter.mbFactor =
-          selectedFilter.mbFactor.intersection(validFilter.mbFactor);
+      resultFilter = RamFilter.fromList(tmpList);
+      validFilter.ramType = resultFilter.ramType;
+      selectedFilter.ramType =
+          selectedFilter.ramType.intersection(validFilter.ramType);
 
-      //import form factor
-      tmpFilter.mbFactor =
-          allFilter.mbFactor.intersection(selectedFilter.mbFactor);
+      //import type
+      tmpFilter.ramType =
+          allFilter.ramType.intersection(selectedFilter.ramType);
 
-      //filter valid socket
+      //filter valid capa
       tmpList = tmpFilter.filters(widget.all);
-      resultFilter = MbFilter.fromList(tmpList);
-      validFilter.mbSocket = resultFilter.mbSocket;
-      selectedFilter.mbSocket =
-          selectedFilter.mbSocket.intersection(validFilter.mbSocket);
+      resultFilter = RamFilter.fromList(tmpList);
+      validFilter.ramCapa = resultFilter.ramCapa;
+      selectedFilter.ramCapa =
+          selectedFilter.ramCapa.intersection(validFilter.ramCapa);
 
-      //import mbSocket
-      tmpFilter.mbSocket =
-          allFilter.mbSocket.intersection(selectedFilter.mbSocket);
+      //import capa
+      tmpFilter.ramCapa =
+          allFilter.ramCapa.intersection(selectedFilter.ramCapa);
 
-      //filter valid Chipset
+      //filter valid bus
       tmpList = tmpFilter.filters(widget.all);
-      resultFilter = MbFilter.fromList(tmpList);
-      validFilter.mbChipset = resultFilter.mbChipset;
-      selectedFilter.mbChipset =
-          selectedFilter.mbChipset.intersection(validFilter.mbChipset);
+      resultFilter = RamFilter.fromList(tmpList);
+      validFilter.ramBus = resultFilter.ramBus;
+      selectedFilter.ramBus =
+          selectedFilter.ramBus.intersection(validFilter.ramBus);
     });
   }
 
@@ -144,17 +144,17 @@ class _MbFilterPageState extends State<MbFilterPage> {
                 });
               },
             ),
-            filterChipMaker('Brands', allFilter.mbBrand, validFilter.mbBrand,
-                selectedFilter.mbBrand),
-            filterChipMaker('Form factor', allFilter.mbFactor,
-                validFilter.mbFactor, selectedFilter.mbFactor),
-            filterChipMaker('Socket', allFilter.mbSocket, validFilter.mbSocket,
-                selectedFilter.mbSocket),
+            filterChipMaker('Brands', allFilter.ramBrand, validFilter.ramBrand,
+                selectedFilter.ramBrand),
+            filterChipMaker('Type', allFilter.ramType, validFilter.ramType,
+                selectedFilter.ramType),
+            filterChipMaker('Capacity', allFilter.ramCapa, validFilter.ramCapa,
+                selectedFilter.ramCapa),
             filterChipMaker(
-              'Chipset',
-              allFilter.mbChipset,
-              validFilter.mbChipset,
-              selectedFilter.mbChipset,
+              'Bus',
+              allFilter.ramBus,
+              validFilter.ramBus,
+              selectedFilter.ramBus,
             ),
           ],
         ),

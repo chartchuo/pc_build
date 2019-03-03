@@ -21,8 +21,8 @@ class VgaPage extends StatefulWidget {
 }
 
 class _VgaPageState extends State<VgaPage> {
-  List<Vga> allVgas = [];
-  List<Vga> filteredVgas = [];
+  List<Vga> all = [];
+  List<Vga> filtered = [];
   Sort sort = Sort.latest;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -91,11 +91,11 @@ class _VgaPageState extends State<VgaPage> {
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/vga');
     final jsonString = json.decode(file.readAsStringSync());
     setState(() {
-      allVgas.clear();
+      all.clear();
       jsonString.forEach((v) {
         final vga = Vga.fromJson(v);
         // if (vga.advId != '' && vga.vgaPriceAdv != 0) {
-        allVgas.add(vga);
+        all.add(vga);
         // }
       });
     });
@@ -104,9 +104,9 @@ class _VgaPageState extends State<VgaPage> {
 
   doFilter() {
     setState(() {
-      filteredVgas = filter.filters(allVgas);
+      filtered = filter.filters(all);
       if (searchString != '')
-        filteredVgas = filteredVgas.where((v) {
+        filtered = filtered.where((v) {
           if (v.vgaBrand.toLowerCase().contains(searchString.toLowerCase()))
             return true;
           if (v.vgaModel.toLowerCase().contains(searchString.toLowerCase()))
@@ -121,15 +121,15 @@ class _VgaPageState extends State<VgaPage> {
     setState(() {
       sort = s;
       if (sort == Sort.lowPrice) {
-        filteredVgas.sort((a, b) {
+        filtered.sort((a, b) {
           return a.lowestPrice - b.lowestPrice;
         });
       } else if (sort == Sort.highPrice) {
-        filteredVgas.sort((a, b) {
+        filtered.sort((a, b) {
           return b.lowestPrice - a.lowestPrice;
         });
       } else {
-        filteredVgas.sort((a, b) {
+        filtered.sort((a, b) {
           return b.id - a.id;
         });
       }
@@ -179,9 +179,7 @@ class _VgaPageState extends State<VgaPage> {
         IconButton(
           icon: Icon(
             Icons.tune,
-            color: filteredVgas.length == allVgas.length
-                ? Colors.white
-                : Colors.pink,
+            color: filtered.length == all.length ? Colors.white : Colors.pink,
           ),
           tooltip: 'Filter',
           onPressed: () {
@@ -223,7 +221,7 @@ class _VgaPageState extends State<VgaPage> {
         MaterialPageRoute(
             builder: (context) => VgaFilterPage(
                   selectedFilter: filter,
-                  allVgas: allVgas,
+                  all: all,
                 )));
     if (result != null) {
       setState(() {
@@ -251,9 +249,9 @@ class _VgaPageState extends State<VgaPage> {
       key: _refreshIndicatorKey,
       onRefresh: loadData,
       child: ListView.builder(
-        itemCount: filteredVgas.length,
+        itemCount: filtered.length,
         itemBuilder: (context, i) {
-          var v = filteredVgas[i];
+          var v = filtered[i];
           return PartTile(
             image: 'https://www.advice.co.th/pic-pc/vga/${v.vgaPicture}',
             title: v.vgaBrand,

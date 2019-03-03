@@ -8,6 +8,7 @@ import 'package:pc_build/widgets/widgets.dart';
 import 'package:pc_build/pages/cpu/cpu_page.dart';
 import 'package:pc_build/pages/mb/mb_page.dart';
 import 'package:pc_build/pages/vga/vga_page.dart';
+import 'package:pc_build/pages/ram/ram_page.dart';
 
 import 'pc_part.dart';
 
@@ -104,7 +105,7 @@ class _MainPageState extends State<MainPage> {
             ),
             InkWell(
               child: PcPartCard(part: pc.ram),
-              // onTap: () => navigate2RamPage(context),
+              onTap: () => navigate2RamPage(context),
             ),
             InkWell(
               child: PcPartCard(part: pc.hdd),
@@ -176,6 +177,21 @@ class _MainPageState extends State<MainPage> {
         pc.vga.picture =
             'https://www.advice.co.th/pic-pc/vga/${result.vgaPicture}';
         pc.vga.price = result.lowestPrice;
+        saveData();
+      });
+    }
+  }
+
+  navigate2RamPage(BuildContext context) async {
+    Ram result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => RamPage()));
+    if (result != null) {
+      setState(() {
+        pc.ram.id = result.id;
+        pc.ram.brandModel = result.ramBrand + ' ' + result.ramModel;
+        pc.ram.picture =
+            'https://www.advice.co.th/pic-pc/ram/${result.ramPicture}';
+        pc.ram.price = result.lowestPrice;
         saveData();
       });
     }

@@ -21,8 +21,8 @@ class CpuPage extends StatefulWidget {
 }
 
 class _CpuPageState extends State<CpuPage> {
-  List<Cpu> allCpus = [];
-  List<Cpu> filteredCpus = [];
+  List<Cpu> all = [];
+  List<Cpu> filtered = [];
   Sort sort = Sort.latest;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -91,10 +91,10 @@ class _CpuPageState extends State<CpuPage> {
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/cpu');
     final jsonString = json.decode(file.readAsStringSync());
     setState(() {
-      allCpus.clear();
+      all.clear();
       jsonString.forEach((v) {
         final cpu = Cpu.fromJson(v);
-        allCpus.add(cpu);
+        all.add(cpu);
       });
     });
     doFilter();
@@ -102,9 +102,9 @@ class _CpuPageState extends State<CpuPage> {
 
   doFilter() {
     setState(() {
-      filteredCpus = filter.filters(allCpus);
+      filtered = filter.filters(all);
       if (searchString != '')
-        filteredCpus = filteredCpus.where((v) {
+        filtered = filtered.where((v) {
           if (v.cpuBrand.toLowerCase().contains(searchString.toLowerCase()))
             return true;
           if (v.cpuModel.toLowerCase().contains(searchString.toLowerCase()))
@@ -119,15 +119,15 @@ class _CpuPageState extends State<CpuPage> {
     setState(() {
       sort = s;
       if (sort == Sort.lowPrice) {
-        filteredCpus.sort((a, b) {
+        filtered.sort((a, b) {
           return a.lowestPrice - b.lowestPrice;
         });
       } else if (sort == Sort.highPrice) {
-        filteredCpus.sort((a, b) {
+        filtered.sort((a, b) {
           return b.lowestPrice - a.lowestPrice;
         });
       } else {
-        filteredCpus.sort((a, b) {
+        filtered.sort((a, b) {
           return b.id - a.id;
         });
       }
@@ -177,9 +177,7 @@ class _CpuPageState extends State<CpuPage> {
         IconButton(
           icon: Icon(
             Icons.tune,
-            color: filteredCpus.length == allCpus.length
-                ? Colors.white
-                : Colors.pink,
+            color: filtered.length == all.length ? Colors.white : Colors.pink,
           ),
           tooltip: 'Filter',
           onPressed: () {
@@ -221,7 +219,7 @@ class _CpuPageState extends State<CpuPage> {
         MaterialPageRoute(
             builder: (context) => CpuFilterPage(
                   selectedFilter: filter,
-                  allCpus: allCpus,
+                  all: all,
                 )));
     if (result != null) {
       setState(() {
@@ -249,9 +247,9 @@ class _CpuPageState extends State<CpuPage> {
       key: _refreshIndicatorKey,
       onRefresh: loadData,
       child: ListView.builder(
-        itemCount: filteredCpus.length,
+        itemCount: filtered.length,
         itemBuilder: (context, i) {
-          var v = filteredCpus[i];
+          var v = filtered[i];
           return PartTile(
             image: 'https://www.advice.co.th/pic-pc/cpu/${v.cpuPicture}',
             title: v.cpuBrand,

@@ -6,9 +6,9 @@ import 'package:pc_build/models/vga.dart';
 
 class VgaFilterPage extends StatefulWidget {
   final VgaFilter selectedFilter;
-  final List<Vga> allVgas;
+  final List<Vga> all;
 
-  VgaFilterPage({Key key, this.selectedFilter, this.allVgas}) : super(key: key);
+  VgaFilterPage({Key key, this.selectedFilter, this.all}) : super(key: key);
 
   @override
   _VgaFilterPageState createState() => _VgaFilterPageState();
@@ -26,7 +26,7 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
   }
 
   initData() {
-    allFilter = VgaFilter.fromList(widget.allVgas);
+    allFilter = VgaFilter.fromList(widget.all);
     validFilter = allFilter;
     selectedFilter = widget.selectedFilter;
     if (selectedFilter.maxPrice > allFilter.maxPrice)
@@ -38,7 +38,7 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
 
   resetData() {
     setState(() {
-      allFilter = VgaFilter.fromList(widget.allVgas);
+      allFilter = VgaFilter.fromList(widget.all);
       validFilter = allFilter;
       selectedFilter = VgaFilter();
       selectedFilter.minPrice = allFilter.minPrice;
@@ -54,7 +54,7 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
       //calculate valid by price
       tmpFilter.minPrice = selectedFilter.minPrice;
       tmpFilter.maxPrice = selectedFilter.maxPrice;
-      var tmpList = tmpFilter.filters(widget.allVgas);
+      var tmpList = tmpFilter.filters(widget.all);
       var resultFilter = VgaFilter.fromList(tmpList);
       validFilter.vgaBrand = resultFilter.vgaBrand;
       selectedFilter.vgaBrand =
@@ -63,7 +63,7 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
       //caclulate valid by brand
       tmpFilter.vgaBrand =
           allFilter.vgaBrand.intersection(selectedFilter.vgaBrand);
-      tmpList = tmpFilter.filters(widget.allVgas);
+      tmpList = tmpFilter.filters(widget.all);
       resultFilter = VgaFilter.fromList(tmpList);
       validFilter.vgaChipset = resultFilter.vgaChipset;
       selectedFilter.vgaChipset =
@@ -72,7 +72,7 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
       //caclulate valid by chipset
       tmpFilter.vgaChipset =
           allFilter.vgaChipset.intersection(selectedFilter.vgaChipset);
-      tmpList = tmpFilter.filters(widget.allVgas);
+      tmpList = tmpFilter.filters(widget.all);
       resultFilter = VgaFilter.fromList(tmpList);
       validFilter.vgaSeries = resultFilter.vgaSeries;
       selectedFilter.vgaSeries =

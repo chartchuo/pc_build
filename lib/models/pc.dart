@@ -1,6 +1,7 @@
 export 'cpu.dart';
 export 'mb.dart';
 export 'vga.dart';
+export 'ram.dart';
 
 class Pc {
   PcPart cpu, mb, vga, ram, hdd, ssd, psu, cas, cooling, mon;

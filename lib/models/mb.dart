@@ -14,14 +14,14 @@ class MbFilter {
     minPrice = 0;
     maxPrice = 1000000;
   }
-  MbFilter.fromList(List<Mb> mbs) {
-    mbBrand = mbs.map((v) => v.mbBrand).toSet();
-    mbFactor = mbs.map((v) => v.mbFactor).toSet();
-    mbChipset = mbs.map((v) => v.mbChipset).toSet();
-    mbSocket = mbs.map((v) => v.mbSocket).toSet();
-    if (mbs.length > 0) {
-      minPrice = mbs.map((v) => v.lowestPrice).reduce((a, b) => a < b ? a : b);
-      maxPrice = mbs.map((v) => v.lowestPrice).reduce((a, b) => a > b ? a : b);
+  MbFilter.fromList(List<Mb> list) {
+    mbBrand = list.map((v) => v.mbBrand).toSet();
+    mbFactor = list.map((v) => v.mbFactor).toSet();
+    mbChipset = list.map((v) => v.mbChipset).toSet();
+    mbSocket = list.map((v) => v.mbSocket).toSet();
+    if (list.length > 0) {
+      minPrice = list.map((v) => v.lowestPrice).reduce((a, b) => a < b ? a : b);
+      maxPrice = list.map((v) => v.lowestPrice).reduce((a, b) => a > b ? a : b);
       minPrice = minPrice ~/ 1000 * 1000;
       maxPrice = maxPrice ~/ 1000 * 1000 + 1000;
     } else {
@@ -37,20 +37,22 @@ class MbFilter {
     minPrice = filter.minPrice;
     maxPrice = filter.maxPrice;
   }
-  bool filter(Mb mb) {
-    if (mb.lowestPrice < minPrice) return false;
-    if (mb.lowestPrice > maxPrice) return false;
-    if (mbBrand.length != 0 && !mbBrand.contains(mb.mbBrand)) return false;
-    if (mbFactor.length != 0 && !mbFactor.contains(mb.mbFactor)) return false;
-    if (mbSocket.length != 0 && !mbSocket.contains(mb.mbSocket)) return false;
-    if (mbChipset.length != 0 && !mbChipset.contains(mb.mbChipset))
+  bool filter(Mb device) {
+    if (device.lowestPrice < minPrice) return false;
+    if (device.lowestPrice > maxPrice) return false;
+    if (mbBrand.length != 0 && !mbBrand.contains(device.mbBrand)) return false;
+    if (mbFactor.length != 0 && !mbFactor.contains(device.mbFactor))
+      return false;
+    if (mbSocket.length != 0 && !mbSocket.contains(device.mbSocket))
+      return false;
+    if (mbChipset.length != 0 && !mbChipset.contains(device.mbChipset))
       return false;
     return true;
   }
 
-  List<Mb> filters(List<Mb> mbs) {
+  List<Mb> filters(List<Mb> list) {
     List<Mb> result = [];
-    mbs.forEach((v) {
+    list.forEach((v) {
       if (filter(v)) result.add(v);
     });
 

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_store/flutter_cache_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:pc_build/models/mb.dart';
-import 'mb_filter.dart';
+import 'package:pc_build/models/ram.dart';
+import 'ram_filter.dart';
 import 'package:pc_build/widgets/widgets.dart';
 
 enum Sort {
@@ -15,20 +15,20 @@ enum Sort {
   highPrice,
 }
 
-class MbPage extends StatefulWidget {
+class RamPage extends StatefulWidget {
   @override
-  _MbPageState createState() => _MbPageState();
+  _RamPageState createState() => _RamPageState();
 }
 
-class _MbPageState extends State<MbPage> {
-  List<Mb> all = [];
-  List<Mb> filtered = [];
+class _RamPageState extends State<RamPage> {
+  List<Ram> all = [];
+  List<Ram> filtered = [];
   Sort sort = Sort.latest;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
-  MbFilter filter = MbFilter();
+  RamFilter filter = RamFilter();
 
   TextEditingController searchController = new TextEditingController();
   String searchString = '';
@@ -66,38 +66,38 @@ class _MbPageState extends State<MbPage> {
   }
 
   saveData() {
-    prefs.setInt('mbFilter.maxPrice', filter.maxPrice);
-    prefs.setInt('mbFilter.minprice', filter.minPrice);
-    prefs.setStringList('mbFilter.mbBrand', filter.mbBrand.toList());
-    prefs.setStringList('mbFilter.mbFactor', filter.mbFactor.toList());
-    prefs.setStringList('mbFilter.mbSocket', filter.mbSocket.toList());
-    prefs.setStringList('mbFilter.mbChipset', filter.mbChipset.toList());
+    prefs.setInt('ramFilter.maxPrice', filter.maxPrice);
+    prefs.setInt('ramFilter.minprice', filter.minPrice);
+    prefs.setStringList('ramFilter.ramBrand', filter.ramBrand.toList());
+    prefs.setStringList('ramFilter.ramType', filter.ramType.toList());
+    prefs.setStringList('ramFilter.ramCapa', filter.ramCapa.toList());
+    prefs.setStringList('ramFilter.ramBus', filter.ramBus.toList());
   }
 
   Future<void> loadData() async {
     prefs = await SharedPreferences.getInstance();
-    var maxPrice = prefs.getInt('mbFilter.maxPrice');
-    var minPrice = prefs.getInt('mbFilter.minprice');
+    var maxPrice = prefs.getInt('ramFilter.maxPrice');
+    var minPrice = prefs.getInt('ramFilter.minprice');
     if (maxPrice != null) filter.maxPrice = maxPrice;
     if (minPrice != null) filter.minPrice = minPrice;
 
-    var mbBrand = prefs.getStringList('mbFilter.mbBrand');
-    var mbFactor = prefs.getStringList('mbFilter.mbFactor');
-    var mbSocket = prefs.getStringList('mbFilter.mbSocket');
-    var mbChipset = prefs.getStringList('mbFilter.mbChipset');
-    if (mbBrand != null) filter.mbBrand = mbBrand.toSet();
-    if (mbFactor != null) filter.mbFactor = mbFactor.toSet();
-    if (mbSocket != null) filter.mbSocket = mbSocket.toSet();
-    if (mbChipset != null) filter.mbChipset = mbChipset.toSet();
+    var ramBrand = prefs.getStringList('ramFilter.ramBrand');
+    var ramType = prefs.getStringList('ramFilter.ramType');
+    var ramCapa = prefs.getStringList('ramFilter.ramCapa');
+    var ramBus = prefs.getStringList('ramFilter.ramBus');
+    if (ramBrand != null) filter.ramBrand = ramBrand.toSet();
+    if (ramType != null) filter.ramType = ramType.toSet();
+    if (ramCapa != null) filter.ramCapa = ramCapa.toSet();
+    if (ramBus != null) filter.ramBus = ramBus.toSet();
 
     final store = await CacheStore.getInstance();
-    File file = await store.getFile('https://www.advice.co.th/pc/get_comp/mb');
+    File file = await store.getFile('https://www.advice.co.th/pc/get_comp/ram');
     final jsonString = json.decode(file.readAsStringSync());
     setState(() {
       all.clear();
       jsonString.forEach((v) {
-        final mb = Mb.fromJson(v);
-        all.add(mb);
+        final ram = Ram.fromJson(v);
+        all.add(ram);
       });
     });
     doFilter();
@@ -108,9 +108,9 @@ class _MbPageState extends State<MbPage> {
       filtered = filter.filters(all);
       if (searchString != '')
         filtered = filtered.where((v) {
-          if (v.mbBrand.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.ramBrand.toLowerCase().contains(searchString.toLowerCase()))
             return true;
-          if (v.mbModel.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.ramModel.toLowerCase().contains(searchString.toLowerCase()))
             return true;
           return false;
         }).toList();
@@ -160,7 +160,7 @@ class _MbPageState extends State<MbPage> {
 
   AppBar appBarBuilder(BuildContext context) {
     return AppBar(
-      title: Text('Main Board'),
+      title: Text('Memory'),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),
@@ -217,10 +217,10 @@ class _MbPageState extends State<MbPage> {
   }
 
   navigate2filterPage(BuildContext context) async {
-    MbFilter result = await Navigator.push(
+    RamFilter result = await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => MbFilterPage(
+            builder: (context) => RamFilterPage(
                   selectedFilter: filter,
                   all: all,
                 )));
@@ -254,9 +254,9 @@ class _MbPageState extends State<MbPage> {
         itemBuilder: (context, i) {
           var v = filtered[i];
           return PartTile(
-            image: 'https://www.advice.co.th/pic-pc/mb/${v.mbPicture}',
-            title: v.mbBrand,
-            subTitle: v.mbModel,
+            image: 'https://www.advice.co.th/pic-pc/ram/${v.ramPicture}',
+            title: v.ramBrand,
+            subTitle: v.ramModel,
             price: v.lowestPrice,
             index: i,
             onAdd: (i) {

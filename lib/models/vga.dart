@@ -12,13 +12,13 @@ class VgaFilter {
     minPrice = 0;
     maxPrice = 1000000;
   }
-  VgaFilter.fromList(List<Vga> vgas) {
-    vgaBrand = vgas.map((v) => v.vgaBrand).toSet();
-    vgaChipset = vgas.map((v) => v.vgaChipset).toSet();
-    vgaSeries = vgas.map((v) => v.vgaSeries).toSet();
-    if (vgas.length > 0) {
-      minPrice = vgas.map((v) => v.lowestPrice).reduce((a, b) => a < b ? a : b);
-      maxPrice = vgas.map((v) => v.lowestPrice).reduce((a, b) => a > b ? a : b);
+  VgaFilter.fromList(List<Vga> list) {
+    vgaBrand = list.map((v) => v.vgaBrand).toSet();
+    vgaChipset = list.map((v) => v.vgaChipset).toSet();
+    vgaSeries = list.map((v) => v.vgaSeries).toSet();
+    if (list.length > 0) {
+      minPrice = list.map((v) => v.lowestPrice).reduce((a, b) => a < b ? a : b);
+      maxPrice = list.map((v) => v.lowestPrice).reduce((a, b) => a > b ? a : b);
       minPrice = minPrice ~/ 1000 * 1000;
       maxPrice = maxPrice ~/ 1000 * 1000 + 1000;
     } else {
@@ -33,20 +33,21 @@ class VgaFilter {
     minPrice = vgaFilter.minPrice;
     maxPrice = vgaFilter.maxPrice;
   }
-  bool filter(Vga vga) {
-    if (vga.lowestPrice < minPrice) return false;
-    if (vga.lowestPrice > maxPrice) return false;
-    if (vgaBrand.length != 0 && !vgaBrand.contains(vga.vgaBrand)) return false;
-    if (vgaChipset.length != 0 && !vgaChipset.contains(vga.vgaChipset))
+  bool filter(Vga device) {
+    if (device.lowestPrice < minPrice) return false;
+    if (device.lowestPrice > maxPrice) return false;
+    if (vgaBrand.length != 0 && !vgaBrand.contains(device.vgaBrand))
       return false;
-    if (vgaSeries.length != 0 && !vgaSeries.contains(vga.vgaSeries))
+    if (vgaChipset.length != 0 && !vgaChipset.contains(device.vgaChipset))
+      return false;
+    if (vgaSeries.length != 0 && !vgaSeries.contains(device.vgaSeries))
       return false;
     return true;
   }
 
-  List<Vga> filters(List<Vga> vgas) {
+  List<Vga> filters(List<Vga> list) {
     List<Vga> result = [];
-    vgas.forEach((v) {
+    list.forEach((v) {
       if (filter(v)) result.add(v);
     });
 

@@ -7,9 +7,9 @@ import 'package:pc_build/models/cpu.dart';
 
 class CpuFilterPage extends StatefulWidget {
   final CpuFilter selectedFilter;
-  final List<Cpu> allCpus;
+  final List<Cpu> all;
 
-  CpuFilterPage({Key key, this.selectedFilter, this.allCpus}) : super(key: key);
+  CpuFilterPage({Key key, this.selectedFilter, this.all}) : super(key: key);
 
   @override
   _CpuFilterPageState createState() => _CpuFilterPageState();
@@ -27,7 +27,7 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
   }
 
   initData() {
-    allFilter = CpuFilter.fromList(widget.allCpus);
+    allFilter = CpuFilter.fromList(widget.all);
     validFilter = allFilter;
     selectedFilter = widget.selectedFilter;
     if (selectedFilter.maxPrice > allFilter.maxPrice)
@@ -39,7 +39,7 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
 
   resetData() {
     setState(() {
-      allFilter = CpuFilter.fromList(widget.allCpus);
+      allFilter = CpuFilter.fromList(widget.all);
       validFilter = allFilter;
       selectedFilter = CpuFilter();
       selectedFilter.minPrice = allFilter.minPrice;
@@ -57,7 +57,7 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
       tmpFilter.maxPrice = selectedFilter.maxPrice;
 
       //filter valid brand
-      var tmpList = tmpFilter.filters(widget.allCpus);
+      var tmpList = tmpFilter.filters(widget.all);
       var resultFilter = CpuFilter.fromList(tmpList);
       validFilter.cpuBrand = resultFilter.cpuBrand;
       selectedFilter.cpuBrand =
@@ -68,7 +68,7 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
           allFilter.cpuBrand.intersection(selectedFilter.cpuBrand);
 
       //filter valid socket
-      tmpList = tmpFilter.filters(widget.allCpus);
+      tmpList = tmpFilter.filters(widget.all);
       resultFilter = CpuFilter.fromList(tmpList);
       validFilter.cpuSocket = resultFilter.cpuSocket;
       selectedFilter.cpuSocket =
@@ -79,7 +79,7 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
           allFilter.cpuSocket.intersection(selectedFilter.cpuSocket);
 
       //filter valid series
-      tmpList = tmpFilter.filters(widget.allCpus);
+      tmpList = tmpFilter.filters(widget.all);
       resultFilter = CpuFilter.fromList(tmpList);
       validFilter.cpuSeries = resultFilter.cpuSeries;
       selectedFilter.cpuSeries =
