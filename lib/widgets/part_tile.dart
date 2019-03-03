@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:pc_build/widgets/widgets.dart';
 
-class DeviceTile extends StatelessWidget {
+class PartTile extends StatelessWidget {
   final String image, title, subTitle;
   final int price;
 
-  DeviceTile({Key key, this.image, this.title, this.subTitle, this.price})
+  PartTile({Key key, this.image, this.title, this.subTitle, this.price})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.symmetric(
-          vertical: 16.0,
-          horizontal: 24.0,
+          vertical: 8.0,
+          horizontal: 16.0,
         ),
         child: Stack(
           children: <Widget>[
@@ -30,8 +30,7 @@ class DeviceTile extends StatelessWidget {
       height: 124.0,
       margin: EdgeInsets.only(left: 46.0),
       decoration: BoxDecoration(
-        color: Color(0xFF444466),
-        // color: Colors.grey,
+        color: Colors.white30,
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: <BoxShadow>[
@@ -48,13 +47,7 @@ class DeviceTile extends StatelessWidget {
 
   Widget deviceThumbnail() {
     return Container(
-      // margin: EdgeInsets.symmetric(vertical: 16.0),
       alignment: FractionalOffset.centerLeft,
-      // child: CircleAvatar(
-      //   backgroundImage: image == null ? null : NetworkImage(image),
-      //   maxRadius: 46,
-      //   minRadius: 46,
-      // ),
       child: CachedNetworkImage(
         imageUrl: image,
         height: 120,
@@ -65,7 +58,7 @@ class DeviceTile extends StatelessWidget {
 
   Widget deviceCardContent() {
     return Container(
-      margin: EdgeInsets.fromLTRB(76.0, 16.0, 16.0, 16.0),
+      margin: EdgeInsets.fromLTRB(90.0, 16.0, 16.0, 16.0),
       constraints: BoxConstraints.expand(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,12 +66,15 @@ class DeviceTile extends StatelessWidget {
           Container(height: 4.0),
           Text(
             title == null ? '' : title,
-            style: headerTextStyle,
+            style: myTextStyle.header,
           ),
           Container(height: 10.0),
-          Text(subTitle == null ? '' : subTitle, style: subHeaderTextStyle),
+          Text(subTitle == null ? '' : subTitle, style: myTextStyle.subHeader),
           Container(height: 10.0),
-          Text(price == null ? '' : '$price บาท', style: priceTextStyle),
+          Text(
+            price == null ? '' : '$price บาท',
+            style: myTextStyle.price,
+          )
         ],
       ),
     );

@@ -146,10 +146,15 @@ class _MbPageState extends State<MbPage> {
 
   @override
   Widget build(BuildContext context) {
+    myTextStyle.init(); // call reinit text style to work with hot reload
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: appBarBuilder(context),
-      body: bodyBuilder(),
+      body: Container(
+        decoration: MyBackgroundDecoration2(),
+        child: bodyBuilder(),
+      ),
     );
   }
 
@@ -248,7 +253,7 @@ class _MbPageState extends State<MbPage> {
         itemCount: filteredMbs.length,
         itemBuilder: (context, i) {
           var v = filteredMbs[i];
-          return DeviceTile(
+          return PartTile(
             image: 'https://www.advice.co.th/pic-pc/mb/${v.mbPicture}',
             title: v.mbBrand,
             subTitle: v.mbModel,

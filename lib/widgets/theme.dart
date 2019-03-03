@@ -1,13 +1,63 @@
 import 'package:flutter/material.dart';
 
-final baseTextStyle = TextStyle(fontFamily: 'Roboto');
+MyTextStyle myTextStyle = MyTextStyle();
 
-final headerTextStyle = baseTextStyle.copyWith(
-    color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w600);
+class MyTextStyle {
+  TextStyle base;
+  TextStyle header;
+  TextStyle regular;
+  TextStyle subHeader;
+  TextStyle price;
 
-final regularTextStyle = baseTextStyle.copyWith(
-    color: Colors.white, fontSize: 9.0, fontWeight: FontWeight.w400);
+  init() {
+    base = TextStyle(fontFamily: 'Roboto', color: Colors.white, fontSize: 14);
+    regular = base.copyWith();
 
-final subHeaderTextStyle = regularTextStyle.copyWith(fontSize: 12.0);
-final priceTextStyle =
-    regularTextStyle.copyWith(color: Colors.red, fontSize: 12.0);
+    header = base.copyWith(fontSize: 18.0, fontWeight: FontWeight.w600);
+    subHeader = base.copyWith(fontWeight: FontWeight.w400);
+
+    price = base.copyWith(
+        color: Color.fromARGB(0xff, 0x88, 0x22, 0x33),
+        fontWeight: FontWeight.w600);
+  }
+
+  MyTextStyle() {
+    init();
+  }
+}
+
+class MyBackgroundDecoration extends BoxDecoration {
+  MyBackgroundDecoration()
+      : super(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+              Colors.pink,
+              Colors.purple,
+            ]));
+}
+
+class MyBackgroundDecoration2 extends BoxDecoration {
+  MyBackgroundDecoration2()
+      : super(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+              Colors.green,
+              Colors.blue,
+            ]));
+}
+
+class MyBackgroundDecoration3 extends BoxDecoration {
+  MyBackgroundDecoration3()
+      : super(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+              Colors.red,
+              Colors.yellow,
+            ]));
+}

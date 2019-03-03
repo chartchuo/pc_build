@@ -101,36 +101,39 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
           ),
         ],
       ),
-      body: ListView(
-        children: <Widget>[
-          ListTile(
-            title: Text('ราคา'),
-            trailing: Text(
-                '${selectedFilter.minPrice}-${selectedFilter.maxPrice} บาท'),
-          ),
-          RangeSlider(
-            min: allFilter.minPrice.toDouble(),
-            max: allFilter.maxPrice.toDouble(),
-            lowerValue: selectedFilter.minPrice.toDouble(),
-            upperValue: selectedFilter.maxPrice.toDouble(),
-            divisions: 20,
-            showValueIndicator: true,
-            valueIndicatorMaxDecimals: 0,
-            onChanged: (l, u) {
-              setState(() {
-                selectedFilter.minPrice = l.toInt();
-                selectedFilter.maxPrice = u.toInt();
-                recalFilter();
-              });
-            },
-          ),
-          filterChipMaker('Brands', allFilter.vgaBrand, validFilter.vgaBrand,
-              selectedFilter.vgaBrand),
-          filterChipMaker('Chipset', allFilter.vgaChipset,
-              validFilter.vgaChipset, selectedFilter.vgaChipset),
-          filterChipMaker('Series', allFilter.vgaSeries, validFilter.vgaSeries,
-              selectedFilter.vgaSeries),
-        ],
+      body: Container(
+        decoration: MyBackgroundDecoration3(),
+        child: ListView(
+          children: <Widget>[
+            ListTile(
+              title: Text('ราคา'),
+              trailing: Text(
+                  '${selectedFilter.minPrice}-${selectedFilter.maxPrice} บาท'),
+            ),
+            RangeSlider(
+              min: allFilter.minPrice.toDouble(),
+              max: allFilter.maxPrice.toDouble(),
+              lowerValue: selectedFilter.minPrice.toDouble(),
+              upperValue: selectedFilter.maxPrice.toDouble(),
+              divisions: 20,
+              showValueIndicator: true,
+              valueIndicatorMaxDecimals: 0,
+              onChanged: (l, u) {
+                setState(() {
+                  selectedFilter.minPrice = l.toInt();
+                  selectedFilter.maxPrice = u.toInt();
+                  recalFilter();
+                });
+              },
+            ),
+            filterChipMaker('Brands', allFilter.vgaBrand, validFilter.vgaBrand,
+                selectedFilter.vgaBrand),
+            filterChipMaker('Chipset', allFilter.vgaChipset,
+                validFilter.vgaChipset, selectedFilter.vgaChipset),
+            filterChipMaker('Series', allFilter.vgaSeries,
+                validFilter.vgaSeries, selectedFilter.vgaSeries),
+          ],
+        ),
       ),
     );
   }

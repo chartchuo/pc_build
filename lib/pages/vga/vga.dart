@@ -26,6 +26,7 @@ class _VgaPageState extends State<VgaPage> {
   Sort sort = Sort.latest;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
   VgaFilter filter = VgaFilter();
 
@@ -40,6 +41,8 @@ class _VgaPageState extends State<VgaPage> {
   void initState() {
     super.initState();
     searchController.addListener(searchListener);
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     loadData();
   }
 
@@ -70,7 +73,7 @@ class _VgaPageState extends State<VgaPage> {
     prefs.setStringList('vgaFilter.vgaSeries', filter.vgaSeries.toList());
   }
 
-  loadData() async {
+  Future<void> loadData() async {
     prefs = await SharedPreferences.getInstance();
     var maxPrice = prefs.getInt('vgaFilter.maxPrice');
     var minPrice = prefs.getInt('vgaFilter.minprice');
@@ -88,6 +91,7 @@ class _VgaPageState extends State<VgaPage> {
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/vga');
     final jsonString = json.decode(file.readAsStringSync());
     setState(() {
+      allVgas.clear();
       jsonString.forEach((v) {
         final vga = Vga.fromJson(v);
         // if (vga.advId != '' && vga.vgaPriceAdv != 0) {
@@ -141,10 +145,15 @@ class _VgaPageState extends State<VgaPage> {
 
   @override
   Widget build(BuildContext context) {
+    myTextStyle.init(); // call reinit text style to work with hot reload
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: appBarBuilder(context),
-      body: bodyBuilder(),
+      body: Container(
+        decoration: MyBackgroundDecoration2(),
+        child: bodyBuilder(),
+      ),
     );
   }
 
@@ -236,17 +245,21 @@ class _VgaPageState extends State<VgaPage> {
   }
 
   Widget listBuilder() {
-    return ListView.builder(
-      itemCount: filteredVgas.length,
-      itemBuilder: (context, i) {
-        var v = filteredVgas[i];
-        return DeviceTile(
-          image: 'https://www.advice.co.th/pic-pc/vga/${v.vgaPicture}',
-          title: v.vgaBrand,
-          subTitle: v.vgaModel,
-          price: v.lowestPrice,
-        );
-      },
+    return RefreshIndicator(
+      key: _refreshIndicatorKey,
+      onRefresh: loadData,
+      child: ListView.builder(
+        itemCount: filteredVgas.length,
+        itemBuilder: (context, i) {
+          var v = filteredVgas[i];
+          return PartTile(
+            image: 'https://www.advice.co.th/pic-pc/vga/${v.vgaPicture}',
+            title: v.vgaBrand,
+            subTitle: v.vgaModel,
+            price: v.lowestPrice,
+          );
+        },
+      ),
     );
   }
 }

@@ -65,10 +65,10 @@ class PcPart extends StatelessWidget {
           Container(height: 4.0),
           Text(
             title == null ? '' : title,
-            style: headerTextStyle,
+            style: myTextStyle.header,
           ),
           Container(height: 10.0),
-          Text(subTitle == null ? '' : subTitle, style: subHeaderTextStyle),
+          Text(subTitle == null ? '' : subTitle, style: myTextStyle.subHeader),
         ],
       ),
     );

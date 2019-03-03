@@ -24,7 +24,7 @@ class FilterChips extends StatelessWidget {
       child: Wrap(
         children: allList.map((b) {
           return FilterChip(
-            // backgroundColor: Colors.black12,
+            selectedColor: Colors.blueAccent,
             label: Text(b),
             selected: selected.contains(b),
             onSelected: !valid.contains(b)

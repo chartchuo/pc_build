@@ -143,10 +143,15 @@ class _CpuPageState extends State<CpuPage> {
 
   @override
   Widget build(BuildContext context) {
+    myTextStyle.init(); // call reinit text style to work with hot reload
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: appBarBuilder(context),
-      body: bodyBuilder(),
+      body: Container(
+        decoration: MyBackgroundDecoration2(),
+        child: bodyBuilder(),
+      ),
     );
   }
 
@@ -245,7 +250,7 @@ class _CpuPageState extends State<CpuPage> {
         itemCount: filteredCpus.length,
         itemBuilder: (context, i) {
           var v = filteredCpus[i];
-          return DeviceTile(
+          return PartTile(
             image: 'https://www.advice.co.th/pic-pc/cpu/${v.cpuPicture}',
             title: v.cpuBrand,
             subTitle: v.cpuModel,

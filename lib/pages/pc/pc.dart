@@ -23,90 +23,93 @@ class _PcPageState extends State<PcPage> {
       // appBar: AppBar(
       //   title: Text('PC Builder'),
       // ),
-      body: ListView(
-        children: <Widget>[
-          GradientAppBar('PC Build'),
-          InkWell(
-            child: PcPart(
-              title: 'CPU',
-              subTitle: 'subtitle',
-              price: '10,000 บาท',
+      body: Container(
+        decoration: MyBackgroundDecoration(),
+        child: ListView(
+          children: <Widget>[
+            GradientAppBar('PC Build'),
+            InkWell(
+              child: PcPart(
+                title: 'CPU',
+                subTitle: 'subtitle',
+                price: '10,000 บาท',
+              ),
+              onTap: () => navigate2CpuPage(context),
             ),
-            onTap: () => navigate2CpuPage(context),
-          ),
-          InkWell(
-            child: PcPart(
-              title: 'Mainboard',
-              subTitle: 'subtitle',
-              price: '10,000 บาท',
+            InkWell(
+              child: PcPart(
+                title: 'Mainboard',
+                subTitle: 'subtitle',
+                price: '10,000 บาท',
+              ),
+              onTap: () => navigate2MbPage(context),
             ),
-            onTap: () => navigate2MbPage(context),
-          ),
-          InkWell(
-            child: PcPart(
-              title: 'VGA',
-              subTitle: 'subtitle',
-              price: '10,000 บาท',
+            InkWell(
+              child: PcPart(
+                title: 'VGA',
+                subTitle: 'subtitle',
+                price: '10,000 บาท',
+              ),
+              onTap: () => navigate2VgaPage(context),
             ),
-            onTap: () => navigate2VgaPage(context),
-          ),
-          InkWell(
-            child: PcPart(
-              title: 'Memory',
-              subTitle: 'subtitle',
-              price: '10,000 บาท',
+            InkWell(
+              child: PcPart(
+                title: 'Memory',
+                subTitle: 'subtitle',
+                price: '10,000 บาท',
+              ),
+              // onTap: () => navigate2VgaPage(context),
             ),
-            // onTap: () => navigate2VgaPage(context),
-          ),
-          InkWell(
-            child: PcPart(
-              title: 'Harddisk',
-              subTitle: 'subtitle',
-              price: '10,000 บาท',
+            InkWell(
+              child: PcPart(
+                title: 'Harddisk',
+                subTitle: 'subtitle',
+                price: '10,000 บาท',
+              ),
+              // onTap: () => navigate2VgaPage(context),
             ),
-            // onTap: () => navigate2VgaPage(context),
-          ),
-          InkWell(
-            child: PcPart(
-              title: 'Solid state Drive',
-              subTitle: 'subtitle',
-              price: '10,000 บาท',
+            InkWell(
+              child: PcPart(
+                title: 'Solid state Drive',
+                subTitle: 'subtitle',
+                price: '10,000 บาท',
+              ),
+              // onTap: () => navigate2VgaPage(context),
             ),
-            // onTap: () => navigate2VgaPage(context),
-          ),
-          InkWell(
-            child: PcPart(
-              title: 'Power Supply',
-              subTitle: 'subtitle',
-              price: '10,000 บาท',
+            InkWell(
+              child: PcPart(
+                title: 'Power Supply',
+                subTitle: 'subtitle',
+                price: '10,000 บาท',
+              ),
+              // onTap: () => navigate2VgaPage(context),
             ),
-            // onTap: () => navigate2VgaPage(context),
-          ),
-          InkWell(
-            child: PcPart(
-              title: 'Case',
-              subTitle: 'subtitle',
-              price: '10,000 บาท',
+            InkWell(
+              child: PcPart(
+                title: 'Case',
+                subTitle: 'subtitle',
+                price: '10,000 บาท',
+              ),
+              // onTap: () => navigate2VgaPage(context),
             ),
-            // onTap: () => navigate2VgaPage(context),
-          ),
-          InkWell(
-            child: PcPart(
-              title: 'CPU Cooler',
-              subTitle: 'subtitle',
-              price: '10,000 บาท',
+            InkWell(
+              child: PcPart(
+                title: 'CPU Cooler',
+                subTitle: 'subtitle',
+                price: '10,000 บาท',
+              ),
+              // onTap: () => navigate2VgaPage(context),
             ),
-            // onTap: () => navigate2VgaPage(context),
-          ),
-          InkWell(
-            child: PcPart(
-              title: 'Monitor',
-              subTitle: 'subtitle',
-              price: '10,000 บาท',
+            InkWell(
+              child: PcPart(
+                title: 'Monitor',
+                subTitle: 'subtitle',
+                price: '10,000 บาท',
+              ),
+              // onTap: () => navigate2VgaPage(context),
             ),
-            // onTap: () => navigate2VgaPage(context),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
