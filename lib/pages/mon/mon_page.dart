@@ -44,11 +44,12 @@ class _MonPageState extends State<MonPage> {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     loadData();
+    loadFilter();
   }
 
   @override
   void dispose() {
-    saveData();
+    saveFilter();
     super.dispose();
   }
 
@@ -65,7 +66,7 @@ class _MonPageState extends State<MonPage> {
     });
   }
 
-  saveData() {
+  saveFilter() {
     prefs.setInt('monFilter.maxPrice', filter.maxPrice);
     prefs.setInt('monFilter.minprice', filter.minPrice);
     prefs.setStringList('monFilter.monBrand', filter.monBrand.toList());
@@ -73,7 +74,7 @@ class _MonPageState extends State<MonPage> {
     prefs.setStringList('monFilter.monSize', filter.monSize.toList());
   }
 
-  Future<void> loadData() async {
+  Future<void> loadFilter() async {
     prefs = await SharedPreferences.getInstance();
     var maxPrice = prefs.getInt('monFilter.maxPrice');
     var minPrice = prefs.getInt('monFilter.minprice');
@@ -86,7 +87,9 @@ class _MonPageState extends State<MonPage> {
     if (monBrand != null) filter.monBrand = monBrand.toSet();
     if (monPanel2 != null) filter.monPanel2 = monPanel2.toSet();
     if (monSize != null) filter.monSize = monSize.toSet();
+  }
 
+  Future<void> loadData() async {
     final store = await CacheStore.getInstance();
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/mon');
     final jsonString = json.decode(file.readAsStringSync());

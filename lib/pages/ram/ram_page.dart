@@ -44,11 +44,12 @@ class _RamPageState extends State<RamPage> {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     loadData();
+    loadFilter();
   }
 
   @override
   void dispose() {
-    saveData();
+    saveFilter();
     super.dispose();
   }
 
@@ -65,7 +66,7 @@ class _RamPageState extends State<RamPage> {
     });
   }
 
-  saveData() {
+  saveFilter() {
     prefs.setInt('ramFilter.maxPrice', filter.maxPrice);
     prefs.setInt('ramFilter.minprice', filter.minPrice);
     prefs.setStringList('ramFilter.ramBrand', filter.ramBrand.toList());
@@ -74,7 +75,7 @@ class _RamPageState extends State<RamPage> {
     prefs.setStringList('ramFilter.ramBus', filter.ramBus.toList());
   }
 
-  Future<void> loadData() async {
+  Future<void> loadFilter() async {
     prefs = await SharedPreferences.getInstance();
     var maxPrice = prefs.getInt('ramFilter.maxPrice');
     var minPrice = prefs.getInt('ramFilter.minprice');
@@ -89,7 +90,9 @@ class _RamPageState extends State<RamPage> {
     if (ramType != null) filter.ramType = ramType.toSet();
     if (ramCapa != null) filter.ramCapa = ramCapa.toSet();
     if (ramBus != null) filter.ramBus = ramBus.toSet();
+  }
 
+  Future<void> loadData() async {
     final store = await CacheStore.getInstance();
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/ram');
     final jsonString = json.decode(file.readAsStringSync());

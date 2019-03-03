@@ -32,8 +32,8 @@ class MyBackgroundDecoration extends BoxDecoration {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-              Colors.pink,
-              Colors.purple,
+              Colors.pink.shade700,
+              Colors.purple.shade700,
             ]));
 }
 
@@ -44,8 +44,8 @@ class MyBackgroundDecoration2 extends BoxDecoration {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-              Colors.green,
-              Colors.blue,
+              Colors.green.shade700,
+              Colors.blue.shade700,
             ]));
 }
 
@@ -56,7 +56,7 @@ class MyBackgroundDecoration3 extends BoxDecoration {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-              Colors.red,
-              Colors.yellow,
+              Colors.red.shade700,
+              Colors.yellow.shade700,
             ]));
 }

@@ -44,11 +44,12 @@ class _CasePageState extends State<CasePage> {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     loadData();
+    loadFilter();
   }
 
   @override
   void dispose() {
-    saveData();
+    saveFilter();
     super.dispose();
   }
 
@@ -65,7 +66,7 @@ class _CasePageState extends State<CasePage> {
     });
   }
 
-  saveData() {
+  saveFilter() {
     prefs.setInt('caseFilter.maxPrice', filter.maxPrice);
     prefs.setInt('caseFilter.minprice', filter.minPrice);
     prefs.setStringList('caseFilter.caseBrand', filter.caseBrand.toList());
@@ -73,7 +74,7 @@ class _CasePageState extends State<CasePage> {
     prefs.setStringList('caseFilter.caseMbSize', filter.caseMbSize.toList());
   }
 
-  Future<void> loadData() async {
+  Future<void> loadFilter() async {
     prefs = await SharedPreferences.getInstance();
     var maxPrice = prefs.getInt('caseFilter.maxPrice');
     var minPrice = prefs.getInt('caseFilter.minprice');
@@ -86,7 +87,9 @@ class _CasePageState extends State<CasePage> {
     if (caseBrand != null) filter.caseBrand = caseBrand.toSet();
     if (caseType != null) filter.caseType = caseType.toSet();
     if (caseMbSize != null) filter.caseMbSize = caseMbSize.toSet();
+  }
 
+  Future<void> loadData() async {
     final store = await CacheStore.getInstance();
     File file =
         await store.getFile('https://www.advice.co.th/pc/get_comp/case');

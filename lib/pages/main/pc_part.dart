@@ -20,10 +20,10 @@ class PcPartCard extends StatelessWidget {
         child: Stack(
       children: <Widget>[
         pcCard(),
-        pcThumbnail(),
+        part.id != null ? pcThumbnail() : addIcon(),
         pcCardTitle(),
-        pcCardContent(),
-        deleteIcon(),
+        part.id != null ? pcCardContent() : SizedBox(),
+        part.id != null ? deleteIcon() : SizedBox(),
       ],
     ));
   }
@@ -38,6 +38,20 @@ class PcPartCard extends StatelessWidget {
         onPressed: () {
           onDelete();
         },
+      ),
+    );
+  }
+
+  Widget addIcon() {
+    return Container(
+      alignment: FractionalOffset.topRight,
+      constraints: BoxConstraints.expand(),
+      child: Center(
+        child: Icon(
+          Icons.add_box,
+          color: Colors.white12,
+          size: 64,
+        ),
       ),
     );
   }

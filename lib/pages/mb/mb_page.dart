@@ -44,11 +44,12 @@ class _MbPageState extends State<MbPage> {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     loadData();
+    loadFilter();
   }
 
   @override
   void dispose() {
-    saveData();
+    saveFilter();
     super.dispose();
   }
 
@@ -65,7 +66,7 @@ class _MbPageState extends State<MbPage> {
     });
   }
 
-  saveData() {
+  saveFilter() {
     prefs.setInt('mbFilter.maxPrice', filter.maxPrice);
     prefs.setInt('mbFilter.minprice', filter.minPrice);
     prefs.setStringList('mbFilter.mbBrand', filter.mbBrand.toList());
@@ -74,7 +75,7 @@ class _MbPageState extends State<MbPage> {
     prefs.setStringList('mbFilter.mbChipset', filter.mbChipset.toList());
   }
 
-  Future<void> loadData() async {
+  Future<void> loadFilter() async {
     prefs = await SharedPreferences.getInstance();
     var maxPrice = prefs.getInt('mbFilter.maxPrice');
     var minPrice = prefs.getInt('mbFilter.minprice');
@@ -89,7 +90,9 @@ class _MbPageState extends State<MbPage> {
     if (mbFactor != null) filter.mbFactor = mbFactor.toSet();
     if (mbSocket != null) filter.mbSocket = mbSocket.toSet();
     if (mbChipset != null) filter.mbChipset = mbChipset.toSet();
+  }
 
+  Future<void> loadData() async {
     final store = await CacheStore.getInstance();
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/mb');
     final jsonString = json.decode(file.readAsStringSync());

@@ -44,11 +44,12 @@ class _SsdPageState extends State<SsdPage> {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     loadData();
+    loadFilter();
   }
 
   @override
   void dispose() {
-    saveData();
+    saveFilter();
     super.dispose();
   }
 
@@ -65,7 +66,7 @@ class _SsdPageState extends State<SsdPage> {
     });
   }
 
-  saveData() {
+  saveFilter() {
     prefs.setInt('ssdFilter.maxPrice', filter.maxPrice);
     prefs.setInt('ssdFilter.minprice', filter.minPrice);
     prefs.setStringList('ssdFilter.ssdBrand', filter.ssdBrand.toList());
@@ -73,7 +74,7 @@ class _SsdPageState extends State<SsdPage> {
     prefs.setStringList('ssdFilter.ssdInterface', filter.ssdInterface.toList());
   }
 
-  Future<void> loadData() async {
+  Future<void> loadFilter() async {
     prefs = await SharedPreferences.getInstance();
     var maxPrice = prefs.getInt('ssdFilter.maxPrice');
     var minPrice = prefs.getInt('ssdFilter.minprice');
@@ -86,7 +87,9 @@ class _SsdPageState extends State<SsdPage> {
     if (ssdBrand != null) filter.ssdBrand = ssdBrand.toSet();
     if (ssdCapacity != null) filter.ssdCapacity = ssdCapacity.toSet();
     if (ssdInterface != null) filter.ssdInterface = ssdInterface.toSet();
+  }
 
+  Future<void> loadData() async {
     final store = await CacheStore.getInstance();
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/ssd');
     final jsonString = json.decode(file.readAsStringSync());

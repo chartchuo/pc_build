@@ -44,11 +44,12 @@ class _CoolingPageState extends State<CoolingPage> {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     loadData();
+    loadFilter();
   }
 
   @override
   void dispose() {
-    saveData();
+    saveFilter();
     super.dispose();
   }
 
@@ -65,14 +66,14 @@ class _CoolingPageState extends State<CoolingPage> {
     });
   }
 
-  saveData() {
+  saveFilter() {
     prefs.setInt('coolingFilter.maxPrice', filter.maxPrice);
     prefs.setInt('coolingFilter.minprice', filter.minPrice);
     prefs.setStringList('coolingFilter.brand', filter.brand.toList());
     prefs.setStringList('coolingFilter.type', filter.type.toList());
   }
 
-  Future<void> loadData() async {
+  Future<void> loadFilter() async {
     prefs = await SharedPreferences.getInstance();
     var maxPrice = prefs.getInt('coolingFilter.maxPrice');
     var minPrice = prefs.getInt('coolingFilter.minprice');
@@ -83,7 +84,9 @@ class _CoolingPageState extends State<CoolingPage> {
     var type = prefs.getStringList('coolingFilter.type');
     if (brand != null) filter.brand = brand.toSet();
     if (type != null) filter.type = type.toSet();
+  }
 
+  Future<void> loadData() async {
     final store = await CacheStore.getInstance();
     File file =
         await store.getFile('https://www.advice.co.th/pc/get_comp/cooling');

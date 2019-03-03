@@ -44,11 +44,12 @@ class _CpuPageState extends State<CpuPage> {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     loadData();
+    loadFilter();
   }
 
   @override
   void dispose() {
-    saveData();
+    saveFilter();
     super.dispose();
   }
 
@@ -65,7 +66,7 @@ class _CpuPageState extends State<CpuPage> {
     });
   }
 
-  saveData() {
+  saveFilter() {
     prefs.setInt('cpuFilter.maxPrice', filter.maxPrice);
     prefs.setInt('cpuFilter.minprice', filter.minPrice);
     prefs.setStringList('cpuFilter.cpuBrand', filter.cpuBrand.toList());
@@ -73,7 +74,7 @@ class _CpuPageState extends State<CpuPage> {
     prefs.setStringList('cpuFilter.cpuSeries', filter.cpuSeries.toList());
   }
 
-  Future<void> loadData() async {
+  Future<void> loadFilter() async {
     prefs = await SharedPreferences.getInstance();
     var maxPrice = prefs.getInt('cpuFilter.maxPrice');
     var minPrice = prefs.getInt('cpuFilter.minprice');
@@ -86,7 +87,9 @@ class _CpuPageState extends State<CpuPage> {
     if (cpuBrand != null) filter.cpuBrand = cpuBrand.toSet();
     if (cpuSocket != null) filter.cpuSocket = cpuSocket.toSet();
     if (cpuSeries != null) filter.cpuSeries = cpuSeries.toSet();
+  }
 
+  Future<void> loadData() async {
     final store = await CacheStore.getInstance();
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/cpu');
     final jsonString = json.decode(file.readAsStringSync());

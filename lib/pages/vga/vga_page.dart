@@ -44,11 +44,12 @@ class _VgaPageState extends State<VgaPage> {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     loadData();
+    loadfilter();
   }
 
   @override
   void dispose() {
-    saveData();
+    saveFilter();
     super.dispose();
   }
 
@@ -65,7 +66,7 @@ class _VgaPageState extends State<VgaPage> {
     });
   }
 
-  saveData() {
+  saveFilter() {
     prefs.setInt('vgaFilter.maxPrice', filter.maxPrice);
     prefs.setInt('vgaFilter.minprice', filter.minPrice);
     prefs.setStringList('vgaFilter.vgaBrand', filter.vgaBrand.toList());
@@ -73,7 +74,7 @@ class _VgaPageState extends State<VgaPage> {
     prefs.setStringList('vgaFilter.vgaSeries', filter.vgaSeries.toList());
   }
 
-  Future<void> loadData() async {
+  Future<void> loadfilter() async {
     prefs = await SharedPreferences.getInstance();
     var maxPrice = prefs.getInt('vgaFilter.maxPrice');
     var minPrice = prefs.getInt('vgaFilter.minprice');
@@ -86,7 +87,9 @@ class _VgaPageState extends State<VgaPage> {
     if (vgaBrand != null) filter.vgaBrand = vgaBrand.toSet();
     if (vgaChipset != null) filter.vgaChipset = vgaChipset.toSet();
     if (vgaSeries != null) filter.vgaSeries = vgaSeries.toSet();
+  }
 
+  Future<void> loadData() async {
     final store = await CacheStore.getInstance();
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/vga');
     final jsonString = json.decode(file.readAsStringSync());

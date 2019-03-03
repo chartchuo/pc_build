@@ -40,7 +40,7 @@ class PartTile extends StatelessWidget {
   Widget deviceCard() {
     return Container(
       height: 140.0,
-      margin: EdgeInsets.only(left: 46.0),
+      margin: EdgeInsets.only(left: 50.0),
       padding: EdgeInsets.only(right: 32.0),
       decoration: BoxDecoration(
         color: Colors.white30,
@@ -63,10 +63,11 @@ class PartTile extends StatelessWidget {
       height: 140,
       alignment: FractionalOffset.centerRight,
       child: IconButton(
+        iconSize: 32,
         tooltip: 'Add',
         icon: Icon(
-          Icons.add,
-          color: Colors.white,
+          Icons.add_box,
+          color: Colors.white54,
         ),
         onPressed: () {
           if (onAdd != null) onAdd(index);

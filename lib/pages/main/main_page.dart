@@ -86,136 +86,149 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PC Builder (total ${pc.totalPriceStr()})'),
+        title: Text('PC Builder'),
         backgroundColor: Colors.purple,
       ),
       body: Container(
         decoration: MyBackgroundDecoration(),
         padding: EdgeInsets.all(4),
-        child: GridView(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
+        child: Column(
           children: <Widget>[
-            InkWell(
-              child: PcPartCard(
-                part: pc.cpu,
-                onDelete: () {
-                  setState(() {
-                    pc.cpu = PcPart();
-                    pc.initTitle();
-                  });
-                },
+            Expanded(
+              child: GridView(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
+                children: <Widget>[
+                  InkWell(
+                    child: PcPartCard(
+                      part: pc.cpu,
+                      onDelete: () {
+                        setState(() {
+                          pc.cpu = PcPart();
+                          pc.initTitle();
+                        });
+                      },
+                    ),
+                    onTap: () => navigate2CpuPage(context),
+                  ),
+                  InkWell(
+                    child: PcPartCard(
+                      part: pc.mb,
+                      onDelete: () {
+                        setState(() {
+                          pc.mb = PcPart();
+                          pc.initTitle();
+                        });
+                      },
+                    ),
+                    onTap: () => navigate2MbPage(context),
+                  ),
+                  InkWell(
+                    child: PcPartCard(
+                      part: pc.vga,
+                      onDelete: () {
+                        setState(() {
+                          pc.vga = PcPart();
+                          pc.initTitle();
+                        });
+                      },
+                    ),
+                    onTap: () => navigate2VgaPage(context),
+                  ),
+                  InkWell(
+                    child: PcPartCard(
+                      part: pc.ram,
+                      onDelete: () {
+                        setState(() {
+                          pc.ram = PcPart();
+                          pc.initTitle();
+                        });
+                      },
+                    ),
+                    onTap: () => navigate2RamPage(context),
+                  ),
+                  InkWell(
+                    child: PcPartCard(
+                      part: pc.hdd,
+                      onDelete: () {
+                        setState(() {
+                          pc.hdd = PcPart();
+                          pc.initTitle();
+                        });
+                      },
+                    ),
+                    onTap: () => navigate2HddPage(context),
+                  ),
+                  InkWell(
+                    child: PcPartCard(
+                      part: pc.ssd,
+                      onDelete: () {
+                        setState(() {
+                          pc.ssd = PcPart();
+                          pc.initTitle();
+                        });
+                      },
+                    ),
+                    onTap: () => navigate2SsdPage(context),
+                  ),
+                  InkWell(
+                    child: PcPartCard(
+                      part: pc.psu,
+                      onDelete: () {
+                        setState(() {
+                          pc.psu = PcPart();
+                          pc.initTitle();
+                        });
+                      },
+                    ),
+                    onTap: () => navigate2PsuPage(context),
+                  ),
+                  InkWell(
+                    child: PcPartCard(
+                      part: pc.cas,
+                      onDelete: () {
+                        setState(() {
+                          pc.cas = PcPart();
+                          pc.initTitle();
+                        });
+                      },
+                    ),
+                    onTap: () => navigate2CasePage(context),
+                  ),
+                  InkWell(
+                    child: PcPartCard(
+                      part: pc.cooling,
+                      onDelete: () {
+                        setState(() {
+                          pc.cooling = PcPart();
+                          pc.initTitle();
+                        });
+                      },
+                    ),
+                    onTap: () => navigate2CoolingPage(context),
+                  ),
+                  InkWell(
+                    child: PcPartCard(
+                      part: pc.mon,
+                      onDelete: () {
+                        setState(() {
+                          pc.mon = PcPart();
+                          pc.initTitle();
+                        });
+                      },
+                    ),
+                    onTap: () => navigate2MonPage(context),
+                  ),
+                ],
               ),
-              onTap: () => navigate2CpuPage(context),
             ),
-            InkWell(
-              child: PcPartCard(
-                part: pc.mb,
-                onDelete: () {
-                  setState(() {
-                    pc.mb = PcPart();
-                    pc.initTitle();
-                  });
-                },
+            Container(
+              margin: EdgeInsets.all(8),
+              child: Text(
+                'รวม ${pc.totalPriceStr()}',
+                style: myTextStyle.header,
               ),
-              onTap: () => navigate2MbPage(context),
-            ),
-            InkWell(
-              child: PcPartCard(
-                part: pc.vga,
-                onDelete: () {
-                  setState(() {
-                    pc.vga = PcPart();
-                    pc.initTitle();
-                  });
-                },
-              ),
-              onTap: () => navigate2VgaPage(context),
-            ),
-            InkWell(
-              child: PcPartCard(
-                part: pc.ram,
-                onDelete: () {
-                  setState(() {
-                    pc.ram = PcPart();
-                    pc.initTitle();
-                  });
-                },
-              ),
-              onTap: () => navigate2RamPage(context),
-            ),
-            InkWell(
-              child: PcPartCard(
-                part: pc.hdd,
-                onDelete: () {
-                  setState(() {
-                    pc.hdd = PcPart();
-                    pc.initTitle();
-                  });
-                },
-              ),
-              onTap: () => navigate2HddPage(context),
-            ),
-            InkWell(
-              child: PcPartCard(
-                part: pc.ssd,
-                onDelete: () {
-                  setState(() {
-                    pc.ssd = PcPart();
-                    pc.initTitle();
-                  });
-                },
-              ),
-              onTap: () => navigate2SsdPage(context),
-            ),
-            InkWell(
-              child: PcPartCard(
-                part: pc.psu,
-                onDelete: () {
-                  setState(() {
-                    pc.psu = PcPart();
-                    pc.initTitle();
-                  });
-                },
-              ),
-              onTap: () => navigate2PsuPage(context),
-            ),
-            InkWell(
-              child: PcPartCard(
-                part: pc.cas,
-                onDelete: () {
-                  setState(() {
-                    pc.cas = PcPart();
-                    pc.initTitle();
-                  });
-                },
-              ),
-              onTap: () => navigate2CasePage(context),
-            ),
-            InkWell(
-              child: PcPartCard(
-                part: pc.cooling,
-                onDelete: () {
-                  setState(() {
-                    pc.cooling = PcPart();
-                    pc.initTitle();
-                  });
-                },
-              ),
-              onTap: () => navigate2CoolingPage(context),
-            ),
-            InkWell(
-              child: PcPartCard(
-                part: pc.mon,
-                onDelete: () {
-                  setState(() {
-                    pc.mon = PcPart();
-                    pc.initTitle();
-                  });
-                },
-              ),
-              onTap: () => navigate2MonPage(context),
             ),
           ],
         ),

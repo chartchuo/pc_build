@@ -44,11 +44,12 @@ class _HddPageState extends State<HddPage> {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     loadData();
+    loadFilter();
   }
 
   @override
   void dispose() {
-    saveData();
+    saveFilter();
     super.dispose();
   }
 
@@ -65,7 +66,7 @@ class _HddPageState extends State<HddPage> {
     });
   }
 
-  saveData() {
+  saveFilter() {
     prefs.setInt('hddFilter.maxPrice', filter.maxPrice);
     prefs.setInt('hddFilter.minprice', filter.minPrice);
     prefs.setStringList('hddFilter.hddBrand', filter.hddBrand.toList());
@@ -73,7 +74,7 @@ class _HddPageState extends State<HddPage> {
     prefs.setStringList('hddFilter.hddRpm', filter.hddRpm.toList());
   }
 
-  Future<void> loadData() async {
+  Future<void> loadFilter() async {
     prefs = await SharedPreferences.getInstance();
     var maxPrice = prefs.getInt('hddFilter.maxPrice');
     var minPrice = prefs.getInt('hddFilter.minprice');
@@ -86,7 +87,9 @@ class _HddPageState extends State<HddPage> {
     if (hddBrand != null) filter.hddBrand = hddBrand.toSet();
     if (hddCapa != null) filter.hddCapa = hddCapa.toSet();
     if (hddRpm != null) filter.hddRpm = hddRpm.toSet();
+  }
 
+  Future<void> loadData() async {
     final store = await CacheStore.getInstance();
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/hdd');
     final jsonString = json.decode(file.readAsStringSync());

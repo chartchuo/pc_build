@@ -44,11 +44,12 @@ class _PsuPageState extends State<PsuPage> {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     loadData();
+    loadFilter();
   }
 
   @override
   void dispose() {
-    saveData();
+    saveFilter();
     super.dispose();
   }
 
@@ -65,7 +66,7 @@ class _PsuPageState extends State<PsuPage> {
     });
   }
 
-  saveData() {
+  saveFilter() {
     prefs.setInt('psuFilter.maxPrice', filter.maxPrice);
     prefs.setInt('psuFilter.minprice', filter.minPrice);
     prefs.setStringList('psuFilter.psuBrand', filter.psuBrand.toList());
@@ -74,7 +75,7 @@ class _PsuPageState extends State<PsuPage> {
     prefs.setStringList('psuFilter.psuMaxPw', filter.psuMaxPw.toList());
   }
 
-  Future<void> loadData() async {
+  Future<void> loadFilter() async {
     prefs = await SharedPreferences.getInstance();
     var maxPrice = prefs.getInt('psuFilter.maxPrice');
     var minPrice = prefs.getInt('psuFilter.minprice');
@@ -89,7 +90,9 @@ class _PsuPageState extends State<PsuPage> {
     if (psuModular != null) filter.psuModular = psuModular.toSet();
     if (psuEnergyEff != null) filter.psuEnergyEff = psuEnergyEff.toSet();
     if (psuMaxPw != null) filter.psuMaxPw = psuMaxPw.toSet();
+  }
 
+  Future<void> loadData() async {
     final store = await CacheStore.getInstance();
     File file = await store.getFile('https://www.advice.co.th/pc/get_comp/psu');
     final jsonString = json.decode(file.readAsStringSync());
