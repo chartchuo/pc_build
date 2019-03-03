@@ -12,6 +12,7 @@ import 'package:pc_build/pages/ram/ram_page.dart';
 import 'package:pc_build/pages/hdd/hdd_page.dart';
 import 'package:pc_build/pages/ssd/ssd_page.dart';
 import 'package:pc_build/pages/psu/psu_page.dart';
+import 'package:pc_build/pages/case/case_page.dart';
 
 import 'pc_part.dart';
 
@@ -124,7 +125,7 @@ class _MainPageState extends State<MainPage> {
             ),
             InkWell(
               child: PcPartCard(part: pc.cas),
-              // onTap: () => navigate2CasPage(context),
+              onTap: () => navigate2CasePage(context),
             ),
             InkWell(
               child: PcPartCard(part: pc.cooling),
@@ -240,6 +241,21 @@ class _MainPageState extends State<MainPage> {
         pc.psu.picture =
             'https://www.advice.co.th/pic-pc/psu/${result.psuPicture}';
         pc.psu.price = result.lowestPrice;
+        saveData();
+      });
+    }
+  }
+
+  navigate2CasePage(BuildContext context) async {
+    Case result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => CasePage()));
+    if (result != null) {
+      setState(() {
+        pc.cas.id = result.id;
+        pc.cas.brandModel = result.caseBrand + ' ' + result.caseModel;
+        pc.cas.picture =
+            'https://www.advice.co.th/pic-pc/case/${result.casePicture}';
+        pc.cas.price = result.lowestPrice;
         saveData();
       });
     }

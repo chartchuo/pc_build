@@ -5,6 +5,9 @@ export 'ram.dart';
 export 'hdd.dart';
 export 'ssd.dart';
 export 'psu.dart';
+export 'case.dart';
+export 'cooling.dart';
+export 'mon.dart';
 
 class Pc {
   PcPart cpu, mb, vga, ram, hdd, ssd, psu, cas, cooling, mon;

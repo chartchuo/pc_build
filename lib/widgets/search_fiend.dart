@@ -12,6 +12,7 @@ class SearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(12),
+      padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.white30,
         shape: BoxShape.rectangle,
@@ -27,13 +28,7 @@ class SearchField extends StatelessWidget {
       child: TextField(
         autofocus: true,
         cursorColor: Colors.white,
-        decoration: InputDecoration(
-          labelText: 'Search',
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(),
-          ),
-        ),
+        decoration: new InputDecoration.collapsed(hintText: 'Search'),
         controller: searchController,
       ),
     );
