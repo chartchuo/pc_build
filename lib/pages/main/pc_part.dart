@@ -6,10 +6,13 @@ import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:pc_build/widgets/widgets.dart';
 import 'package:pc_build/models/pc.dart';
 
+typedef Callback = void Function();
+
 class PcPartCard extends StatelessWidget {
   final PcPart part;
+  final Callback onDelete;
 
-  PcPartCard({Key key, this.part}) : super(key: key);
+  PcPartCard({Key key, this.part, this.onDelete}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +23,23 @@ class PcPartCard extends StatelessWidget {
         pcThumbnail(),
         pcCardTitle(),
         pcCardContent(),
+        deleteIcon(),
       ],
     ));
+  }
+
+  Widget deleteIcon() {
+    return Container(
+      alignment: FractionalOffset.topRight,
+      constraints: BoxConstraints.expand(),
+      child: IconButton(
+        icon: Icon(Icons.delete),
+        color: Colors.white24,
+        onPressed: () {
+          onDelete();
+        },
+      ),
+    );
   }
 
   Widget pcCard() {
@@ -80,14 +98,9 @@ class PcPartCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.fromLTRB(16, 16, 16, 16),
       constraints: BoxConstraints.expand(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            part.title == null ? '' : part.title,
-            style: myTextStyle.header,
-          ),
-        ],
+      child: Text(
+        part.title == null ? '' : part.title,
+        style: myTextStyle.header,
       ),
     );
   }

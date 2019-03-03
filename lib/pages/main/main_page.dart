@@ -98,43 +98,123 @@ class _MainPageState extends State<MainPage> {
           ),
           children: <Widget>[
             InkWell(
-              child: PcPartCard(part: pc.cpu),
+              child: PcPartCard(
+                part: pc.cpu,
+                onDelete: () {
+                  setState(() {
+                    pc.cpu = PcPart();
+                    pc.initTitle();
+                  });
+                },
+              ),
               onTap: () => navigate2CpuPage(context),
             ),
             InkWell(
-              child: PcPartCard(part: pc.mb),
+              child: PcPartCard(
+                part: pc.mb,
+                onDelete: () {
+                  setState(() {
+                    pc.mb = PcPart();
+                    pc.initTitle();
+                  });
+                },
+              ),
               onTap: () => navigate2MbPage(context),
             ),
             InkWell(
-              child: PcPartCard(part: pc.vga),
+              child: PcPartCard(
+                part: pc.vga,
+                onDelete: () {
+                  setState(() {
+                    pc.vga = PcPart();
+                    pc.initTitle();
+                  });
+                },
+              ),
               onTap: () => navigate2VgaPage(context),
             ),
             InkWell(
-              child: PcPartCard(part: pc.ram),
+              child: PcPartCard(
+                part: pc.ram,
+                onDelete: () {
+                  setState(() {
+                    pc.ram = PcPart();
+                    pc.initTitle();
+                  });
+                },
+              ),
               onTap: () => navigate2RamPage(context),
             ),
             InkWell(
-              child: PcPartCard(part: pc.hdd),
+              child: PcPartCard(
+                part: pc.hdd,
+                onDelete: () {
+                  setState(() {
+                    pc.hdd = PcPart();
+                    pc.initTitle();
+                  });
+                },
+              ),
               onTap: () => navigate2HddPage(context),
             ),
             InkWell(
-              child: PcPartCard(part: pc.ssd),
+              child: PcPartCard(
+                part: pc.ssd,
+                onDelete: () {
+                  setState(() {
+                    pc.ssd = PcPart();
+                    pc.initTitle();
+                  });
+                },
+              ),
               onTap: () => navigate2SsdPage(context),
             ),
             InkWell(
-              child: PcPartCard(part: pc.psu),
+              child: PcPartCard(
+                part: pc.psu,
+                onDelete: () {
+                  setState(() {
+                    pc.psu = PcPart();
+                    pc.initTitle();
+                  });
+                },
+              ),
               onTap: () => navigate2PsuPage(context),
             ),
             InkWell(
-              child: PcPartCard(part: pc.cas),
+              child: PcPartCard(
+                part: pc.cas,
+                onDelete: () {
+                  setState(() {
+                    pc.cas = PcPart();
+                    pc.initTitle();
+                  });
+                },
+              ),
               onTap: () => navigate2CasePage(context),
             ),
             InkWell(
-              child: PcPartCard(part: pc.cooling),
+              child: PcPartCard(
+                part: pc.cooling,
+                onDelete: () {
+                  setState(() {
+                    pc.cooling = PcPart();
+                    pc.initTitle();
+                  });
+                },
+              ),
               onTap: () => navigate2CoolingPage(context),
             ),
             InkWell(
-              child: PcPartCard(part: pc.mon),
+              child: PcPartCard(
+                part: pc.mon,
+                onDelete: () {
+                  setState(() {
+                    pc.mon = PcPart();
+                    pc.initTitle();
+                  });
+                },
+              ),
               onTap: () => navigate2MonPage(context),
             ),
           ],
