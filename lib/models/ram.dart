@@ -103,6 +103,7 @@ class Ram {
   dynamic ramPriceTopvalue;
   dynamic topvalueId;
   int lowestPrice;
+  String advPath;
 
   Ram(
       {this.cat,
@@ -147,6 +148,7 @@ class Ram {
       this.isHighlight,
       this.ramPriceTopvalue,
       this.topvalueId,
+      this.advPath,
       this.lowestPrice});
 
   Ram.fromJson(Map<String, dynamic> json) {
@@ -193,6 +195,7 @@ class Ram {
     ramPriceTopvalue = json['ram_price_topvalue'];
     topvalueId = json['topvalue_id'];
     lowestPrice = json['lowest_price'];
+    advPath = json['adv_path'];
   }
 
   Map<String, dynamic> toJson() {
@@ -240,6 +243,7 @@ class Ram {
     data['ram_price_topvalue'] = this.ramPriceTopvalue;
     data['topvalue_id'] = this.topvalueId;
     data['lowest_price'] = this.lowestPrice;
+    data['adv_path'] = this.advPath;
     return data;
   }
 }

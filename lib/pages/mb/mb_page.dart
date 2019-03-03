@@ -258,6 +258,9 @@ class _MbPageState extends State<MbPage> {
           var v = filtered[i];
           return PartTile(
             image: 'https://www.advice.co.th/pic-pc/mb/${v.mbPicture}',
+            url: v.advPath == null
+                ? ''
+                : 'https://www.advice.co.th/${v.advPath}',
             title: v.mbBrand,
             subTitle: v.mbModel,
             price: v.lowestPrice,

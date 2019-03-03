@@ -25,6 +25,7 @@ dependencies:
   flutter_range_slider: ^1.1.0
   shared_preferences: ^0.4.0
   flutter_money_formatter: ^0.7.3
+  flutter_webview_plugin: ^0.3.0+2
 
 dev_dependencies:
   flutter_test:

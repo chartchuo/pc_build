@@ -141,6 +141,7 @@ class Mb {
   dynamic mbPriceTopvalue;
   dynamic topvalueId;
   int lowestPrice;
+  String advPath;
 
   Mb(
       {this.cat,
@@ -222,7 +223,8 @@ class Mb {
       this.isHighlight,
       this.mbPriceTopvalue,
       this.topvalueId,
-      this.lowestPrice});
+      this.lowestPrice,
+      this.advPath});
 
   Mb.fromJson(Map<String, dynamic> json) {
     cat = json['cat'];
@@ -305,6 +307,7 @@ class Mb {
     mbPriceTopvalue = json['mb_price_topvalue'];
     topvalueId = json['topvalue_id'];
     lowestPrice = json['lowest_price'];
+    advPath = json['adv_path'];
   }
 
   Map<String, dynamic> toJson() {
@@ -389,6 +392,7 @@ class Mb {
     data['mb_price_topvalue'] = this.mbPriceTopvalue;
     data['topvalue_id'] = this.topvalueId;
     data['lowest_price'] = this.lowestPrice;
+    data['adv_path'] = this.advPath;
     return data;
   }
 }

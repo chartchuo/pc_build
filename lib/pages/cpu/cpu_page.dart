@@ -255,6 +255,9 @@ class _CpuPageState extends State<CpuPage> {
           var v = filtered[i];
           return PartTile(
             image: 'https://www.advice.co.th/pic-pc/cpu/${v.cpuPicture}',
+            url: v.advPath == null
+                ? ''
+                : 'https://www.advice.co.th/${v.advPath}',
             title: v.cpuBrand,
             subTitle: v.cpuModel,
             price: v.lowestPrice,

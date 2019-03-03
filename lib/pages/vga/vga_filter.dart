@@ -85,6 +85,7 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
     // List<String> allBrandList = allFilter.vgaBrand.toList()..sort();
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.orange,
         title: Text('Filter'),
         actions: <Widget>[
           IconButton(

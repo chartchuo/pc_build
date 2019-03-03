@@ -121,6 +121,7 @@ class Vga {
   dynamic topvalueId;
   int lowestPrice;
   String vgaMemModel;
+  String advPath;
 
   Vga(
       {this.cat,
@@ -187,6 +188,7 @@ class Vga {
       this.vgaPriceTopvalue,
       this.topvalueId,
       this.lowestPrice,
+      this.advPath,
       this.vgaMemModel});
 
   Vga.fromJson(Map<String, dynamic> json) {
@@ -255,6 +257,7 @@ class Vga {
     topvalueId = json['topvalue_id'];
     lowestPrice = json['lowest_price'];
     vgaMemModel = json['vga_mem_model'];
+    advPath = json['adv_path'];
   }
 
   Map<String, dynamic> toJson() {
@@ -324,6 +327,7 @@ class Vga {
     data['topvalue_id'] = this.topvalueId;
     data['lowest_price'] = this.lowestPrice;
     data['vga_mem_model'] = this.vgaMemModel;
+    data['adv_path'] = this.advPath;
     return data;
   }
 }

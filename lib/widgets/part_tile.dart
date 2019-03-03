@@ -4,9 +4,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 import 'package:pc_build/widgets/widgets.dart';
+import 'webview.dart';
 
 class PartTile extends StatelessWidget {
-  final String image, title, subTitle;
+  final String image, title, subTitle, url;
   final int price;
   final int index;
   final ValueChanged<int> onAdd;
@@ -16,6 +17,7 @@ class PartTile extends StatelessWidget {
       this.image,
       this.title,
       this.subTitle,
+      this.url,
       this.price,
       this.index,
       this.onAdd})
@@ -31,8 +33,9 @@ class PartTile extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             deviceCard(),
-            deviceThumbnail(),
+            deviceThumbnail(context),
             addIcon(),
+            urlIcon(context),
           ],
         ));
   }
@@ -58,6 +61,25 @@ class PartTile extends StatelessWidget {
     );
   }
 
+  Widget urlIcon(BuildContext context) {
+    if (url == null || url == '') return SizedBox();
+    return Container(
+      height: 140,
+      alignment: FractionalOffset.bottomLeft,
+      child: IconButton(
+        // iconSize: 32,
+        tooltip: 'Web',
+        icon: Icon(
+          Icons.public,
+          color: Colors.white54,
+        ),
+        onPressed: () {
+          navigate2Webview(context);
+        },
+      ),
+    );
+  }
+
   Widget addIcon() {
     return Container(
       height: 140,
@@ -76,15 +98,20 @@ class PartTile extends StatelessWidget {
     );
   }
 
-  Widget deviceThumbnail() {
-    return Container(
-      height: 140,
-      alignment: FractionalOffset.centerLeft,
-      child: CachedNetworkImage(
-        imageUrl: image,
-        height: 120,
-        width: 120,
+  Widget deviceThumbnail(BuildContext context) {
+    return InkWell(
+      child: Container(
+        height: 140,
+        alignment: FractionalOffset.centerLeft,
+        child: CachedNetworkImage(
+          imageUrl: image,
+          height: 120,
+          width: 120,
+        ),
       ),
+      onTap: () {
+        navigate2Webview(context);
+      },
     );
   }
 
@@ -122,5 +149,16 @@ class PartTile extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  navigate2Webview(BuildContext context) async {
+    if (url == null || url == '') return;
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Webview(
+                  title: subTitle,
+                  url: url,
+                )));
   }
 }

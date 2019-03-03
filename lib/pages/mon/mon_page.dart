@@ -255,6 +255,9 @@ class _MonPageState extends State<MonPage> {
           var v = filtered[i];
           return PartTile(
             image: 'https://www.advice.co.th/pic-pc/mon/${v.monPicture}',
+            url: v.advPath == null
+                ? ''
+                : 'https://www.advice.co.th/${v.advPath}',
             title: v.monBrand,
             subTitle: v.monModel,
             price: v.lowestPrice,

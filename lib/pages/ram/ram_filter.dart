@@ -103,6 +103,7 @@ class _RamFilterPageState extends State<RamFilterPage> {
     // List<String> allBrandList = allFilter.vgaBrand.toList()..sort();
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.orange,
         title: Text('Filter'),
         actions: <Widget>[
           IconButton(

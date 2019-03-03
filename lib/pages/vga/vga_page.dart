@@ -257,6 +257,9 @@ class _VgaPageState extends State<VgaPage> {
           var v = filtered[i];
           return PartTile(
             image: 'https://www.advice.co.th/pic-pc/vga/${v.vgaPicture}',
+            url: v.advPath == null
+                ? ''
+                : 'https://www.advice.co.th/${v.advPath}',
             title: v.vgaBrand,
             subTitle: v.vgaModel,
             price: v.lowestPrice,

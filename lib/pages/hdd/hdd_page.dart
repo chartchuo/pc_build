@@ -255,6 +255,9 @@ class _HddPageState extends State<HddPage> {
           var v = filtered[i];
           return PartTile(
             image: 'https://www.advice.co.th/pic-pc/hdd/${v.hddPicture}',
+            url: v.advPath == null
+                ? ''
+                : 'https://www.advice.co.th/${v.advPath}',
             title: v.hddBrand,
             subTitle: v.hddModel,
             price: v.lowestPrice,

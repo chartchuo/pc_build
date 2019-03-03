@@ -258,6 +258,9 @@ class _RamPageState extends State<RamPage> {
           var v = filtered[i];
           return PartTile(
             image: 'https://www.advice.co.th/pic-pc/ram/${v.ramPicture}',
+            url: v.advPath == null
+                ? ''
+                : 'https://www.advice.co.th/${v.advPath}',
             title: v.ramBrand,
             subTitle: v.ramModel,
             price: v.lowestPrice,

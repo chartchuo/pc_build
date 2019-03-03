@@ -255,6 +255,9 @@ class _SsdPageState extends State<SsdPage> {
           var v = filtered[i];
           return PartTile(
             image: 'https://www.advice.co.th/pic-pc/ssd/${v.ssdPicture}',
+            url: v.advPath == null
+                ? ''
+                : 'https://www.advice.co.th/${v.advPath}',
             title: v.ssdBrand,
             subTitle: v.ssdModel,
             price: v.lowestPrice,

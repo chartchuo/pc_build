@@ -50,7 +50,7 @@ class PcPartCard extends StatelessWidget {
       constraints: BoxConstraints.expand(),
       child: IconButton(
         icon: Icon(Icons.delete_outline),
-        color: Colors.white30,
+        color: Colors.white70,
         onPressed: () {
           onDelete();
         },
@@ -67,7 +67,7 @@ class PcPartCard extends StatelessWidget {
         constraints: BoxConstraints.expand(),
         child: IconButton(
           icon: Icon(Icons.add_circle_outline),
-          color: Colors.white30,
+          color: Colors.white70,
           onPressed: () {
             onAdd();
           },
@@ -83,7 +83,7 @@ class PcPartCard extends StatelessWidget {
       constraints: BoxConstraints.expand(),
       child: IconButton(
         icon: Icon(Icons.remove_circle_outline),
-        color: Colors.white30,
+        color: Colors.white70,
         onPressed: part.qty == 1
             ? null
             : () {

@@ -113,6 +113,7 @@ class Mon {
   dynamic topvalueId;
   String review;
   int lowestPrice;
+  String advPath;
 
   Mon(
       {this.cat,
@@ -171,6 +172,7 @@ class Mon {
       this.monPriceTopvalue,
       this.topvalueId,
       this.review,
+      this.advPath,
       this.lowestPrice});
 
   Mon.fromJson(Map<String, dynamic> json) {
@@ -231,6 +233,7 @@ class Mon {
     topvalueId = json['topvalue_id'];
     review = json['review'];
     lowestPrice = json['lowest_price'];
+    advPath = json['adv_path'];
   }
 
   Map<String, dynamic> toJson() {
@@ -292,6 +295,7 @@ class Mon {
     data['topvalue_id'] = this.topvalueId;
     data['review'] = this.review;
     data['lowest_price'] = this.lowestPrice;
+    data['adv_path'] = this.advPath;
     return data;
   }
 }

@@ -258,6 +258,9 @@ class _PsuPageState extends State<PsuPage> {
           var v = filtered[i];
           return PartTile(
             image: 'https://www.advice.co.th/pic-pc/psu/${v.psuPicture}',
+            url: v.advPath == null
+                ? ''
+                : 'https://www.advice.co.th/${v.advPath}',
             title: v.psuBrand,
             subTitle: v.psuModel,
             price: v.lowestPrice,

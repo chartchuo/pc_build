@@ -256,6 +256,9 @@ class _CasePageState extends State<CasePage> {
           var v = filtered[i];
           return PartTile(
             image: 'https://www.advice.co.th/pic-pc/case/${v.casePicture}',
+            url: v.advPath == null
+                ? ''
+                : 'https://www.advice.co.th/${v.advPath}',
             title: v.caseBrand,
             subTitle: v.caseModel,
             price: v.lowestPrice,

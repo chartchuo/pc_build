@@ -100,6 +100,7 @@ class Hdd {
   int hddPriceTopvalue;
   int topvalueId;
   int lowestPrice;
+  String advPath;
 
   Hdd(
       {this.cat,
@@ -146,7 +147,8 @@ class Hdd {
       this.isHighlight,
       this.hddPriceTopvalue,
       this.topvalueId,
-      this.lowestPrice});
+      this.lowestPrice,
+      this.advPath});
 
   Hdd.fromJson(Map<String, dynamic> json) {
     cat = json['cat'];
@@ -194,6 +196,7 @@ class Hdd {
     hddPriceTopvalue = json['hdd_price_topvalue'];
     topvalueId = json['topvalue_id'];
     lowestPrice = json['lowest_price'];
+    advPath = json['adv_path'];
   }
 
   Map<String, dynamic> toJson() {
@@ -243,6 +246,7 @@ class Hdd {
     data['hdd_price_topvalue'] = this.hddPriceTopvalue;
     data['topvalue_id'] = this.topvalueId;
     data['lowest_price'] = this.lowestPrice;
+    data['adv_path'] = this.advPath;
     return data;
   }
 }
