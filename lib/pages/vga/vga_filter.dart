@@ -169,14 +169,12 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
           valid: valid,
           selected: selected,
           onSelected: (str) {
-            print(str);
             setState(() {
               selected.add(str);
               recalFilter();
             });
           },
           onDeselected: (str) {
-            print(str);
             setState(() {
               selected.remove(str);
               recalFilter();

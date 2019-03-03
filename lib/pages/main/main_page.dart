@@ -40,8 +40,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   saveData() {
-    print('save');
-    print(jsonEncode(pc.cpu));
+    pc.init();
     prefs.setString('pc.cpu', jsonEncode(pc.cpu));
     prefs.setString('pc.mb', jsonEncode(pc.mb));
     prefs.setString('pc.vga', jsonEncode(pc.vga));
@@ -78,160 +77,194 @@ class _MainPageState extends State<MainPage> {
       pc.cooling = loadPart(prefs, 'pc.cooling');
       pc.mon = loadPart(prefs, 'pc.mon');
 
-      pc.initTitle();
+      pc.init();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('PC Builder'),
-        backgroundColor: Colors.purple,
-      ),
-      body: Container(
-        decoration: MyBackgroundDecoration(),
-        padding: EdgeInsets.all(4),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: GridView(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+      // appBar: AppBar(
+      //   title: Text('PC Builder'),
+      //   backgroundColor: Colors.purple,
+      // ),
+      body: bodyBuilder(context),
+    );
+  }
+
+  Widget bodyBuilder(BuildContext context) {
+    return Container(
+      decoration: MyBackgroundDecoration(),
+      padding: EdgeInsets.all(4),
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: GridView(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.7,
+              ),
+              children: <Widget>[
+                InkWell(
+                  child: PcPartCard(
+                    part: pc.cpu,
+                    onDelete: () {
+                      setState(() {
+                        pc.cpu = PcPart();
+                        pc.init();
+                      });
+                    },
+                  ),
+                  onTap: () => navigate2CpuPage(context),
                 ),
-                children: <Widget>[
-                  InkWell(
-                    child: PcPartCard(
-                      part: pc.cpu,
-                      onDelete: () {
-                        setState(() {
-                          pc.cpu = PcPart();
-                          pc.initTitle();
-                        });
-                      },
-                    ),
-                    onTap: () => navigate2CpuPage(context),
+                InkWell(
+                  child: PcPartCard(
+                    part: pc.mb,
+                    onDelete: () {
+                      setState(() {
+                        pc.mb = PcPart();
+                        pc.init();
+                      });
+                    },
                   ),
-                  InkWell(
-                    child: PcPartCard(
-                      part: pc.mb,
-                      onDelete: () {
-                        setState(() {
-                          pc.mb = PcPart();
-                          pc.initTitle();
-                        });
-                      },
-                    ),
-                    onTap: () => navigate2MbPage(context),
+                  onTap: () => navigate2MbPage(context),
+                ),
+                InkWell(
+                  child: PcPartCard(
+                    part: pc.vga,
+                    onDelete: () {
+                      setState(() {
+                        pc.vga = PcPart();
+                        pc.init();
+                      });
+                    },
                   ),
-                  InkWell(
-                    child: PcPartCard(
-                      part: pc.vga,
-                      onDelete: () {
-                        setState(() {
-                          pc.vga = PcPart();
-                          pc.initTitle();
-                        });
-                      },
-                    ),
-                    onTap: () => navigate2VgaPage(context),
+                  onTap: () => navigate2VgaPage(context),
+                ),
+                InkWell(
+                  child: PcPartCard(
+                    part: pc.ram,
+                    onDelete: () {
+                      setState(() {
+                        pc.ram = PcPart();
+                        pc.init();
+                      });
+                    },
+                    onAdd: () {
+                      setState(() {
+                        pc.ram.qty++;
+                      });
+                    },
+                    onSub: () {
+                      setState(() {
+                        pc.ram.qty--;
+                      });
+                    },
                   ),
-                  InkWell(
-                    child: PcPartCard(
-                      part: pc.ram,
-                      onDelete: () {
-                        setState(() {
-                          pc.ram = PcPart();
-                          pc.initTitle();
-                        });
-                      },
-                    ),
-                    onTap: () => navigate2RamPage(context),
+                  onTap: () => navigate2RamPage(context),
+                ),
+                InkWell(
+                  child: PcPartCard(
+                    part: pc.hdd,
+                    onDelete: () {
+                      setState(() {
+                        pc.hdd = PcPart();
+                        pc.init();
+                      });
+                    },
+                    onAdd: () {
+                      setState(() {
+                        pc.hdd.qty++;
+                      });
+                    },
+                    onSub: () {
+                      setState(() {
+                        pc.hdd.qty--;
+                      });
+                    },
                   ),
-                  InkWell(
-                    child: PcPartCard(
-                      part: pc.hdd,
-                      onDelete: () {
-                        setState(() {
-                          pc.hdd = PcPart();
-                          pc.initTitle();
-                        });
-                      },
-                    ),
-                    onTap: () => navigate2HddPage(context),
+                  onTap: () => navigate2HddPage(context),
+                ),
+                InkWell(
+                  child: PcPartCard(
+                    part: pc.ssd,
+                    onDelete: () {
+                      setState(() {
+                        pc.ssd = PcPart();
+                        pc.init();
+                      });
+                    },
+                    onAdd: () {
+                      setState(() {
+                        pc.ssd.qty++;
+                      });
+                    },
+                    onSub: () {
+                      setState(() {
+                        pc.ssd.qty--;
+                      });
+                    },
                   ),
-                  InkWell(
-                    child: PcPartCard(
-                      part: pc.ssd,
-                      onDelete: () {
-                        setState(() {
-                          pc.ssd = PcPart();
-                          pc.initTitle();
-                        });
-                      },
-                    ),
-                    onTap: () => navigate2SsdPage(context),
+                  onTap: () => navigate2SsdPage(context),
+                ),
+                InkWell(
+                  child: PcPartCard(
+                    part: pc.psu,
+                    onDelete: () {
+                      setState(() {
+                        pc.psu = PcPart();
+                        pc.init();
+                      });
+                    },
                   ),
-                  InkWell(
-                    child: PcPartCard(
-                      part: pc.psu,
-                      onDelete: () {
-                        setState(() {
-                          pc.psu = PcPart();
-                          pc.initTitle();
-                        });
-                      },
-                    ),
-                    onTap: () => navigate2PsuPage(context),
-                  ),
-                  InkWell(
-                    child: PcPartCard(
+                  onTap: () => navigate2PsuPage(context),
+                ),
+                InkWell(
+                  child: PcPartCard(
                       part: pc.cas,
                       onDelete: () {
                         setState(() {
                           pc.cas = PcPart();
-                          pc.initTitle();
+                          pc.init();
                         });
-                      },
-                    ),
-                    onTap: () => navigate2CasePage(context),
+                      }),
+                  onTap: () => navigate2CasePage(context),
+                ),
+                InkWell(
+                  child: PcPartCard(
+                    part: pc.cooling,
+                    onDelete: () {
+                      setState(() {
+                        pc.cooling = PcPart();
+                        pc.init();
+                      });
+                    },
                   ),
-                  InkWell(
-                    child: PcPartCard(
-                      part: pc.cooling,
-                      onDelete: () {
-                        setState(() {
-                          pc.cooling = PcPart();
-                          pc.initTitle();
-                        });
-                      },
-                    ),
-                    onTap: () => navigate2CoolingPage(context),
+                  onTap: () => navigate2CoolingPage(context),
+                ),
+                InkWell(
+                  child: PcPartCard(
+                    part: pc.mon,
+                    onDelete: () {
+                      setState(() {
+                        pc.mon = PcPart();
+                        pc.init();
+                      });
+                    },
                   ),
-                  InkWell(
-                    child: PcPartCard(
-                      part: pc.mon,
-                      onDelete: () {
-                        setState(() {
-                          pc.mon = PcPart();
-                          pc.initTitle();
-                        });
-                      },
-                    ),
-                    onTap: () => navigate2MonPage(context),
-                  ),
-                ],
-              ),
+                  onTap: () => navigate2MonPage(context),
+                ),
+              ],
             ),
-            Container(
-              margin: EdgeInsets.all(8),
-              child: Text(
-                'รวม ${pc.totalPriceStr()}',
-                style: myTextStyle.header,
-              ),
+          ),
+          Container(
+            margin: EdgeInsets.all(8),
+            child: Text(
+              'รวม ${pc.totalPriceStr()}',
+              style: myTextStyle.header,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -241,11 +274,13 @@ class _MainPageState extends State<MainPage> {
         context, MaterialPageRoute(builder: (context) => CpuPage()));
     if (result != null) {
       setState(() {
-        pc.cpu.id = result.id;
-        pc.cpu.brandModel = result.cpuBrand + ' ' + result.cpuModel;
-        pc.cpu.picture =
+        var part = PcPart();
+        part.id = result.id;
+        part.brandModel = result.cpuBrand + ' ' + result.cpuModel;
+        part.picture =
             'https://www.advice.co.th/pic-pc/cpu/${result.cpuPicture}';
-        pc.cpu.price = result.lowestPrice;
+        part.price = result.lowestPrice;
+        pc.cpu = part;
         saveData();
       });
     }
@@ -256,11 +291,12 @@ class _MainPageState extends State<MainPage> {
         context, MaterialPageRoute(builder: (context) => MbPage()));
     if (result != null) {
       setState(() {
-        pc.mb.id = result.id;
-        pc.mb.brandModel = result.mbBrand + ' ' + result.mbModel;
-        pc.mb.picture =
-            'https://www.advice.co.th/pic-pc/mb/${result.mbPicture}';
-        pc.mb.price = result.lowestPrice;
+        var part = PcPart();
+        part.id = result.id;
+        part.brandModel = result.mbBrand + ' ' + result.mbModel;
+        part.picture = 'https://www.advice.co.th/pic-pc/mb/${result.mbPicture}';
+        part.price = result.lowestPrice;
+        pc.mb = part;
         saveData();
       });
     }
@@ -271,11 +307,13 @@ class _MainPageState extends State<MainPage> {
         context, MaterialPageRoute(builder: (context) => VgaPage()));
     if (result != null) {
       setState(() {
-        pc.vga.id = result.id;
-        pc.vga.brandModel = result.vgaBrand + ' ' + result.vgaModel;
-        pc.vga.picture =
+        var part = PcPart();
+        part.id = result.id;
+        part.brandModel = result.vgaBrand + ' ' + result.vgaModel;
+        part.picture =
             'https://www.advice.co.th/pic-pc/vga/${result.vgaPicture}';
-        pc.vga.price = result.lowestPrice;
+        part.price = result.lowestPrice;
+        pc.vga = part;
         saveData();
       });
     }
@@ -286,11 +324,13 @@ class _MainPageState extends State<MainPage> {
         context, MaterialPageRoute(builder: (context) => RamPage()));
     if (result != null) {
       setState(() {
-        pc.ram.id = result.id;
-        pc.ram.brandModel = result.ramBrand + ' ' + result.ramModel;
-        pc.ram.picture =
+        var part = PcPart();
+        part.id = result.id;
+        part.brandModel = result.ramBrand + ' ' + result.ramModel;
+        part.picture =
             'https://www.advice.co.th/pic-pc/ram/${result.ramPicture}';
-        pc.ram.price = result.lowestPrice;
+        part.price = result.lowestPrice;
+        pc.ram = part;
         saveData();
       });
     }
@@ -301,11 +341,13 @@ class _MainPageState extends State<MainPage> {
         context, MaterialPageRoute(builder: (context) => HddPage()));
     if (result != null) {
       setState(() {
-        pc.hdd.id = result.id;
-        pc.hdd.brandModel = result.hddBrand + ' ' + result.hddModel;
-        pc.hdd.picture =
+        var part = PcPart();
+        part.id = result.id;
+        part.brandModel = result.hddBrand + ' ' + result.hddModel;
+        part.picture =
             'https://www.advice.co.th/pic-pc/hdd/${result.hddPicture}';
-        pc.hdd.price = result.lowestPrice;
+        part.price = result.lowestPrice;
+        pc.hdd = part;
         saveData();
       });
     }
@@ -316,11 +358,13 @@ class _MainPageState extends State<MainPage> {
         context, MaterialPageRoute(builder: (context) => SsdPage()));
     if (result != null) {
       setState(() {
-        pc.ssd.id = result.id;
-        pc.ssd.brandModel = result.ssdBrand + ' ' + result.ssdModel;
-        pc.ssd.picture =
+        var part = PcPart();
+        part.id = result.id;
+        part.brandModel = result.ssdBrand + ' ' + result.ssdModel;
+        part.picture =
             'https://www.advice.co.th/pic-pc/ssd/${result.ssdPicture}';
-        pc.ssd.price = result.lowestPrice;
+        part.price = result.lowestPrice;
+        pc.ssd = part;
         saveData();
       });
     }
@@ -331,11 +375,13 @@ class _MainPageState extends State<MainPage> {
         context, MaterialPageRoute(builder: (context) => PsuPage()));
     if (result != null) {
       setState(() {
-        pc.psu.id = result.id;
-        pc.psu.brandModel = result.psuBrand + ' ' + result.psuModel;
-        pc.psu.picture =
+        var part = PcPart();
+        part.id = result.id;
+        part.brandModel = result.psuBrand + ' ' + result.psuModel;
+        part.picture =
             'https://www.advice.co.th/pic-pc/psu/${result.psuPicture}';
-        pc.psu.price = result.lowestPrice;
+        part.price = result.lowestPrice;
+        pc.psu = part;
         saveData();
       });
     }
@@ -346,11 +392,13 @@ class _MainPageState extends State<MainPage> {
         context, MaterialPageRoute(builder: (context) => CasePage()));
     if (result != null) {
       setState(() {
-        pc.cas.id = result.id;
-        pc.cas.brandModel = result.caseBrand + ' ' + result.caseModel;
-        pc.cas.picture =
+        var part = PcPart();
+        part.id = result.id;
+        part.brandModel = result.caseBrand + ' ' + result.caseModel;
+        part.picture =
             'https://www.advice.co.th/pic-pc/case/${result.casePicture}';
-        pc.cas.price = result.lowestPrice;
+        part.price = result.lowestPrice;
+        pc.cas = part;
         saveData();
       });
     }
@@ -361,11 +409,13 @@ class _MainPageState extends State<MainPage> {
         context, MaterialPageRoute(builder: (context) => CoolingPage()));
     if (result != null) {
       setState(() {
-        pc.cooling.id = result.id;
-        pc.cooling.brandModel = result.brand + ' ' + result.model;
-        pc.cooling.picture =
+        var part = PcPart();
+        part.id = result.id;
+        part.brandModel = result.brand + ' ' + result.model;
+        part.picture =
             'https://www.advice.co.th/pic-pc/cooling/${result.picture}';
-        pc.cooling.price = result.lowestPrice;
+        part.price = result.lowestPrice;
+        pc.cooling = part;
         saveData();
       });
     }
@@ -376,11 +426,13 @@ class _MainPageState extends State<MainPage> {
         context, MaterialPageRoute(builder: (context) => MonPage()));
     if (result != null) {
       setState(() {
-        pc.mon.id = result.id;
-        pc.mon.brandModel = result.monBrand + ' ' + result.monModel;
-        pc.mon.picture =
+        var part = PcPart();
+        part.id = result.id;
+        part.brandModel = result.monBrand + ' ' + result.monModel;
+        part.picture =
             'https://www.advice.co.th/pic-pc/mon/${result.monPicture}';
-        pc.mon.price = result.lowestPrice;
+        part.price = result.lowestPrice;
+        pc.mon = part;
         saveData();
       });
     }

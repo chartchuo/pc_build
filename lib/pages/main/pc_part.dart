@@ -11,19 +11,35 @@ typedef Callback = void Function();
 class PcPartCard extends StatelessWidget {
   final PcPart part;
   final Callback onDelete;
+  final Callback onAdd;
+  final Callback onSub;
 
-  PcPartCard({Key key, this.part, this.onDelete}) : super(key: key);
+  PcPartCard({Key key, this.part, this.onDelete, this.onAdd, this.onSub})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (part.id == null) {
+      return Container(
+          child: Stack(
+        children: <Widget>[
+          pcCard(),
+          addIcon(),
+          pcCardTitle(),
+        ],
+      ));
+    }
     return Container(
         child: Stack(
       children: <Widget>[
         pcCard(),
-        part.id != null ? pcThumbnail() : addIcon(),
+        pcThumbnail(),
         pcCardTitle(),
-        part.id != null ? pcCardContent() : SizedBox(),
-        part.id != null ? deleteIcon() : SizedBox(),
+        pcCardContent(),
+        deleteIcon(),
+        // qty(),
+        add(),
+        sub(),
       ],
     ));
   }
@@ -33,11 +49,46 @@ class PcPartCard extends StatelessWidget {
       alignment: FractionalOffset.topRight,
       constraints: BoxConstraints.expand(),
       child: IconButton(
-        icon: Icon(Icons.delete),
-        color: Colors.white24,
+        icon: Icon(Icons.delete_outline),
+        color: Colors.white30,
         onPressed: () {
           onDelete();
         },
+      ),
+    );
+  }
+
+  Widget add() {
+    if (part == null || part.multiple == null || !part.multiple) {
+      return SizedBox();
+    }
+    return Container(
+        alignment: FractionalOffset.centerRight,
+        constraints: BoxConstraints.expand(),
+        child: IconButton(
+          icon: Icon(Icons.add_circle_outline),
+          color: Colors.white30,
+          onPressed: () {
+            onAdd();
+          },
+        ));
+  }
+
+  Widget sub() {
+    if (part == null || part.multiple == null || !part.multiple) {
+      return SizedBox();
+    }
+    return Container(
+      alignment: FractionalOffset.centerLeft,
+      constraints: BoxConstraints.expand(),
+      child: IconButton(
+        icon: Icon(Icons.remove_circle_outline),
+        color: Colors.white30,
+        onPressed: part.qty == 1
+            ? null
+            : () {
+                onSub();
+              },
       ),
     );
   }
@@ -60,7 +111,7 @@ class PcPartCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: Color(0x88333366),
+        color: Color(0xaa333366),
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: <BoxShadow>[
@@ -77,7 +128,7 @@ class PcPartCard extends StatelessWidget {
   Widget pcThumbnail() {
     return Container(
       alignment: FractionalOffset.center,
-      margin: EdgeInsets.symmetric(vertical: 48),
+      margin: EdgeInsets.fromLTRB(16, 20, 16, 48),
       child: part.picture == null
           ? null
           : CachedNetworkImage(imageUrl: part.picture),
@@ -92,15 +143,23 @@ class PcPartCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Text(part.brandModel == null ? '' : part.brandModel,
-              style: myTextStyle.subHeader.copyWith(color: Colors.white70)),
+          Text(
+            part.brandModel == null ? '' : part.brandModel,
+            style: myTextStyle.subHeader.copyWith(color: Colors.white),
+            textAlign: TextAlign.right,
+            softWrap: true,
+            maxLines: 3,
+            overflow: TextOverflow.fade,
+          ),
+          SizedBox(height: 4),
           Text(
             part.price == null
                 ? ''
                 : FlutterMoneyFormatter(amount: part.price.toDouble())
                         .output
                         .withoutFractionDigits +
-                    ' บาท',
+                    ' บาท' +
+                    (part.qty > 1 ? ' x${part.qty}' : ''),
             style: myTextStyle.price,
           ),
         ],

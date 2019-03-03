@@ -177,14 +177,12 @@ class _CaseFilterPageState extends State<CaseFilterPage> {
           valid: valid,
           selected: selected,
           onSelected: (str) {
-            print(str);
             setState(() {
               selected.add(str);
               recalFilter();
             });
           },
           onDeselected: (str) {
-            print(str);
             setState(() {
               selected.remove(str);
               recalFilter();
