@@ -84,10 +84,6 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('PC Builder'),
-      //   backgroundColor: Colors.purple,
-      // ),
       body: bodyBuilder(context),
     );
   }
@@ -279,6 +275,9 @@ class _MainPageState extends State<MainPage> {
         part.brandModel = result.cpuBrand + ' ' + result.cpuModel;
         part.picture =
             'https://www.advice.co.th/pic-pc/cpu/${result.cpuPicture}';
+        part.url = result.advPath == null || result.advPath == ''
+            ? ''
+            : 'https://www.advice.co.th/${result.advPath}';
         part.price = result.lowestPrice;
         pc.cpu = part;
         saveData();
@@ -295,6 +294,9 @@ class _MainPageState extends State<MainPage> {
         part.id = result.id;
         part.brandModel = result.mbBrand + ' ' + result.mbModel;
         part.picture = 'https://www.advice.co.th/pic-pc/mb/${result.mbPicture}';
+        part.url = result.advPath == null || result.advPath == ''
+            ? ''
+            : 'https://www.advice.co.th/${result.advPath}';
         part.price = result.lowestPrice;
         pc.mb = part;
         saveData();
@@ -312,6 +314,9 @@ class _MainPageState extends State<MainPage> {
         part.brandModel = result.vgaBrand + ' ' + result.vgaModel;
         part.picture =
             'https://www.advice.co.th/pic-pc/vga/${result.vgaPicture}';
+        part.url = result.advPath == null || result.advPath == ''
+            ? ''
+            : 'https://www.advice.co.th/${result.advPath}';
         part.price = result.lowestPrice;
         pc.vga = part;
         saveData();
@@ -329,6 +334,9 @@ class _MainPageState extends State<MainPage> {
         part.brandModel = result.ramBrand + ' ' + result.ramModel;
         part.picture =
             'https://www.advice.co.th/pic-pc/ram/${result.ramPicture}';
+        part.url = result.advPath == null || result.advPath == ''
+            ? ''
+            : 'https://www.advice.co.th/${result.advPath}';
         part.price = result.lowestPrice;
         pc.ram = part;
         saveData();
@@ -346,6 +354,9 @@ class _MainPageState extends State<MainPage> {
         part.brandModel = result.hddBrand + ' ' + result.hddModel;
         part.picture =
             'https://www.advice.co.th/pic-pc/hdd/${result.hddPicture}';
+        part.url = result.advPath == null || result.advPath == ''
+            ? ''
+            : 'https://www.advice.co.th/${result.advPath}';
         part.price = result.lowestPrice;
         pc.hdd = part;
         saveData();
@@ -363,6 +374,9 @@ class _MainPageState extends State<MainPage> {
         part.brandModel = result.ssdBrand + ' ' + result.ssdModel;
         part.picture =
             'https://www.advice.co.th/pic-pc/ssd/${result.ssdPicture}';
+        part.url = result.advPath == null || result.advPath == ''
+            ? ''
+            : 'https://www.advice.co.th/${result.advPath}';
         part.price = result.lowestPrice;
         pc.ssd = part;
         saveData();
@@ -380,6 +394,9 @@ class _MainPageState extends State<MainPage> {
         part.brandModel = result.psuBrand + ' ' + result.psuModel;
         part.picture =
             'https://www.advice.co.th/pic-pc/psu/${result.psuPicture}';
+        part.url = result.advPath == null || result.advPath == ''
+            ? ''
+            : 'https://www.advice.co.th/${result.advPath}';
         part.price = result.lowestPrice;
         pc.psu = part;
         saveData();
@@ -397,6 +414,9 @@ class _MainPageState extends State<MainPage> {
         part.brandModel = result.caseBrand + ' ' + result.caseModel;
         part.picture =
             'https://www.advice.co.th/pic-pc/case/${result.casePicture}';
+        part.url = result.advPath == null || result.advPath == ''
+            ? ''
+            : 'https://www.advice.co.th/${result.advPath}';
         part.price = result.lowestPrice;
         pc.cas = part;
         saveData();
@@ -414,6 +434,9 @@ class _MainPageState extends State<MainPage> {
         part.brandModel = result.brand + ' ' + result.model;
         part.picture =
             'https://www.advice.co.th/pic-pc/cooling/${result.picture}';
+        part.url = result.advPath == null || result.advPath == ''
+            ? ''
+            : 'https://www.advice.co.th/${result.advPath}';
         part.price = result.lowestPrice;
         pc.cooling = part;
         saveData();
@@ -431,6 +454,9 @@ class _MainPageState extends State<MainPage> {
         part.brandModel = result.monBrand + ' ' + result.monModel;
         part.picture =
             'https://www.advice.co.th/pic-pc/mon/${result.monPicture}';
+        part.url = result.advPath == null || result.advPath == ''
+            ? ''
+            : 'https://www.advice.co.th/${result.advPath}';
         part.price = result.lowestPrice;
         pc.mon = part;
         saveData();

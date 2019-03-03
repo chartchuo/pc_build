@@ -76,9 +76,10 @@ class PcPart {
   String title;
   String brandModel;
   String picture;
+  String url;
   int price;
 
-  PcPart({this.title = '', this.multiple = false, this.qty = 1});
+  PcPart({this.title = '', this.multiple = false, this.url = '', this.qty = 1});
 
   PcPart.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -86,6 +87,7 @@ class PcPart {
         qty = json['qty'],
         brandModel = json['brand_model'],
         picture = json['picture'],
+        url = json['url'],
         price = json['price'];
 
   Map<String, dynamic> toJson() => {
@@ -94,6 +96,7 @@ class PcPart {
         'qty': qty,
         'brand_model': brandModel,
         'picture': picture,
+        'url': url,
         'price': price,
       };
 }

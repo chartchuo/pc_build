@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 import 'package:pc_build/widgets/widgets.dart';
+import 'package:pc_build/widgets/webview.dart';
 import 'package:pc_build/models/pc.dart';
 
 typedef Callback = void Function();
@@ -40,8 +41,26 @@ class PcPartCard extends StatelessWidget {
         // qty(),
         add(),
         sub(),
+        urlIcon(context),
       ],
     ));
+  }
+
+  Widget urlIcon(BuildContext context) {
+    if (part.url == null || part.url == '') return SizedBox();
+    return Container(
+      alignment: FractionalOffset.bottomLeft,
+      child: IconButton(
+        tooltip: 'Web',
+        icon: Icon(
+          Icons.public,
+          color: Colors.white54,
+        ),
+        onPressed: () {
+          navigate2Webview(context);
+        },
+      ),
+    );
   }
 
   Widget deleteIcon() {
@@ -176,5 +195,16 @@ class PcPartCard extends StatelessWidget {
         style: myTextStyle.header,
       ),
     );
+  }
+
+  navigate2Webview(BuildContext context) async {
+    if (part.url == null || part.url == '') return;
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Webview(
+                  title: part.brandModel,
+                  url: part.url,
+                )));
   }
 }
