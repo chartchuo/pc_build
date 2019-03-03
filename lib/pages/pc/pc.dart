@@ -20,14 +20,16 @@ class _PcPageState extends State<PcPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('PC Builder'),
-      // ),
+      appBar: AppBar(
+        title: Text('PC Builder'),
+      ),
       body: Container(
         decoration: MyBackgroundDecoration(),
-        child: ListView(
+        child: GridView(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
           children: <Widget>[
-            GradientAppBar('PC Build'),
             InkWell(
               child: PcPart(
                 title: 'CPU',

@@ -10,25 +10,19 @@ class PcPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.symmetric(
-          vertical: 16.0,
-          horizontal: 24.0,
-        ),
         child: Stack(
-          children: <Widget>[
-            pcCard(),
-            pcThumbnail(),
-          ],
-        ));
+      children: <Widget>[
+        pcThumbnail(),
+        pcCard(),
+      ],
+    ));
   }
 
   Widget pcCard() {
     return Container(
-      // constraints: BoxConstraints.expand(),
-      height: 124.0,
-      margin: EdgeInsets.only(left: 46.0),
+      margin: EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: Color(0xFF333366),
+        color: Color(0xbb333366),
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: <BoxShadow>[
@@ -45,19 +39,14 @@ class PcPart extends StatelessWidget {
 
   Widget pcThumbnail() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 16.0),
+      margin: EdgeInsets.symmetric(vertical: 16),
       alignment: FractionalOffset.centerLeft,
-      // child: CircleAvatar(
-      //   backgroundImage: image == null ? null : NetworkImage(image),
-      //   maxRadius: 46,
-      //   minRadius: 46,
-      // ),
     );
   }
 
   Widget pcCardContent() {
     return Container(
-      margin: EdgeInsets.fromLTRB(76.0, 16.0, 16.0, 16.0),
+      margin: EdgeInsets.fromLTRB(16, 16, 16, 16),
       constraints: BoxConstraints.expand(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
