@@ -69,9 +69,9 @@ class _CpuPageState extends State<CpuPage> {
   saveFilter() {
     prefs.setInt('cpuFilter.maxPrice', filter.maxPrice);
     prefs.setInt('cpuFilter.minprice', filter.minPrice);
-    prefs.setStringList('cpuFilter.cpuBrand', filter.cpuBrand.toList());
-    prefs.setStringList('cpuFilter.cpuSocket', filter.cpuSocket.toList());
-    prefs.setStringList('cpuFilter.cpuSeries', filter.cpuSeries.toList());
+    prefs.setStringList('cpuFilter.cpuBrand', filter.brand.toList());
+    prefs.setStringList('cpuFilter.cpuSocket', filter.socket.toList());
+    prefs.setStringList('cpuFilter.cpuSeries', filter.series.toList());
   }
 
   Future<void> loadFilter() async {
@@ -84,9 +84,9 @@ class _CpuPageState extends State<CpuPage> {
     var cpuBrand = prefs.getStringList('cpuFilter.cpuBrand');
     var cpuSocket = prefs.getStringList('cpuFilter.cpuSocket');
     var cpuSeries = prefs.getStringList('cpuFilter.cpuSeries');
-    if (cpuBrand != null) filter.cpuBrand = cpuBrand.toSet();
-    if (cpuSocket != null) filter.cpuSocket = cpuSocket.toSet();
-    if (cpuSeries != null) filter.cpuSeries = cpuSeries.toSet();
+    if (cpuBrand != null) filter.brand = cpuBrand.toSet();
+    if (cpuSocket != null) filter.socket = cpuSocket.toSet();
+    if (cpuSeries != null) filter.series = cpuSeries.toSet();
   }
 
   Future<void> loadData() async {
@@ -97,7 +97,7 @@ class _CpuPageState extends State<CpuPage> {
       all.clear();
       jsonString.forEach((v) {
         final cpu = Cpu.fromJson(v);
-        all.add(cpu);
+        if (cpu.price != null) all.add(cpu);
       });
     });
     doFilter();
@@ -108,9 +108,9 @@ class _CpuPageState extends State<CpuPage> {
       filtered = filter.filters(all);
       if (searchString != '')
         filtered = filtered.where((v) {
-          if (v.cpuBrand.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.brand.toLowerCase().contains(searchString.toLowerCase()))
             return true;
-          if (v.cpuModel.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.model.toLowerCase().contains(searchString.toLowerCase()))
             return true;
           return false;
         }).toList();
@@ -121,18 +121,23 @@ class _CpuPageState extends State<CpuPage> {
   doSort(Sort s) {
     setState(() {
       sort = s;
-      if (sort == Sort.lowPrice) {
-        filtered.sort((a, b) {
-          return a.lowestPrice - b.lowestPrice;
-        });
-      } else if (sort == Sort.highPrice) {
-        filtered.sort((a, b) {
-          return b.lowestPrice - a.lowestPrice;
-        });
-      } else {
-        filtered.sort((a, b) {
-          return b.id - a.id;
-        });
+      switch (sort) {
+        case Sort.lowPrice:
+          filtered.sort((a, b) {
+            return a.price - b.price;
+          });
+          break;
+        case Sort.highPrice:
+          filtered.sort((a, b) {
+            return b.price - a.price;
+          });
+          break;
+        case Sort.latest:
+          filtered.sort((a, b) {
+            return b.id - a.id;
+          });
+          break;
+        default:
       }
     });
   }
@@ -189,12 +194,7 @@ class _CpuPageState extends State<CpuPage> {
         ),
         PopupMenuButton(
           onSelected: (v) => doSort(v),
-          // icon: Icon(Icons.sort),
-          icon: sort == Sort.highPrice
-              ? Icon(Icons.arrow_upward)
-              : sort == Sort.lowPrice
-                  ? Icon(Icons.arrow_downward)
-                  : Icon(Icons.sort),
+          icon: Icon(Icons.sort),
           itemBuilder: (context) {
             return [
               PopupMenuItem(
@@ -254,13 +254,11 @@ class _CpuPageState extends State<CpuPage> {
         itemBuilder: (context, i) {
           var v = filtered[i];
           return PartTile(
-            image: 'https://www.advice.co.th/pic-pc/cpu/${v.cpuPicture}',
-            url: v.advPath == null
-                ? ''
-                : 'https://www.advice.co.th/${v.advPath}',
-            title: v.cpuBrand,
-            subTitle: v.cpuModel,
-            price: v.lowestPrice,
+            image: 'https://www.advice.co.th/pic-pc/cpu/${v.picture}',
+            url: v.path == null ? '' : 'https://www.advice.co.th/${v.path}',
+            title: v.brand,
+            subTitle: v.model,
+            price: v.price,
             index: i,
             onAdd: (i) {
               Navigator.pop(context, v);

@@ -110,7 +110,7 @@ class PartTile extends StatelessWidget {
         ),
       ),
       onTap: () {
-        navigate2Webview(context);
+        // navigate2Webview(context);
       },
     );
   }

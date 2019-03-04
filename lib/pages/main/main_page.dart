@@ -290,13 +290,12 @@ class _MainPageState extends State<MainPage> {
       setState(() {
         var part = PcPart();
         part.id = result.id;
-        part.brandModel = result.cpuBrand + ' ' + result.cpuModel;
-        part.picture =
-            'https://www.advice.co.th/pic-pc/cpu/${result.cpuPicture}';
-        part.url = result.advPath == null || result.advPath == ''
+        part.brandModel = result.brand + ' ' + result.model;
+        part.picture = 'https://www.advice.co.th/pic-pc/cpu/${result.picture}';
+        part.url = result.path == null || result.path == ''
             ? ''
-            : 'https://www.advice.co.th/${result.advPath}';
-        part.price = result.lowestPrice;
+            : 'https://www.advice.co.th/${result.path}';
+        part.price = result.price;
         pc.cpu = part;
         saveData();
       });

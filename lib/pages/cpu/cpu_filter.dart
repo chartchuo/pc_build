@@ -59,31 +59,29 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
       //filter valid brand
       var tmpList = tmpFilter.filters(widget.all);
       var resultFilter = CpuFilter.fromList(tmpList);
-      validFilter.cpuBrand = resultFilter.cpuBrand;
-      selectedFilter.cpuBrand =
-          selectedFilter.cpuBrand.intersection(validFilter.cpuBrand);
+      validFilter.brand = resultFilter.brand;
+      selectedFilter.brand =
+          selectedFilter.brand.intersection(validFilter.brand);
 
       //import brand
-      tmpFilter.cpuBrand =
-          allFilter.cpuBrand.intersection(selectedFilter.cpuBrand);
+      tmpFilter.brand = allFilter.brand.intersection(selectedFilter.brand);
 
       //filter valid socket
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = CpuFilter.fromList(tmpList);
-      validFilter.cpuSocket = resultFilter.cpuSocket;
-      selectedFilter.cpuSocket =
-          selectedFilter.cpuSocket.intersection(validFilter.cpuSocket);
+      validFilter.socket = resultFilter.socket;
+      selectedFilter.socket =
+          selectedFilter.socket.intersection(validFilter.socket);
 
       //import cpuSocket
-      tmpFilter.cpuSocket =
-          allFilter.cpuSocket.intersection(selectedFilter.cpuSocket);
+      tmpFilter.socket = allFilter.socket.intersection(selectedFilter.socket);
 
       //filter valid series
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = CpuFilter.fromList(tmpList);
-      validFilter.cpuSeries = resultFilter.cpuSeries;
-      selectedFilter.cpuSeries =
-          selectedFilter.cpuSeries.intersection(validFilter.cpuSeries);
+      validFilter.series = resultFilter.series;
+      selectedFilter.series =
+          selectedFilter.series.intersection(validFilter.series);
     });
   }
 
@@ -134,12 +132,12 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
                 });
               },
             ),
-            filterChipMaker('Brands', allFilter.cpuBrand, validFilter.cpuBrand,
-                selectedFilter.cpuBrand),
-            filterChipMaker('Socket', allFilter.cpuSocket,
-                validFilter.cpuSocket, selectedFilter.cpuSocket),
-            filterChipMaker('Series', allFilter.cpuSeries,
-                validFilter.cpuSeries, selectedFilter.cpuSeries),
+            filterChipMaker('Brands', allFilter.brand, validFilter.brand,
+                selectedFilter.brand),
+            filterChipMaker('Socket', allFilter.socket, validFilter.socket,
+                selectedFilter.socket),
+            filterChipMaker('Series', allFilter.series, validFilter.series,
+                selectedFilter.series),
           ],
         ),
       ),

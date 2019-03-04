@@ -1,24 +1,54 @@
+import 'part.dart';
+
+class Cpu extends Part {
+  String series;
+  String socket;
+
+  Cpu.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    brand = json['cpu_brand'];
+    model = json['cpu_model'];
+    picture = json['cpu_picture'];
+    path = json['adv_path'];
+    price = json['price_adv'];
+    series = json['cpu_series'];
+    socket = json['cpu_socket'];
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['cpu_brand'] = this.brand;
+    data['cpu_model'] = this.model;
+    data['cpu_picture'] = this.picture;
+    data['adv_path'] = this.path;
+    data['price_adv'] = this.price;
+    data['cpu_series'] = this.series;
+    data['cpu_socket'] = this.socket;
+    return data;
+  }
+}
+
 class CpuFilter {
-  Set<String> cpuBrand;
-  Set<String> cpuSeries;
-  Set<String> cpuSocket;
+  Set<String> brand;
+  Set<String> series;
+  Set<String> socket;
   int minPrice;
   int maxPrice;
 
   CpuFilter() {
-    cpuBrand = Set<String>();
-    cpuSeries = Set<String>();
-    cpuSocket = Set<String>();
+    brand = Set<String>();
+    series = Set<String>();
+    socket = Set<String>();
     minPrice = 0;
     maxPrice = 1000000;
   }
   CpuFilter.fromList(List<Cpu> list) {
-    cpuBrand = list.map((v) => v.cpuBrand).toSet();
-    cpuSeries = list.map((v) => v.cpuSeries).toSet();
-    cpuSocket = list.map((v) => v.cpuSocket).toSet();
+    brand = list.map((v) => v.brand).toSet();
+    series = list.map((v) => v.series).toSet();
+    socket = list.map((v) => v.socket).toSet();
     if (list.length > 0) {
-      minPrice = list.map((v) => v.lowestPrice).reduce((a, b) => a < b ? a : b);
-      maxPrice = list.map((v) => v.lowestPrice).reduce((a, b) => a > b ? a : b);
+      minPrice = list.map((v) => v.price).reduce((a, b) => a < b ? a : b);
+      maxPrice = list.map((v) => v.price).reduce((a, b) => a > b ? a : b);
       minPrice = minPrice ~/ 1000 * 1000;
       maxPrice = maxPrice ~/ 1000 * 1000 + 1000;
     } else {
@@ -27,21 +57,18 @@ class CpuFilter {
     }
   }
   CpuFilter.clone(CpuFilter filter) {
-    cpuBrand = Set<String>()..addAll(filter.cpuBrand);
-    cpuSeries = Set<String>()..addAll(filter.cpuSeries);
-    cpuSocket = Set<String>()..addAll(filter.cpuSocket);
+    brand = Set<String>()..addAll(filter.brand);
+    series = Set<String>()..addAll(filter.series);
+    socket = Set<String>()..addAll(filter.socket);
     minPrice = filter.minPrice;
     maxPrice = filter.maxPrice;
   }
   bool filter(Cpu device) {
-    if (device.lowestPrice < minPrice) return false;
-    if (device.lowestPrice > maxPrice) return false;
-    if (cpuBrand.length != 0 && !cpuBrand.contains(device.cpuBrand))
-      return false;
-    if (cpuSeries.length != 0 && !cpuSeries.contains(device.cpuSeries))
-      return false;
-    if (cpuSocket.length != 0 && !cpuSocket.contains(device.cpuSocket))
-      return false;
+    if (device.price < minPrice) return false;
+    if (device.price > maxPrice) return false;
+    if (brand.length != 0 && !brand.contains(device.brand)) return false;
+    if (series.length != 0 && !series.contains(device.series)) return false;
+    if (socket.length != 0 && !socket.contains(device.socket)) return false;
     return true;
   }
 
@@ -52,226 +79,5 @@ class CpuFilter {
     });
 
     return result;
-  }
-}
-
-class Cpu {
-  String cat;
-  int id;
-  int view;
-  int currentweek;
-  int lastweek;
-  int last2week;
-  int lastupdate;
-  int cpuId;
-  String cpuBrand;
-  String cpuSeries;
-  String cpuModel;
-  String cpuSocket;
-  String cpuCt;
-  dynamic cpuFrequency;
-  dynamic cpuTurbo;
-  String cpuBus;
-  dynamic cpuArchitec;
-  String cpuL2;
-  String cpuL3;
-  int cpuVgaChip;
-  dynamic cpuPower;
-  int cpuWaranty;
-  int cpuScore;
-  int score3D11;
-  int cpuPriceAdv;
-  int cpuPriceBan;
-  int cpuPriceJib;
-  int cpuPriceTk;
-  int cpuPriceJedi;
-  int cpuPriceCommore;
-  int cpuPriceHwh;
-  int cpuPriceBusitek;
-  int cpuPriceEtc;
-  int priceMark;
-  String cpuPicture;
-  dynamic jediId;
-  dynamic tkId;
-  int soldout;
-  String when;
-  int tmpClose;
-  String timestampTmpClose;
-  dynamic advId;
-  dynamic jibId;
-  dynamic commoreId;
-  dynamic bananaId;
-  int isHighlight;
-  dynamic topvalueId;
-  dynamic cpuPriceTopvalue;
-  int advSoldout;
-  String advPath;
-  int priceAdv;
-  int lowestPrice;
-
-  Cpu(
-      {this.cat,
-      this.id,
-      this.view,
-      this.currentweek,
-      this.lastweek,
-      this.last2week,
-      this.lastupdate,
-      this.cpuId,
-      this.cpuBrand,
-      this.cpuSeries,
-      this.cpuModel,
-      this.cpuSocket,
-      this.cpuCt,
-      this.cpuFrequency,
-      this.cpuTurbo,
-      this.cpuBus,
-      this.cpuArchitec,
-      this.cpuL2,
-      this.cpuL3,
-      this.cpuVgaChip,
-      this.cpuPower,
-      this.cpuWaranty,
-      this.cpuScore,
-      this.score3D11,
-      this.cpuPriceAdv,
-      this.cpuPriceBan,
-      this.cpuPriceJib,
-      this.cpuPriceTk,
-      this.cpuPriceJedi,
-      this.cpuPriceCommore,
-      this.cpuPriceHwh,
-      this.cpuPriceBusitek,
-      this.cpuPriceEtc,
-      this.priceMark,
-      this.cpuPicture,
-      this.jediId,
-      this.tkId,
-      this.soldout,
-      this.when,
-      this.tmpClose,
-      this.timestampTmpClose,
-      this.advId,
-      this.jibId,
-      this.commoreId,
-      this.bananaId,
-      this.isHighlight,
-      this.topvalueId,
-      this.cpuPriceTopvalue,
-      this.advSoldout,
-      this.advPath,
-      this.priceAdv,
-      this.lowestPrice});
-
-  Cpu.fromJson(Map<String, dynamic> json) {
-    cat = json['cat'];
-    id = json['id'];
-    view = json['view'];
-    currentweek = json['currentweek'];
-    lastweek = json['lastweek'];
-    last2week = json['last2week'];
-    lastupdate = json['lastupdate'];
-    cpuId = json['cpu_id'];
-    cpuBrand = json['cpu_brand'];
-    cpuSeries = json['cpu_series'];
-    cpuModel = json['cpu_model'];
-    cpuSocket = json['cpu_socket'];
-    cpuCt = json['cpu_ct'];
-    cpuFrequency = json['cpu_frequency'];
-    cpuTurbo = json['cpu_turbo'];
-    cpuBus = json['cpu_bus'];
-    cpuArchitec = json['cpu_architec'];
-    cpuL2 = json['cpu_L2'];
-    cpuL3 = json['cpu_L3'];
-    cpuVgaChip = json['cpu_vga_chip'];
-    cpuPower = json['cpu_power'];
-    cpuWaranty = json['cpu_waranty'];
-    cpuScore = json['cpu_score'];
-    score3D11 = json['score3D11'];
-    cpuPriceAdv = json['cpu_price_adv'];
-    cpuPriceBan = json['cpu_price_ban'];
-    cpuPriceJib = json['cpu_price_jib'];
-    cpuPriceTk = json['cpu_price_tk'];
-    cpuPriceJedi = json['cpu_price_jedi'];
-    cpuPriceCommore = json['cpu_price_commore'];
-    cpuPriceHwh = json['cpu_price_hwh'];
-    cpuPriceBusitek = json['cpu_price_busitek'];
-    cpuPriceEtc = json['cpu_price_etc'];
-    priceMark = json['price_mark'];
-    cpuPicture = json['cpu_picture'];
-    jediId = json['jedi_id'];
-    tkId = json['tk_id'];
-    soldout = json['soldout'];
-    when = json['when'];
-    tmpClose = json['tmp_close'];
-    timestampTmpClose = json['timestamp_tmp_close'];
-    advId = json['adv_id'];
-    jibId = json['jib_id'];
-    commoreId = json['commore_id'];
-    bananaId = json['banana_id'];
-    isHighlight = json['is_highlight'];
-    topvalueId = json['topvalue_id'];
-    cpuPriceTopvalue = json['cpu_price_topvalue'];
-    advSoldout = json['adv_soldout'];
-    advPath = json['adv_path'];
-    priceAdv = json['price_adv'];
-    lowestPrice = json['lowest_price'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['cat'] = this.cat;
-    data['id'] = this.id;
-    data['view'] = this.view;
-    data['currentweek'] = this.currentweek;
-    data['lastweek'] = this.lastweek;
-    data['last2week'] = this.last2week;
-    data['lastupdate'] = this.lastupdate;
-    data['cpu_id'] = this.cpuId;
-    data['cpu_brand'] = this.cpuBrand;
-    data['cpu_series'] = this.cpuSeries;
-    data['cpu_model'] = this.cpuModel;
-    data['cpu_socket'] = this.cpuSocket;
-    data['cpu_ct'] = this.cpuCt;
-    data['cpu_frequency'] = this.cpuFrequency;
-    data['cpu_turbo'] = this.cpuTurbo;
-    data['cpu_bus'] = this.cpuBus;
-    data['cpu_architec'] = this.cpuArchitec;
-    data['cpu_L2'] = this.cpuL2;
-    data['cpu_L3'] = this.cpuL3;
-    data['cpu_vga_chip'] = this.cpuVgaChip;
-    data['cpu_power'] = this.cpuPower;
-    data['cpu_waranty'] = this.cpuWaranty;
-    data['cpu_score'] = this.cpuScore;
-    data['score3D11'] = this.score3D11;
-    data['cpu_price_adv'] = this.cpuPriceAdv;
-    data['cpu_price_ban'] = this.cpuPriceBan;
-    data['cpu_price_jib'] = this.cpuPriceJib;
-    data['cpu_price_tk'] = this.cpuPriceTk;
-    data['cpu_price_jedi'] = this.cpuPriceJedi;
-    data['cpu_price_commore'] = this.cpuPriceCommore;
-    data['cpu_price_hwh'] = this.cpuPriceHwh;
-    data['cpu_price_busitek'] = this.cpuPriceBusitek;
-    data['cpu_price_etc'] = this.cpuPriceEtc;
-    data['price_mark'] = this.priceMark;
-    data['cpu_picture'] = this.cpuPicture;
-    data['jedi_id'] = this.jediId;
-    data['tk_id'] = this.tkId;
-    data['soldout'] = this.soldout;
-    data['when'] = this.when;
-    data['tmp_close'] = this.tmpClose;
-    data['timestamp_tmp_close'] = this.timestampTmpClose;
-    data['adv_id'] = this.advId;
-    data['jib_id'] = this.jibId;
-    data['commore_id'] = this.commoreId;
-    data['banana_id'] = this.bananaId;
-    data['is_highlight'] = this.isHighlight;
-    data['topvalue_id'] = this.topvalueId;
-    data['cpu_price_topvalue'] = this.cpuPriceTopvalue;
-    data['adv_soldout'] = this.advSoldout;
-    data['adv_path'] = this.advPath;
-    data['price_adv'] = this.priceAdv;
-    data['lowest_price'] = this.lowestPrice;
-    return data;
   }
 }
