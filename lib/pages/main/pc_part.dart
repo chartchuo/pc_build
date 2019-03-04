@@ -165,7 +165,7 @@ class PcPartCard extends StatelessWidget {
           Text(
             part.brandModel == null ? '' : part.brandModel,
             style: myTextStyle.subHeader.copyWith(color: Colors.white),
-            textAlign: TextAlign.right,
+            textAlign: TextAlign.center,
             softWrap: true,
             maxLines: 3,
             overflow: TextOverflow.fade,
