@@ -65,7 +65,7 @@ class Case {
   int lastupdate;
   int caseId;
   String caseBrand;
-  dynamic caseModel;
+  String caseModel;
   String caseType;
   int caseScore;
   String caseMbSize;
@@ -179,7 +179,7 @@ class Case {
     lastupdate = json['lastupdate'];
     caseId = json['case_id'];
     caseBrand = json['case_brand'];
-    caseModel = json['case_model'];
+    caseModel = json['case_model'].toString();
     caseType = json['case_type'];
     caseScore = json['case_score'];
     caseMbSize = json['case_mb_size'];
