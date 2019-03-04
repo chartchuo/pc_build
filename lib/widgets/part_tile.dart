@@ -143,7 +143,7 @@ class PartTile extends StatelessWidget {
                 : FlutterMoneyFormatter(amount: price.toDouble())
                         .output
                         .withoutFractionDigits +
-                    ' บาท',
+                    ' \u{0e3f}',
             style: myTextStyle.price,
           ),
         ],

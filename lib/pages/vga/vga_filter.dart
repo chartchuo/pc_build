@@ -109,7 +109,7 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
             ListTile(
               title: Text('ราคา'),
               trailing: Text(
-                  '${selectedFilter.minPrice}-${selectedFilter.maxPrice} บาท'),
+                  '${selectedFilter.minPrice}-${selectedFilter.maxPrice} \u{0e3f}'),
             ),
             RangeSlider(
               min: allFilter.minPrice.toDouble(),

@@ -48,7 +48,7 @@ class Pc {
     return FlutterMoneyFormatter(amount: total.toDouble())
             .output
             .withoutFractionDigits +
-        ' บาท';
+        ' \u{0e3f}';
   }
 
   init() {

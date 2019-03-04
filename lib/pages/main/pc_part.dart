@@ -41,7 +41,7 @@ class PcPartCard extends StatelessWidget {
         // qty(),
         add(),
         sub(),
-        urlIcon(context),
+        // urlIcon(context),
       ],
     ));
   }
@@ -49,7 +49,7 @@ class PcPartCard extends StatelessWidget {
   Widget urlIcon(BuildContext context) {
     if (part.url == null || part.url == '') return SizedBox();
     return Container(
-      alignment: FractionalOffset.bottomLeft,
+      alignment: FractionalOffset.centerRight,
       child: IconButton(
         tooltip: 'Web',
         icon: Icon(
@@ -82,7 +82,7 @@ class PcPartCard extends StatelessWidget {
       return SizedBox();
     }
     return Container(
-        alignment: FractionalOffset.centerRight,
+        alignment: FractionalOffset.bottomRight,
         constraints: BoxConstraints.expand(),
         child: IconButton(
           icon: Icon(Icons.add_circle_outline),
@@ -98,7 +98,7 @@ class PcPartCard extends StatelessWidget {
       return SizedBox();
     }
     return Container(
-      alignment: FractionalOffset.centerLeft,
+      alignment: FractionalOffset.bottomLeft,
       constraints: BoxConstraints.expand(),
       child: IconButton(
         icon: Icon(Icons.remove_circle_outline),
@@ -114,7 +114,7 @@ class PcPartCard extends StatelessWidget {
 
   Widget addIcon() {
     return Container(
-      alignment: FractionalOffset.topRight,
+      alignment: FractionalOffset.center,
       constraints: BoxConstraints.expand(),
       child: Center(
         child: Icon(
@@ -160,7 +160,7 @@ class PcPartCard extends StatelessWidget {
       constraints: BoxConstraints.expand(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
             part.brandModel == null ? '' : part.brandModel,
@@ -177,7 +177,7 @@ class PcPartCard extends StatelessWidget {
                 : FlutterMoneyFormatter(amount: part.price.toDouble())
                         .output
                         .withoutFractionDigits +
-                    ' บาท' +
+                    ' \u{0e3f}' +
                     (part.qty > 1 ? ' x${part.qty}' : ''),
             style: myTextStyle.price,
           ),
