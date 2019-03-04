@@ -254,8 +254,8 @@ class _CpuPageState extends State<CpuPage> {
         itemBuilder: (context, i) {
           var v = filtered[i];
           return PartTile(
-            image: 'https://www.advice.co.th/pic-pc/cpu/${v.picture}',
-            url: v.path == null ? '' : 'https://www.advice.co.th/${v.path}',
+            image: v.picture,
+            url: v.path,
             title: v.brand,
             subTitle: v.model,
             price: v.price,

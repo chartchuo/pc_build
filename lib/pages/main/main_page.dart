@@ -291,10 +291,8 @@ class _MainPageState extends State<MainPage> {
         var part = PcPart();
         part.id = result.id;
         part.brandModel = result.brand + ' ' + result.model;
-        part.picture = 'https://www.advice.co.th/pic-pc/cpu/${result.picture}';
-        part.url = result.path == null || result.path == ''
-            ? ''
-            : 'https://www.advice.co.th/${result.path}';
+        part.picture = result.picture;
+        part.url = result.path;
         part.price = result.price;
         pc.cpu = part;
         saveData();

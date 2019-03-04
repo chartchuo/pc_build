@@ -8,8 +8,11 @@ class Cpu extends Part {
     id = json['id'];
     brand = json['cpu_brand'];
     model = json['cpu_model'];
-    picture = json['cpu_picture'];
-    path = json['adv_path'];
+
+    var tmp = json['cpu_picture'];
+    if (tmp != null) picture = 'https://www.advice.co.th/pic-pc/cpu/${tmp}';
+    tmp = json['adv_path'];
+    if (tmp != null) path = 'https://www.advice.co.th/${tmp}';
     price = json['price_adv'];
     series = json['cpu_series'];
     socket = json['cpu_socket'];
