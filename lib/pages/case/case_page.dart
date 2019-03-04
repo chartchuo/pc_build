@@ -111,8 +111,10 @@ class _CasePageState extends State<CasePage> {
         filtered = filtered.where((v) {
           if (v.caseBrand.toLowerCase().contains(searchString.toLowerCase()))
             return true;
-          if (v.caseModel.toLowerCase().contains(searchString.toLowerCase()))
-            return true;
+          if (v.caseModel
+              .toString()
+              .toLowerCase()
+              .contains(searchString.toLowerCase())) return true;
           return false;
         }).toList();
     });
