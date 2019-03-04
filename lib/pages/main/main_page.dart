@@ -108,6 +108,7 @@ class _MainPageState extends State<MainPage> {
                       setState(() {
                         pc.cpu = PcPart();
                         pc.init();
+                        saveData();
                       });
                     },
                   ),
@@ -120,6 +121,7 @@ class _MainPageState extends State<MainPage> {
                       setState(() {
                         pc.mb = PcPart();
                         pc.init();
+                        saveData();
                       });
                     },
                   ),
@@ -132,6 +134,7 @@ class _MainPageState extends State<MainPage> {
                       setState(() {
                         pc.vga = PcPart();
                         pc.init();
+                        saveData();
                       });
                     },
                   ),
@@ -144,17 +147,22 @@ class _MainPageState extends State<MainPage> {
                       setState(() {
                         pc.ram = PcPart();
                         pc.init();
+                        saveData();
                       });
                     },
                     onAdd: () {
                       setState(() {
                         pc.ram.qty++;
+                        saveData();
                       });
+                      saveData();
                     },
                     onSub: () {
                       setState(() {
                         pc.ram.qty--;
+                        saveData();
                       });
+                      saveData();
                     },
                   ),
                   onTap: () => navigate2RamPage(context),
@@ -166,16 +174,19 @@ class _MainPageState extends State<MainPage> {
                       setState(() {
                         pc.hdd = PcPart();
                         pc.init();
+                        saveData();
                       });
                     },
                     onAdd: () {
                       setState(() {
                         pc.hdd.qty++;
+                        saveData();
                       });
                     },
                     onSub: () {
                       setState(() {
                         pc.hdd.qty--;
+                        saveData();
                       });
                     },
                   ),
@@ -188,16 +199,19 @@ class _MainPageState extends State<MainPage> {
                       setState(() {
                         pc.ssd = PcPart();
                         pc.init();
+                        saveData();
                       });
                     },
                     onAdd: () {
                       setState(() {
                         pc.ssd.qty++;
+                        saveData();
                       });
                     },
                     onSub: () {
                       setState(() {
                         pc.ssd.qty--;
+                        saveData();
                       });
                     },
                   ),
@@ -210,6 +224,7 @@ class _MainPageState extends State<MainPage> {
                       setState(() {
                         pc.psu = PcPart();
                         pc.init();
+                        saveData();
                       });
                     },
                   ),
@@ -222,6 +237,7 @@ class _MainPageState extends State<MainPage> {
                         setState(() {
                           pc.cas = PcPart();
                           pc.init();
+                          saveData();
                         });
                       }),
                   onTap: () => navigate2CasePage(context),
@@ -233,6 +249,7 @@ class _MainPageState extends State<MainPage> {
                       setState(() {
                         pc.cooling = PcPart();
                         pc.init();
+                        saveData();
                       });
                     },
                   ),
@@ -245,6 +262,7 @@ class _MainPageState extends State<MainPage> {
                       setState(() {
                         pc.mon = PcPart();
                         pc.init();
+                        saveData();
                       });
                     },
                   ),
