@@ -292,7 +292,7 @@ class _MainPageState extends State<MainPage> {
         part.id = result.id;
         part.brandModel = result.brand + ' ' + result.model;
         part.picture = result.picture;
-        part.url = result.path;
+        part.url = result.path ?? '';
         part.price = result.price;
         pc.cpu = part;
         saveData();
@@ -426,13 +426,10 @@ class _MainPageState extends State<MainPage> {
       setState(() {
         var part = PcPart();
         part.id = result.id;
-        part.brandModel = result.caseBrand + ' ' + result.caseModel;
-        part.picture =
-            'https://www.advice.co.th/pic-pc/case/${result.casePicture}';
-        part.url = result.advPath == null || result.advPath == ''
-            ? ''
-            : 'https://www.advice.co.th/${result.advPath}';
-        part.price = result.lowestPrice;
+        part.brandModel = result.brand + ' ' + result.model;
+        part.picture = result.picture;
+        part.url = result.path ?? '';
+        part.price = result.price;
         pc.cas = part;
         saveData();
       });

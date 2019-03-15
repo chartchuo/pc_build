@@ -69,9 +69,9 @@ class _CasePageState extends State<CasePage> {
   saveFilter() {
     prefs.setInt('caseFilter.maxPrice', filter.maxPrice);
     prefs.setInt('caseFilter.minprice', filter.minPrice);
-    prefs.setStringList('caseFilter.caseBrand', filter.caseBrand.toList());
-    prefs.setStringList('caseFilter.caseType', filter.caseType.toList());
-    prefs.setStringList('caseFilter.caseMbSize', filter.caseMbSize.toList());
+    prefs.setStringList('caseFilter.caseBrand', filter.brand.toList());
+    prefs.setStringList('caseFilter.caseType', filter.type.toList());
+    prefs.setStringList('caseFilter.caseMbSize', filter.mbSize.toList());
   }
 
   Future<void> loadFilter() async {
@@ -84,9 +84,9 @@ class _CasePageState extends State<CasePage> {
     var caseBrand = prefs.getStringList('caseFilter.caseBrand');
     var caseType = prefs.getStringList('caseFilter.caseType');
     var caseMbSize = prefs.getStringList('caseFilter.caseMbSize');
-    if (caseBrand != null) filter.caseBrand = caseBrand.toSet();
-    if (caseType != null) filter.caseType = caseType.toSet();
-    if (caseMbSize != null) filter.caseMbSize = caseMbSize.toSet();
+    if (caseBrand != null) filter.brand = caseBrand.toSet();
+    if (caseType != null) filter.type = caseType.toSet();
+    if (caseMbSize != null) filter.mbSize = caseMbSize.toSet();
   }
 
   Future<void> loadData() async {
@@ -109,9 +109,9 @@ class _CasePageState extends State<CasePage> {
       filtered = filter.filters(all);
       if (searchString != '')
         filtered = filtered.where((v) {
-          if (v.caseBrand.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.brand.toLowerCase().contains(searchString.toLowerCase()))
             return true;
-          if (v.caseModel
+          if (v.model
               .toString()
               .toLowerCase()
               .contains(searchString.toLowerCase())) return true;
@@ -126,11 +126,11 @@ class _CasePageState extends State<CasePage> {
       sort = s;
       if (sort == Sort.lowPrice) {
         filtered.sort((a, b) {
-          return a.lowestPrice - b.lowestPrice;
+          return a.price - b.price;
         });
       } else if (sort == Sort.highPrice) {
         filtered.sort((a, b) {
-          return b.lowestPrice - a.lowestPrice;
+          return b.price - a.price;
         });
       } else {
         filtered.sort((a, b) {
@@ -257,13 +257,11 @@ class _CasePageState extends State<CasePage> {
         itemBuilder: (context, i) {
           var v = filtered[i];
           return PartTile(
-            image: 'https://www.advice.co.th/pic-pc/case/${v.casePicture}',
-            url: v.advPath == null
-                ? ''
-                : 'https://www.advice.co.th/${v.advPath}',
-            title: v.caseBrand,
-            subTitle: v.caseModel,
-            price: v.lowestPrice,
+            image: v.picture,
+            url: v.path == null ? '' : v.path,
+            title: v.brand,
+            subTitle: v.model,
+            price: v.price,
             index: i,
             onAdd: (i) {
               Navigator.pop(context, v);

@@ -59,32 +59,29 @@ class _CaseFilterPageState extends State<CaseFilterPage> {
       //filter valid brand
       var tmpList = tmpFilter.filters(widget.all);
       var resultFilter = CaseFilter.fromList(tmpList);
-      validFilter.caseBrand = resultFilter.caseBrand;
-      selectedFilter.caseBrand =
-          selectedFilter.caseBrand.intersection(validFilter.caseBrand);
+      validFilter.brand = resultFilter.brand;
+      selectedFilter.brand =
+          selectedFilter.brand.intersection(validFilter.brand);
 
       //import brand
-      tmpFilter.caseBrand =
-          allFilter.caseBrand.intersection(selectedFilter.caseBrand);
+      tmpFilter.brand = allFilter.brand.intersection(selectedFilter.brand);
 
       //filter type
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = CaseFilter.fromList(tmpList);
-      validFilter.caseType = resultFilter.caseType;
-      selectedFilter.caseType =
-          selectedFilter.caseType.intersection(validFilter.caseType);
+      validFilter.type = resultFilter.type;
+      selectedFilter.type = selectedFilter.type.intersection(validFilter.type);
 
       //import type
-      tmpFilter.caseType =
-          allFilter.caseType.intersection(selectedFilter.caseType);
+      tmpFilter.type = allFilter.type.intersection(selectedFilter.type);
 
       //Todo: deal with multiple value in one field
       //filter mb support
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = CaseFilter.fromList(tmpList);
-      validFilter.caseMbSize = resultFilter.caseMbSize;
-      selectedFilter.caseMbSize =
-          selectedFilter.caseMbSize.intersection(validFilter.caseMbSize);
+      validFilter.mbSize = resultFilter.mbSize;
+      selectedFilter.mbSize =
+          selectedFilter.mbSize.intersection(validFilter.mbSize);
     });
   }
 
@@ -135,12 +132,12 @@ class _CaseFilterPageState extends State<CaseFilterPage> {
                 });
               },
             ),
-            filterChipMaker('Brands', allFilter.caseBrand,
-                validFilter.caseBrand, selectedFilter.caseBrand),
-            filterChipMaker('Type', allFilter.caseType, validFilter.caseType,
-                selectedFilter.caseType),
-            filterChipMaker('Support mainboard size', allFilter.caseMbSize,
-                validFilter.caseMbSize, selectedFilter.caseMbSize),
+            filterChipMaker('Brands', allFilter.brand, validFilter.brand,
+                selectedFilter.brand),
+            filterChipMaker(
+                'Type', allFilter.type, validFilter.type, selectedFilter.type),
+            filterChipMaker('Support mainboard size', allFilter.mbSize,
+                validFilter.mbSize, selectedFilter.mbSize),
           ],
         ),
       ),
