@@ -69,9 +69,9 @@ class _SsdPageState extends State<SsdPage> {
   saveFilter() {
     prefs.setInt('ssdFilter.maxPrice', filter.maxPrice);
     prefs.setInt('ssdFilter.minprice', filter.minPrice);
-    prefs.setStringList('ssdFilter.ssdBrand', filter.ssdBrand.toList());
-    prefs.setStringList('ssdFilter.ssdCapacity', filter.ssdCapacity.toList());
-    prefs.setStringList('ssdFilter.ssdInterface', filter.ssdInterface.toList());
+    prefs.setStringList('ssdFilter.ssdBrand', filter.brand.toList());
+    prefs.setStringList('ssdFilter.ssdCapacity', filter.capa.toList());
+    prefs.setStringList('ssdFilter.ssdInterface', filter.interface.toList());
   }
 
   Future<void> loadFilter() async {
@@ -84,9 +84,9 @@ class _SsdPageState extends State<SsdPage> {
     var ssdBrand = prefs.getStringList('ssdFilter.ssdBrand');
     var ssdCapacity = prefs.getStringList('ssdFilter.ssdCapacity');
     var ssdInterface = prefs.getStringList('ssdFilter.ssdInterface');
-    if (ssdBrand != null) filter.ssdBrand = ssdBrand.toSet();
-    if (ssdCapacity != null) filter.ssdCapacity = ssdCapacity.toSet();
-    if (ssdInterface != null) filter.ssdInterface = ssdInterface.toSet();
+    if (ssdBrand != null) filter.brand = ssdBrand.toSet();
+    if (ssdCapacity != null) filter.capa = ssdCapacity.toSet();
+    if (ssdInterface != null) filter.interface = ssdInterface.toSet();
   }
 
   Future<void> loadData() async {
@@ -108,9 +108,9 @@ class _SsdPageState extends State<SsdPage> {
       filtered = filter.filters(all);
       if (searchString != '')
         filtered = filtered.where((v) {
-          if (v.ssdBrand.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.brand.toLowerCase().contains(searchString.toLowerCase()))
             return true;
-          if (v.ssdModel.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.model.toLowerCase().contains(searchString.toLowerCase()))
             return true;
           return false;
         }).toList();
@@ -123,11 +123,11 @@ class _SsdPageState extends State<SsdPage> {
       sort = s;
       if (sort == Sort.lowPrice) {
         filtered.sort((a, b) {
-          return a.lowestPrice - b.lowestPrice;
+          return a.price - b.price;
         });
       } else if (sort == Sort.highPrice) {
         filtered.sort((a, b) {
-          return b.lowestPrice - a.lowestPrice;
+          return b.price - a.price;
         });
       } else {
         filtered.sort((a, b) {
@@ -254,13 +254,11 @@ class _SsdPageState extends State<SsdPage> {
         itemBuilder: (context, i) {
           var v = filtered[i];
           return PartTile(
-            image: 'https://www.advice.co.th/pic-pc/ssd/${v.ssdPicture}',
-            url: v.advPath == null
-                ? ''
-                : 'https://www.advice.co.th/${v.advPath}',
-            title: v.ssdBrand,
-            subTitle: v.ssdModel,
-            price: v.lowestPrice,
+            image: v.picture,
+            url: v.path ?? '',
+            title: v.brand,
+            subTitle: v.model,
+            price: v.price,
             index: i,
             onAdd: (i) {
               Navigator.pop(context, v);

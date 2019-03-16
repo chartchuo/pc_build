@@ -59,42 +59,41 @@ class _PsuFilterPageState extends State<PsuFilterPage> {
       //filter valid brand
       var tmpList = tmpFilter.filters(widget.all);
       var resultFilter = PsuFilter.fromList(tmpList);
-      validFilter.psuBrand = resultFilter.psuBrand;
-      selectedFilter.psuBrand =
-          selectedFilter.psuBrand.intersection(validFilter.psuBrand);
+      validFilter.brand = resultFilter.brand;
+      selectedFilter.brand =
+          selectedFilter.brand.intersection(validFilter.brand);
 
       //import brand
-      tmpFilter.psuBrand =
-          allFilter.psuBrand.intersection(selectedFilter.psuBrand);
+      tmpFilter.brand = allFilter.brand.intersection(selectedFilter.brand);
 
       //filter valid modular
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = PsuFilter.fromList(tmpList);
-      validFilter.psuModular = resultFilter.psuModular;
-      selectedFilter.psuModular =
-          selectedFilter.psuModular.intersection(validFilter.psuModular);
+      validFilter.modular = resultFilter.modular;
+      selectedFilter.modular =
+          selectedFilter.modular.intersection(validFilter.modular);
 
       //import modular
-      tmpFilter.psuModular =
-          allFilter.psuModular.intersection(selectedFilter.psuModular);
+      tmpFilter.modular =
+          allFilter.modular.intersection(selectedFilter.modular);
 
       //filter valid psuEnergyEff
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = PsuFilter.fromList(tmpList);
-      validFilter.psuEnergyEff = resultFilter.psuEnergyEff;
-      selectedFilter.psuEnergyEff =
-          selectedFilter.psuEnergyEff.intersection(validFilter.psuEnergyEff);
+      validFilter.energyEff = resultFilter.energyEff;
+      selectedFilter.energyEff =
+          selectedFilter.energyEff.intersection(validFilter.energyEff);
 
       //import psuEnergyEff
-      tmpFilter.psuEnergyEff =
-          allFilter.psuEnergyEff.intersection(selectedFilter.psuEnergyEff);
+      tmpFilter.energyEff =
+          allFilter.energyEff.intersection(selectedFilter.energyEff);
 
       //filter valid maxpower
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = PsuFilter.fromList(tmpList);
-      validFilter.psuMaxPw = resultFilter.psuMaxPw;
-      selectedFilter.psuMaxPw =
-          selectedFilter.psuMaxPw.intersection(validFilter.psuMaxPw);
+      validFilter.maxPw = resultFilter.maxPw;
+      selectedFilter.maxPw =
+          selectedFilter.maxPw.intersection(validFilter.maxPw);
     });
   }
 
@@ -145,14 +144,14 @@ class _PsuFilterPageState extends State<PsuFilterPage> {
                 });
               },
             ),
-            filterChipMaker('Brands', allFilter.psuBrand, validFilter.psuBrand,
-                selectedFilter.psuBrand),
-            filterChipMaker('Modular', allFilter.psuModular,
-                validFilter.psuModular, selectedFilter.psuModular),
-            filterChipMaker('Energy Efficiency', allFilter.psuEnergyEff,
-                validFilter.psuEnergyEff, selectedFilter.psuEnergyEff),
-            filterChipMaker('Power', allFilter.psuMaxPw, validFilter.psuMaxPw,
-                selectedFilter.psuMaxPw),
+            filterChipMaker('Brands', allFilter.brand, validFilter.brand,
+                selectedFilter.brand),
+            filterChipMaker('Modular', allFilter.modular, validFilter.modular,
+                selectedFilter.modular),
+            filterChipMaker('Energy Efficiency', allFilter.energyEff,
+                validFilter.energyEff, selectedFilter.energyEff),
+            filterChipMaker('Power', allFilter.maxPw, validFilter.maxPw,
+                selectedFilter.maxPw),
           ],
         ),
       ),

@@ -69,10 +69,10 @@ class _PsuPageState extends State<PsuPage> {
   saveFilter() {
     prefs.setInt('psuFilter.maxPrice', filter.maxPrice);
     prefs.setInt('psuFilter.minprice', filter.minPrice);
-    prefs.setStringList('psuFilter.psuBrand', filter.psuBrand.toList());
-    prefs.setStringList('psuFilter.psuModular', filter.psuModular.toList());
-    prefs.setStringList('psuFilter.psuEnergyEff', filter.psuEnergyEff.toList());
-    prefs.setStringList('psuFilter.psuMaxPw', filter.psuMaxPw.toList());
+    prefs.setStringList('psuFilter.psuBrand', filter.brand.toList());
+    prefs.setStringList('psuFilter.psuModular', filter.modular.toList());
+    prefs.setStringList('psuFilter.psuEnergyEff', filter.energyEff.toList());
+    prefs.setStringList('psuFilter.psuMaxPw', filter.maxPw.toList());
   }
 
   Future<void> loadFilter() async {
@@ -86,10 +86,10 @@ class _PsuPageState extends State<PsuPage> {
     var psuModular = prefs.getStringList('psuFilter.psuModular');
     var psuEnergyEff = prefs.getStringList('psuFilter.psuEnergyEff');
     var psuMaxPw = prefs.getStringList('psuFilter.psuMaxPw');
-    if (psuBrand != null) filter.psuBrand = psuBrand.toSet();
-    if (psuModular != null) filter.psuModular = psuModular.toSet();
-    if (psuEnergyEff != null) filter.psuEnergyEff = psuEnergyEff.toSet();
-    if (psuMaxPw != null) filter.psuMaxPw = psuMaxPw.toSet();
+    if (psuBrand != null) filter.brand = psuBrand.toSet();
+    if (psuModular != null) filter.modular = psuModular.toSet();
+    if (psuEnergyEff != null) filter.energyEff = psuEnergyEff.toSet();
+    if (psuMaxPw != null) filter.maxPw = psuMaxPw.toSet();
   }
 
   Future<void> loadData() async {
@@ -111,9 +111,9 @@ class _PsuPageState extends State<PsuPage> {
       filtered = filter.filters(all);
       if (searchString != '')
         filtered = filtered.where((v) {
-          if (v.psuBrand.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.brand.toLowerCase().contains(searchString.toLowerCase()))
             return true;
-          if (v.psuModel.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.model.toLowerCase().contains(searchString.toLowerCase()))
             return true;
           return false;
         }).toList();
@@ -126,11 +126,11 @@ class _PsuPageState extends State<PsuPage> {
       sort = s;
       if (sort == Sort.lowPrice) {
         filtered.sort((a, b) {
-          return a.lowestPrice - b.lowestPrice;
+          return a.price - b.price;
         });
       } else if (sort == Sort.highPrice) {
         filtered.sort((a, b) {
-          return b.lowestPrice - a.lowestPrice;
+          return b.price - a.price;
         });
       } else {
         filtered.sort((a, b) {
@@ -257,13 +257,11 @@ class _PsuPageState extends State<PsuPage> {
         itemBuilder: (context, i) {
           var v = filtered[i];
           return PartTile(
-            image: 'https://www.advice.co.th/pic-pc/psu/${v.psuPicture}',
-            url: v.advPath == null
-                ? ''
-                : 'https://www.advice.co.th/${v.advPath}',
-            title: v.psuBrand,
-            subTitle: v.psuModel,
-            price: v.lowestPrice,
+            image: v.picture,
+            url: v.path ?? '',
+            title: v.brand,
+            subTitle: v.model,
+            price: v.price,
             index: i,
             onAdd: (i) {
               Navigator.pop(context, v);

@@ -59,31 +59,29 @@ class _SsdFilterPageState extends State<SsdFilterPage> {
       //filter valid brand
       var tmpList = tmpFilter.filters(widget.all);
       var resultFilter = SsdFilter.fromList(tmpList);
-      validFilter.ssdBrand = resultFilter.ssdBrand;
-      selectedFilter.ssdBrand =
-          selectedFilter.ssdBrand.intersection(validFilter.ssdBrand);
+      validFilter.brand = resultFilter.brand;
+      selectedFilter.brand =
+          selectedFilter.brand.intersection(validFilter.brand);
 
       //import brand
-      tmpFilter.ssdBrand =
-          allFilter.ssdBrand.intersection(selectedFilter.ssdBrand);
+      tmpFilter.brand = allFilter.brand.intersection(selectedFilter.brand);
 
       //filter interface
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = SsdFilter.fromList(tmpList);
-      validFilter.ssdInterface = resultFilter.ssdInterface;
-      selectedFilter.ssdInterface =
-          selectedFilter.ssdInterface.intersection(validFilter.ssdInterface);
+      validFilter.interface = resultFilter.interface;
+      selectedFilter.interface =
+          selectedFilter.interface.intersection(validFilter.interface);
 
       //import interface
-      tmpFilter.ssdInterface =
-          allFilter.ssdInterface.intersection(selectedFilter.ssdInterface);
+      tmpFilter.interface =
+          allFilter.interface.intersection(selectedFilter.interface);
 
       //filter valid capa
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = SsdFilter.fromList(tmpList);
-      validFilter.ssdCapacity = resultFilter.ssdCapacity;
-      selectedFilter.ssdCapacity =
-          selectedFilter.ssdCapacity.intersection(validFilter.ssdCapacity);
+      validFilter.capa = resultFilter.capa;
+      selectedFilter.capa = selectedFilter.capa.intersection(validFilter.capa);
     });
   }
 
@@ -134,12 +132,12 @@ class _SsdFilterPageState extends State<SsdFilterPage> {
                 });
               },
             ),
-            filterChipMaker('Brands', allFilter.ssdBrand, validFilter.ssdBrand,
-                selectedFilter.ssdBrand),
-            filterChipMaker('Interface', allFilter.ssdInterface,
-                validFilter.ssdInterface, selectedFilter.ssdInterface),
-            filterChipMaker('Capacity', allFilter.ssdCapacity,
-                validFilter.ssdCapacity, selectedFilter.ssdCapacity),
+            filterChipMaker('Brands', allFilter.brand, validFilter.brand,
+                selectedFilter.brand),
+            filterChipMaker('Interface', allFilter.interface,
+                validFilter.interface, selectedFilter.interface),
+            filterChipMaker('Capacity', allFilter.capa, validFilter.capa,
+                selectedFilter.capa),
           ],
         ),
       ),

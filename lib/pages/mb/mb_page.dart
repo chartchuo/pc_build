@@ -69,10 +69,10 @@ class _MbPageState extends State<MbPage> {
   saveFilter() {
     prefs.setInt('mbFilter.maxPrice', filter.maxPrice);
     prefs.setInt('mbFilter.minprice', filter.minPrice);
-    prefs.setStringList('mbFilter.mbBrand', filter.mbBrand.toList());
-    prefs.setStringList('mbFilter.mbFactor', filter.mbFactor.toList());
-    prefs.setStringList('mbFilter.mbSocket', filter.mbSocket.toList());
-    prefs.setStringList('mbFilter.mbChipset', filter.mbChipset.toList());
+    prefs.setStringList('mbFilter.mbBrand', filter.brand.toList());
+    prefs.setStringList('mbFilter.mbFactor', filter.factor.toList());
+    prefs.setStringList('mbFilter.mbSocket', filter.socket.toList());
+    prefs.setStringList('mbFilter.mbChipset', filter.chipset.toList());
   }
 
   Future<void> loadFilter() async {
@@ -86,10 +86,10 @@ class _MbPageState extends State<MbPage> {
     var mbFactor = prefs.getStringList('mbFilter.mbFactor');
     var mbSocket = prefs.getStringList('mbFilter.mbSocket');
     var mbChipset = prefs.getStringList('mbFilter.mbChipset');
-    if (mbBrand != null) filter.mbBrand = mbBrand.toSet();
-    if (mbFactor != null) filter.mbFactor = mbFactor.toSet();
-    if (mbSocket != null) filter.mbSocket = mbSocket.toSet();
-    if (mbChipset != null) filter.mbChipset = mbChipset.toSet();
+    if (mbBrand != null) filter.brand = mbBrand.toSet();
+    if (mbFactor != null) filter.factor = mbFactor.toSet();
+    if (mbSocket != null) filter.socket = mbSocket.toSet();
+    if (mbChipset != null) filter.chipset = mbChipset.toSet();
   }
 
   Future<void> loadData() async {
@@ -111,9 +111,9 @@ class _MbPageState extends State<MbPage> {
       filtered = filter.filters(all);
       if (searchString != '')
         filtered = filtered.where((v) {
-          if (v.mbBrand.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.brand.toLowerCase().contains(searchString.toLowerCase()))
             return true;
-          if (v.mbModel.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.model.toLowerCase().contains(searchString.toLowerCase()))
             return true;
           return false;
         }).toList();
@@ -126,11 +126,11 @@ class _MbPageState extends State<MbPage> {
       sort = s;
       if (sort == Sort.lowPrice) {
         filtered.sort((a, b) {
-          return a.lowestPrice - b.lowestPrice;
+          return a.price - b.price;
         });
       } else if (sort == Sort.highPrice) {
         filtered.sort((a, b) {
-          return b.lowestPrice - a.lowestPrice;
+          return b.price - a.price;
         });
       } else {
         filtered.sort((a, b) {
@@ -257,13 +257,11 @@ class _MbPageState extends State<MbPage> {
         itemBuilder: (context, i) {
           var v = filtered[i];
           return PartTile(
-            image: 'https://www.advice.co.th/pic-pc/mb/${v.mbPicture}',
-            url: v.advPath == null
-                ? ''
-                : 'https://www.advice.co.th/${v.advPath}',
-            title: v.mbBrand,
-            subTitle: v.mbModel,
-            price: v.lowestPrice,
+            image: v.picture,
+            url: v.path == null ? '' : v.path,
+            title: v.brand,
+            subTitle: v.model,
+            price: v.price,
             index: i,
             onAdd: (i) {
               Navigator.pop(context, v);

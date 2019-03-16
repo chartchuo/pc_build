@@ -59,42 +59,39 @@ class _MbFilterPageState extends State<MbFilterPage> {
       //filter valid brand
       var tmpList = tmpFilter.filters(widget.all);
       var resultFilter = MbFilter.fromList(tmpList);
-      validFilter.mbBrand = resultFilter.mbBrand;
-      selectedFilter.mbBrand =
-          selectedFilter.mbBrand.intersection(validFilter.mbBrand);
+      validFilter.brand = resultFilter.brand;
+      selectedFilter.brand =
+          selectedFilter.brand.intersection(validFilter.brand);
 
       //import brand
-      tmpFilter.mbBrand =
-          allFilter.mbBrand.intersection(selectedFilter.mbBrand);
+      tmpFilter.brand = allFilter.brand.intersection(selectedFilter.brand);
 
       //filter valid form factor
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = MbFilter.fromList(tmpList);
-      validFilter.mbFactor = resultFilter.mbFactor;
-      selectedFilter.mbFactor =
-          selectedFilter.mbFactor.intersection(validFilter.mbFactor);
+      validFilter.factor = resultFilter.factor;
+      selectedFilter.factor =
+          selectedFilter.factor.intersection(validFilter.factor);
 
       //import form factor
-      tmpFilter.mbFactor =
-          allFilter.mbFactor.intersection(selectedFilter.mbFactor);
+      tmpFilter.factor = allFilter.factor.intersection(selectedFilter.factor);
 
       //filter valid socket
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = MbFilter.fromList(tmpList);
-      validFilter.mbSocket = resultFilter.mbSocket;
-      selectedFilter.mbSocket =
-          selectedFilter.mbSocket.intersection(validFilter.mbSocket);
+      validFilter.socket = resultFilter.socket;
+      selectedFilter.socket =
+          selectedFilter.socket.intersection(validFilter.socket);
 
       //import mbSocket
-      tmpFilter.mbSocket =
-          allFilter.mbSocket.intersection(selectedFilter.mbSocket);
+      tmpFilter.socket = allFilter.socket.intersection(selectedFilter.socket);
 
       //filter valid Chipset
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = MbFilter.fromList(tmpList);
-      validFilter.mbChipset = resultFilter.mbChipset;
-      selectedFilter.mbChipset =
-          selectedFilter.mbChipset.intersection(validFilter.mbChipset);
+      validFilter.chipset = resultFilter.chipset;
+      selectedFilter.chipset =
+          selectedFilter.chipset.intersection(validFilter.chipset);
     });
   }
 
@@ -145,14 +142,14 @@ class _MbFilterPageState extends State<MbFilterPage> {
                 });
               },
             ),
-            filterChipMaker('Brands', allFilter.mbBrand, validFilter.mbBrand,
-                selectedFilter.mbBrand),
-            filterChipMaker('Form factor', allFilter.mbFactor,
-                validFilter.mbFactor, selectedFilter.mbFactor),
-            filterChipMaker('Socket', allFilter.mbSocket, validFilter.mbSocket,
-                selectedFilter.mbSocket),
-            filterChipMaker('Chipset', allFilter.mbChipset,
-                validFilter.mbChipset, selectedFilter.mbChipset),
+            filterChipMaker('Brands', allFilter.brand, validFilter.brand,
+                selectedFilter.brand),
+            filterChipMaker('Form factor', allFilter.factor, validFilter.factor,
+                selectedFilter.factor),
+            filterChipMaker('Socket', allFilter.socket, validFilter.socket,
+                selectedFilter.socket),
+            filterChipMaker('Chipset', allFilter.chipset, validFilter.chipset,
+                selectedFilter.chipset),
           ],
         ),
       ),

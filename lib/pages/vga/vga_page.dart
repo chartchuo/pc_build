@@ -69,9 +69,9 @@ class _VgaPageState extends State<VgaPage> {
   saveFilter() {
     prefs.setInt('vgaFilter.maxPrice', filter.maxPrice);
     prefs.setInt('vgaFilter.minprice', filter.minPrice);
-    prefs.setStringList('vgaFilter.vgaBrand', filter.vgaBrand.toList());
-    prefs.setStringList('vgaFilter.vgaChipset', filter.vgaChipset.toList());
-    prefs.setStringList('vgaFilter.vgaSeries', filter.vgaSeries.toList());
+    prefs.setStringList('vgaFilter.vgaBrand', filter.brand.toList());
+    prefs.setStringList('vgaFilter.vgaChipset', filter.chipset.toList());
+    prefs.setStringList('vgaFilter.vgaSeries', filter.series.toList());
   }
 
   Future<void> loadfilter() async {
@@ -84,9 +84,9 @@ class _VgaPageState extends State<VgaPage> {
     var vgaBrand = prefs.getStringList('vgaFilter.vgaBrand');
     var vgaChipset = prefs.getStringList('vgaFilter.vgaChipset');
     var vgaSeries = prefs.getStringList('vgaFilter.vgaSeries');
-    if (vgaBrand != null) filter.vgaBrand = vgaBrand.toSet();
-    if (vgaChipset != null) filter.vgaChipset = vgaChipset.toSet();
-    if (vgaSeries != null) filter.vgaSeries = vgaSeries.toSet();
+    if (vgaBrand != null) filter.brand = vgaBrand.toSet();
+    if (vgaChipset != null) filter.chipset = vgaChipset.toSet();
+    if (vgaSeries != null) filter.series = vgaSeries.toSet();
   }
 
   Future<void> loadData() async {
@@ -110,9 +110,9 @@ class _VgaPageState extends State<VgaPage> {
       filtered = filter.filters(all);
       if (searchString != '')
         filtered = filtered.where((v) {
-          if (v.vgaBrand.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.brand.toLowerCase().contains(searchString.toLowerCase()))
             return true;
-          if (v.vgaModel.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.model.toLowerCase().contains(searchString.toLowerCase()))
             return true;
           return false;
         }).toList();
@@ -125,11 +125,11 @@ class _VgaPageState extends State<VgaPage> {
       sort = s;
       if (sort == Sort.lowPrice) {
         filtered.sort((a, b) {
-          return a.lowestPrice - b.lowestPrice;
+          return a.price - b.price;
         });
       } else if (sort == Sort.highPrice) {
         filtered.sort((a, b) {
-          return b.lowestPrice - a.lowestPrice;
+          return b.price - a.price;
         });
       } else {
         filtered.sort((a, b) {
@@ -256,13 +256,11 @@ class _VgaPageState extends State<VgaPage> {
         itemBuilder: (context, i) {
           var v = filtered[i];
           return PartTile(
-            image: 'https://www.advice.co.th/pic-pc/vga/${v.vgaPicture}',
-            url: v.advPath == null
-                ? ''
-                : 'https://www.advice.co.th/${v.advPath}',
-            title: v.vgaBrand,
-            subTitle: v.vgaModel,
-            price: v.lowestPrice,
+            image: v.picture,
+            url: v.path ?? '',
+            title: v.brand,
+            subTitle: v.model,
+            price: v.price,
             index: i,
             onAdd: (i) {
               Navigator.pop(context, v);

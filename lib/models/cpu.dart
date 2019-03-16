@@ -13,9 +13,11 @@ class Cpu extends Part {
     if (tmp != null) picture = 'https://www.advice.co.th/pic-pc/cpu/$tmp';
     tmp = json['adv_path'];
     if (tmp != null) path = 'https://www.advice.co.th/$tmp';
-    price = json['price_adv'];
-    series = json['cpu_series'];
-    socket = json['cpu_socket'];
+    price = json['price_adv'] ?? json['lowest_price'] ?? 0;
+    series = json['cpu_series'] ?? '-';
+    if (series == '') series = '-';
+    socket = json['cpu_socket'] ?? '-';
+    if (socket == '') socket = '-';
   }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

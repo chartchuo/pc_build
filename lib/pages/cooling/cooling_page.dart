@@ -121,11 +121,11 @@ class _CoolingPageState extends State<CoolingPage> {
       sort = s;
       if (sort == Sort.lowPrice) {
         filtered.sort((a, b) {
-          return a.lowestPrice - b.lowestPrice;
+          return a.price - b.price;
         });
       } else if (sort == Sort.highPrice) {
         filtered.sort((a, b) {
-          return b.lowestPrice - a.lowestPrice;
+          return b.price - a.price;
         });
       } else {
         filtered.sort((a, b) {
@@ -252,13 +252,11 @@ class _CoolingPageState extends State<CoolingPage> {
         itemBuilder: (context, i) {
           var v = filtered[i];
           return PartTile(
-            image: 'https://www.advice.co.th/pic-pc/cooling/${v.picture}',
-            url: v.advPath == null
-                ? ''
-                : 'https://www.advice.co.th/${v.advPath}',
+            image: v.picture,
+            url: v.path ?? '',
             title: v.brand,
             subTitle: v.model,
-            price: v.lowestPrice,
+            price: v.price,
             index: i,
             onAdd: (i) {
               Navigator.pop(context, v);

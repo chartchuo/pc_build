@@ -59,31 +59,27 @@ class _HddFilterPageState extends State<HddFilterPage> {
       //filter valid brand
       var tmpList = tmpFilter.filters(widget.all);
       var resultFilter = HddFilter.fromList(tmpList);
-      validFilter.hddBrand = resultFilter.hddBrand;
-      selectedFilter.hddBrand =
-          selectedFilter.hddBrand.intersection(validFilter.hddBrand);
+      validFilter.brand = resultFilter.brand;
+      selectedFilter.brand =
+          selectedFilter.brand.intersection(validFilter.brand);
 
       //import brand
-      tmpFilter.hddBrand =
-          allFilter.hddBrand.intersection(selectedFilter.hddBrand);
+      tmpFilter.brand = allFilter.brand.intersection(selectedFilter.brand);
 
       //filter valid capa
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = HddFilter.fromList(tmpList);
-      validFilter.hddCapa = resultFilter.hddCapa;
-      selectedFilter.hddCapa =
-          selectedFilter.hddCapa.intersection(validFilter.hddCapa);
+      validFilter.capa = resultFilter.capa;
+      selectedFilter.capa = selectedFilter.capa.intersection(validFilter.capa);
 
       //import capa
-      tmpFilter.hddCapa =
-          allFilter.hddCapa.intersection(selectedFilter.hddCapa);
+      tmpFilter.capa = allFilter.capa.intersection(selectedFilter.capa);
 
       //filter rpm
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = HddFilter.fromList(tmpList);
-      validFilter.hddRpm = resultFilter.hddRpm;
-      selectedFilter.hddRpm =
-          selectedFilter.hddRpm.intersection(validFilter.hddRpm);
+      validFilter.rpm = resultFilter.rpm;
+      selectedFilter.rpm = selectedFilter.rpm.intersection(validFilter.rpm);
     });
   }
 
@@ -134,12 +130,12 @@ class _HddFilterPageState extends State<HddFilterPage> {
                 });
               },
             ),
-            filterChipMaker('Brands', allFilter.hddBrand, validFilter.hddBrand,
-                selectedFilter.hddBrand),
-            filterChipMaker('Capacity', allFilter.hddCapa, validFilter.hddCapa,
-                selectedFilter.hddCapa),
-            filterChipMaker('RPM', allFilter.hddRpm, validFilter.hddRpm,
-                selectedFilter.hddRpm),
+            filterChipMaker('Brands', allFilter.brand, validFilter.brand,
+                selectedFilter.brand),
+            filterChipMaker('Capacity', allFilter.capa, validFilter.capa,
+                selectedFilter.capa),
+            filterChipMaker(
+                'RPM', allFilter.rpm, validFilter.rpm, selectedFilter.rpm),
           ],
         ),
       ),

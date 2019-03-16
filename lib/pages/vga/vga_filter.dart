@@ -51,32 +51,37 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
       validFilter = VgaFilter.clone(allFilter);
       var tmpFilter = VgaFilter.clone(allFilter);
 
-      //calculate valid by price
+      //import price
       tmpFilter.minPrice = selectedFilter.minPrice;
       tmpFilter.maxPrice = selectedFilter.maxPrice;
+
+      //finter valid brand
       var tmpList = tmpFilter.filters(widget.all);
       var resultFilter = VgaFilter.fromList(tmpList);
-      validFilter.vgaBrand = resultFilter.vgaBrand;
-      selectedFilter.vgaBrand =
-          selectedFilter.vgaBrand.intersection(validFilter.vgaBrand);
+      validFilter.brand = resultFilter.brand;
+      selectedFilter.brand =
+          selectedFilter.brand.intersection(validFilter.brand);
 
-      //caclulate valid by brand
-      tmpFilter.vgaBrand =
-          allFilter.vgaBrand.intersection(selectedFilter.vgaBrand);
+      //import brand
+      tmpFilter.brand = allFilter.brand.intersection(selectedFilter.brand);
+
+      //filter valid shipset
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = VgaFilter.fromList(tmpList);
-      validFilter.vgaChipset = resultFilter.vgaChipset;
-      selectedFilter.vgaChipset =
-          selectedFilter.vgaChipset.intersection(validFilter.vgaChipset);
+      validFilter.chipset = resultFilter.chipset;
+      selectedFilter.chipset =
+          selectedFilter.chipset.intersection(validFilter.chipset);
 
-      //caclulate valid by chipset
-      tmpFilter.vgaChipset =
-          allFilter.vgaChipset.intersection(selectedFilter.vgaChipset);
+      //import chipset
+      tmpFilter.chipset =
+          allFilter.chipset.intersection(selectedFilter.chipset);
+
+      //filter valid series
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = VgaFilter.fromList(tmpList);
-      validFilter.vgaSeries = resultFilter.vgaSeries;
-      selectedFilter.vgaSeries =
-          selectedFilter.vgaSeries.intersection(validFilter.vgaSeries);
+      validFilter.series = resultFilter.series;
+      selectedFilter.series =
+          selectedFilter.series.intersection(validFilter.series);
     });
   }
 
@@ -127,12 +132,12 @@ class _VgaFilterPageState extends State<VgaFilterPage> {
                 });
               },
             ),
-            filterChipMaker('Brands', allFilter.vgaBrand, validFilter.vgaBrand,
-                selectedFilter.vgaBrand),
-            filterChipMaker('Chipset', allFilter.vgaChipset,
-                validFilter.vgaChipset, selectedFilter.vgaChipset),
-            filterChipMaker('Series', allFilter.vgaSeries,
-                validFilter.vgaSeries, selectedFilter.vgaSeries),
+            filterChipMaker('Brands', allFilter.brand, validFilter.brand,
+                selectedFilter.brand),
+            filterChipMaker('Chipset', allFilter.chipset, validFilter.chipset,
+                selectedFilter.chipset),
+            filterChipMaker('Series', allFilter.series, validFilter.series,
+                selectedFilter.series),
           ],
         ),
       ),

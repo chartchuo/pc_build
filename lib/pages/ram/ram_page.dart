@@ -69,10 +69,10 @@ class _RamPageState extends State<RamPage> {
   saveFilter() {
     prefs.setInt('ramFilter.maxPrice', filter.maxPrice);
     prefs.setInt('ramFilter.minprice', filter.minPrice);
-    prefs.setStringList('ramFilter.ramBrand', filter.ramBrand.toList());
-    prefs.setStringList('ramFilter.ramType', filter.ramType.toList());
-    prefs.setStringList('ramFilter.ramCapa', filter.ramCapa.toList());
-    prefs.setStringList('ramFilter.ramBus', filter.ramBus.toList());
+    prefs.setStringList('ramFilter.ramBrand', filter.brand.toList());
+    prefs.setStringList('ramFilter.ramType', filter.type.toList());
+    prefs.setStringList('ramFilter.ramCapa', filter.capa.toList());
+    prefs.setStringList('ramFilter.ramBus', filter.bus.toList());
   }
 
   Future<void> loadFilter() async {
@@ -86,10 +86,10 @@ class _RamPageState extends State<RamPage> {
     var ramType = prefs.getStringList('ramFilter.ramType');
     var ramCapa = prefs.getStringList('ramFilter.ramCapa');
     var ramBus = prefs.getStringList('ramFilter.ramBus');
-    if (ramBrand != null) filter.ramBrand = ramBrand.toSet();
-    if (ramType != null) filter.ramType = ramType.toSet();
-    if (ramCapa != null) filter.ramCapa = ramCapa.toSet();
-    if (ramBus != null) filter.ramBus = ramBus.toSet();
+    if (ramBrand != null) filter.brand = ramBrand.toSet();
+    if (ramType != null) filter.type = ramType.toSet();
+    if (ramCapa != null) filter.capa = ramCapa.toSet();
+    if (ramBus != null) filter.bus = ramBus.toSet();
   }
 
   Future<void> loadData() async {
@@ -111,9 +111,9 @@ class _RamPageState extends State<RamPage> {
       filtered = filter.filters(all);
       if (searchString != '')
         filtered = filtered.where((v) {
-          if (v.ramBrand.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.brand.toLowerCase().contains(searchString.toLowerCase()))
             return true;
-          if (v.ramModel.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.model.toLowerCase().contains(searchString.toLowerCase()))
             return true;
           return false;
         }).toList();
@@ -126,11 +126,11 @@ class _RamPageState extends State<RamPage> {
       sort = s;
       if (sort == Sort.lowPrice) {
         filtered.sort((a, b) {
-          return a.lowestPrice - b.lowestPrice;
+          return a.price - b.price;
         });
       } else if (sort == Sort.highPrice) {
         filtered.sort((a, b) {
-          return b.lowestPrice - a.lowestPrice;
+          return b.price - a.price;
         });
       } else {
         filtered.sort((a, b) {
@@ -257,13 +257,11 @@ class _RamPageState extends State<RamPage> {
         itemBuilder: (context, i) {
           var v = filtered[i];
           return PartTile(
-            image: 'https://www.advice.co.th/pic-pc/ram/${v.ramPicture}',
-            url: v.advPath == null
-                ? ''
-                : 'https://www.advice.co.th/${v.advPath}',
-            title: v.ramBrand,
-            subTitle: v.ramModel,
-            price: v.lowestPrice,
+            image: v.picture,
+            url: v.path ?? '',
+            title: v.brand,
+            subTitle: v.model,
+            price: v.price,
             index: i,
             onAdd: (i) {
               Navigator.pop(context, v);

@@ -59,31 +59,28 @@ class _CpuFilterPageState extends State<MonFilterPage> {
       //filter valid brand
       var tmpList = tmpFilter.filters(widget.all);
       var resultFilter = MonFilter.fromList(tmpList);
-      validFilter.monBrand = resultFilter.monBrand;
-      selectedFilter.monBrand =
-          selectedFilter.monBrand.intersection(validFilter.monBrand);
+      validFilter.brand = resultFilter.brand;
+      selectedFilter.brand =
+          selectedFilter.brand.intersection(validFilter.brand);
 
       //import brand
-      tmpFilter.monBrand =
-          allFilter.monBrand.intersection(selectedFilter.monBrand);
+      tmpFilter.brand = allFilter.brand.intersection(selectedFilter.brand);
 
       //filter valid panel
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = MonFilter.fromList(tmpList);
-      validFilter.monPanel2 = resultFilter.monPanel2;
-      selectedFilter.monPanel2 =
-          selectedFilter.monPanel2.intersection(validFilter.monPanel2);
+      validFilter.panel = resultFilter.panel;
+      selectedFilter.panel =
+          selectedFilter.panel.intersection(validFilter.panel);
 
       //import panel
-      tmpFilter.monPanel2 =
-          allFilter.monPanel2.intersection(selectedFilter.monPanel2);
+      tmpFilter.panel = allFilter.panel.intersection(selectedFilter.panel);
 
       //filter valid size
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = MonFilter.fromList(tmpList);
-      validFilter.monSize = resultFilter.monSize;
-      selectedFilter.monSize =
-          selectedFilter.monSize.intersection(validFilter.monSize);
+      validFilter.size = resultFilter.size;
+      selectedFilter.size = selectedFilter.size.intersection(validFilter.size);
     });
   }
 
@@ -134,12 +131,12 @@ class _CpuFilterPageState extends State<MonFilterPage> {
                 });
               },
             ),
-            filterChipMaker('Brands', allFilter.monBrand, validFilter.monBrand,
-                selectedFilter.monBrand),
-            filterChipMaker('Panel', allFilter.monPanel2, validFilter.monPanel2,
-                selectedFilter.monPanel2),
-            filterChipMaker('Size', allFilter.monSize, validFilter.monSize,
-                selectedFilter.monSize),
+            filterChipMaker('Brands', allFilter.brand, validFilter.brand,
+                selectedFilter.brand),
+            filterChipMaker('Panel', allFilter.panel, validFilter.panel,
+                selectedFilter.panel),
+            filterChipMaker(
+                'Size', allFilter.size, validFilter.size, selectedFilter.size),
           ],
         ),
       ),

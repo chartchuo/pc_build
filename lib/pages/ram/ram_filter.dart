@@ -59,42 +59,36 @@ class _RamFilterPageState extends State<RamFilterPage> {
       //filter valid brand
       var tmpList = tmpFilter.filters(widget.all);
       var resultFilter = RamFilter.fromList(tmpList);
-      validFilter.ramBrand = resultFilter.ramBrand;
-      selectedFilter.ramBrand =
-          selectedFilter.ramBrand.intersection(validFilter.ramBrand);
+      validFilter.brand = resultFilter.brand;
+      selectedFilter.brand =
+          selectedFilter.brand.intersection(validFilter.brand);
 
       //import brand
-      tmpFilter.ramBrand =
-          allFilter.ramBrand.intersection(selectedFilter.ramBrand);
+      tmpFilter.brand = allFilter.brand.intersection(selectedFilter.brand);
 
       //filter valid type
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = RamFilter.fromList(tmpList);
-      validFilter.ramType = resultFilter.ramType;
-      selectedFilter.ramType =
-          selectedFilter.ramType.intersection(validFilter.ramType);
+      validFilter.type = resultFilter.type;
+      selectedFilter.type = selectedFilter.type.intersection(validFilter.type);
 
       //import type
-      tmpFilter.ramType =
-          allFilter.ramType.intersection(selectedFilter.ramType);
+      tmpFilter.type = allFilter.type.intersection(selectedFilter.type);
 
       //filter valid capa
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = RamFilter.fromList(tmpList);
-      validFilter.ramCapa = resultFilter.ramCapa;
-      selectedFilter.ramCapa =
-          selectedFilter.ramCapa.intersection(validFilter.ramCapa);
+      validFilter.capa = resultFilter.capa;
+      selectedFilter.capa = selectedFilter.capa.intersection(validFilter.capa);
 
       //import capa
-      tmpFilter.ramCapa =
-          allFilter.ramCapa.intersection(selectedFilter.ramCapa);
+      tmpFilter.capa = allFilter.capa.intersection(selectedFilter.capa);
 
       //filter valid bus
       tmpList = tmpFilter.filters(widget.all);
       resultFilter = RamFilter.fromList(tmpList);
-      validFilter.ramBus = resultFilter.ramBus;
-      selectedFilter.ramBus =
-          selectedFilter.ramBus.intersection(validFilter.ramBus);
+      validFilter.bus = resultFilter.bus;
+      selectedFilter.bus = selectedFilter.bus.intersection(validFilter.bus);
     });
   }
 
@@ -145,14 +139,14 @@ class _RamFilterPageState extends State<RamFilterPage> {
                 });
               },
             ),
-            filterChipMaker('Brands', allFilter.ramBrand, validFilter.ramBrand,
-                selectedFilter.ramBrand),
-            filterChipMaker('Type', allFilter.ramType, validFilter.ramType,
-                selectedFilter.ramType),
-            filterChipMaker('Capacity', allFilter.ramCapa, validFilter.ramCapa,
-                selectedFilter.ramCapa),
-            filterChipMaker('Bus', allFilter.ramBus, validFilter.ramBus,
-                selectedFilter.ramBus),
+            filterChipMaker('Brands', allFilter.brand, validFilter.brand,
+                selectedFilter.brand),
+            filterChipMaker(
+                'Type', allFilter.type, validFilter.type, selectedFilter.type),
+            filterChipMaker('Capacity', allFilter.capa, validFilter.capa,
+                selectedFilter.capa),
+            filterChipMaker(
+                'Bus', allFilter.bus, validFilter.bus, selectedFilter.bus),
           ],
         ),
       ),

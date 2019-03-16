@@ -69,9 +69,9 @@ class _HddPageState extends State<HddPage> {
   saveFilter() {
     prefs.setInt('hddFilter.maxPrice', filter.maxPrice);
     prefs.setInt('hddFilter.minprice', filter.minPrice);
-    prefs.setStringList('hddFilter.hddBrand', filter.hddBrand.toList());
-    prefs.setStringList('hddFilter.hddCapa', filter.hddCapa.toList());
-    prefs.setStringList('hddFilter.hddRpm', filter.hddRpm.toList());
+    prefs.setStringList('hddFilter.hddBrand', filter.brand.toList());
+    prefs.setStringList('hddFilter.hddCapa', filter.capa.toList());
+    prefs.setStringList('hddFilter.hddRpm', filter.rpm.toList());
   }
 
   Future<void> loadFilter() async {
@@ -84,9 +84,9 @@ class _HddPageState extends State<HddPage> {
     var hddBrand = prefs.getStringList('hddFilter.hddBrand');
     var hddCapa = prefs.getStringList('hddFilter.hddCapa');
     var hddRpm = prefs.getStringList('hddFilter.hddRpm');
-    if (hddBrand != null) filter.hddBrand = hddBrand.toSet();
-    if (hddCapa != null) filter.hddCapa = hddCapa.toSet();
-    if (hddRpm != null) filter.hddRpm = hddRpm.toSet();
+    if (hddBrand != null) filter.brand = hddBrand.toSet();
+    if (hddCapa != null) filter.capa = hddCapa.toSet();
+    if (hddRpm != null) filter.rpm = hddRpm.toSet();
   }
 
   Future<void> loadData() async {
@@ -108,9 +108,9 @@ class _HddPageState extends State<HddPage> {
       filtered = filter.filters(all);
       if (searchString != '')
         filtered = filtered.where((v) {
-          if (v.hddBrand.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.brand.toLowerCase().contains(searchString.toLowerCase()))
             return true;
-          if (v.hddModel.toLowerCase().contains(searchString.toLowerCase()))
+          if (v.model.toLowerCase().contains(searchString.toLowerCase()))
             return true;
           return false;
         }).toList();
@@ -123,11 +123,11 @@ class _HddPageState extends State<HddPage> {
       sort = s;
       if (sort == Sort.lowPrice) {
         filtered.sort((a, b) {
-          return a.lowestPrice - b.lowestPrice;
+          return a.price - b.price;
         });
       } else if (sort == Sort.highPrice) {
         filtered.sort((a, b) {
-          return b.lowestPrice - a.lowestPrice;
+          return b.price - a.price;
         });
       } else {
         filtered.sort((a, b) {
@@ -254,13 +254,11 @@ class _HddPageState extends State<HddPage> {
         itemBuilder: (context, i) {
           var v = filtered[i];
           return PartTile(
-            image: 'https://www.advice.co.th/pic-pc/hdd/${v.hddPicture}',
-            url: v.advPath == null
-                ? ''
-                : 'https://www.advice.co.th/${v.advPath}',
-            title: v.hddBrand,
-            subTitle: v.hddModel,
-            price: v.lowestPrice,
+            image: v.picture,
+            url: v.path ?? '',
+            title: v.brand,
+            subTitle: v.model,
+            price: v.price,
             index: i,
             onAdd: (i) {
               Navigator.pop(context, v);
