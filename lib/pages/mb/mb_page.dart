@@ -258,7 +258,7 @@ class _MbPageState extends State<MbPage> {
           var v = filtered[i];
           return PartTile(
             image: v.picture,
-            url: v.path == null ? '' : v.path,
+            url: v.path ?? '',
             title: v.brand,
             subTitle: v.model,
             price: v.price,
