@@ -15,7 +15,7 @@ class _CpuPage2State extends State<CpuPage2> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  bool showSearch = false;
+  bool showSearch;
 
   final searchController = TextEditingController();
 
@@ -24,6 +24,8 @@ class _CpuPage2State extends State<CpuPage2> {
     super.initState();
     searchController.addListener(searchListener);
     cpuState.loadData();
+    showSearch = cpuState.searchEnable;
+    searchController.text = cpuState.searchString;
   }
 
   showMessage(String txt) {
@@ -50,9 +52,9 @@ class _CpuPage2State extends State<CpuPage2> {
   searchListener() {
     if (searchController.text != null) {
       if (searchController.text.length > 1) {
-        cpuState.search(searchController.text);
+        cpuState.search(searchController.text, true);
       } else {
-        cpuState.search('');
+        cpuState.search(searchController.text, false);
       }
     }
   }
@@ -60,7 +62,7 @@ class _CpuPage2State extends State<CpuPage2> {
   toggleSearch() {
     setState(() {
       showSearch = !showSearch;
-      if (!showSearch) cpuState.search('');
+      if (!showSearch) cpuState.search(searchController.text, false);
     });
   }
 

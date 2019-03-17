@@ -11,14 +11,17 @@ class CpuState {
   var _all = List<Cpu>();
   var _sort = PartSort.latest;
   String _searchString = '';
+  bool _searchEnabled = false;
   CpuFilter _filter = CpuFilter();
   var _list = BehaviorSubject<List<Cpu>>();
 
   Observable<List<Part>> get list => _list.stream
       .map((e) => _filter.filters(e))
-      .map((e) => partSearchMap(e, _searchString))
+      .map((e) => _searchEnabled ? partSearchMap(e, _searchString) : e)
       .map((e) => partSortMap(e, _sort));
 
+  get searchEnable => _searchEnabled;
+  get searchString => _searchString;
   //tempory geter for filter page will delete when refactory filter page to rxdart
   get all => _all;
   get filter => _filter;
@@ -42,8 +45,9 @@ class CpuState {
     _update();
   }
 
-  search(String txt) {
+  search(String txt, bool enable) {
     _searchString = txt;
+    _searchEnabled = enable;
     _update();
   }
 
