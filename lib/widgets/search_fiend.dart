@@ -28,7 +28,7 @@ class SearchField extends StatelessWidget {
       child: TextField(
         autofocus: true,
         cursorColor: Colors.white,
-        decoration: new InputDecoration.collapsed(hintText: 'Search'),
+        decoration: InputDecoration.collapsed(hintText: 'Search'),
         controller: searchController,
       ),
     );

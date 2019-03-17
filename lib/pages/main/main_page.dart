@@ -285,7 +285,7 @@ class _MainPageState extends State<MainPage> {
 
   navigate2CpuPage(BuildContext context) async {
     Cpu result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => CpuPage()));
+        context, MaterialPageRoute(builder: (context) => CpuPage2()));
     if (result != null) {
       setState(() {
         var part = PcPart();

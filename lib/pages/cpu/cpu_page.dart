@@ -1,152 +1,30 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_store/flutter_cache_store.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:pc_build/models/part.dart';
 import 'package:pc_build/models/cpu.dart';
-import 'cpu_filter.dart';
 import 'package:pc_build/widgets/widgets.dart';
 
-enum Sort {
-  latest,
-  lowPrice,
-  highPrice,
-}
+import 'cpu_state.dart';
+import 'cpu_filter.dart';
 
-class CpuPage extends StatefulWidget {
+class CpuPage2 extends StatefulWidget {
   @override
-  _CpuPageState createState() => _CpuPageState();
+  _CpuPage2State createState() => _CpuPage2State();
 }
 
-class _CpuPageState extends State<CpuPage> {
-  List<Cpu> all = [];
-  List<Cpu> filtered = [];
-  Sort sort = Sort.latest;
-
+class _CpuPage2State extends State<CpuPage2> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-
-  CpuFilter filter = CpuFilter();
-
-  TextEditingController searchController = new TextEditingController();
-  String searchString = '';
-  String lastSearchString = '';
   bool showSearch = false;
 
-  SharedPreferences prefs;
+  final searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     searchController.addListener(searchListener);
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-    loadData();
-    loadFilter();
-  }
-
-  @override
-  void dispose() {
-    saveFilter();
-    super.dispose();
-  }
-
-  searchListener() {
-    setState(() {
-      if (searchController.text != null) {
-        if (searchController.text.length > 1) {
-          searchString = searchController.text;
-        } else {
-          searchString = '';
-        }
-        doFilter();
-      }
-    });
-  }
-
-  saveFilter() {
-    prefs.setInt('cpuFilter.maxPrice', filter.maxPrice);
-    prefs.setInt('cpuFilter.minprice', filter.minPrice);
-    prefs.setStringList('cpuFilter.cpuBrand', filter.brand.toList());
-    prefs.setStringList('cpuFilter.cpuSocket', filter.socket.toList());
-    prefs.setStringList('cpuFilter.cpuSeries', filter.series.toList());
-  }
-
-  Future<void> loadFilter() async {
-    prefs = await SharedPreferences.getInstance();
-    var maxPrice = prefs.getInt('cpuFilter.maxPrice');
-    var minPrice = prefs.getInt('cpuFilter.minprice');
-    if (maxPrice != null) filter.maxPrice = maxPrice;
-    if (minPrice != null) filter.minPrice = minPrice;
-
-    var cpuBrand = prefs.getStringList('cpuFilter.cpuBrand');
-    var cpuSocket = prefs.getStringList('cpuFilter.cpuSocket');
-    var cpuSeries = prefs.getStringList('cpuFilter.cpuSeries');
-    if (cpuBrand != null) filter.brand = cpuBrand.toSet();
-    if (cpuSocket != null) filter.socket = cpuSocket.toSet();
-    if (cpuSeries != null) filter.series = cpuSeries.toSet();
-  }
-
-  Future<void> loadData() async {
-    final store = await CacheStore.getInstance();
-    File file = await store.getFile('https://www.advice.co.th/pc/get_comp/cpu');
-    final jsonString = json.decode(file.readAsStringSync());
-    setState(() {
-      all.clear();
-      jsonString.forEach((v) {
-        final cpu = Cpu.fromJson(v);
-        if (cpu.price != null) all.add(cpu);
-      });
-    });
-    doFilter();
-  }
-
-  doFilter() {
-    setState(() {
-      filtered = filter.filters(all);
-      if (searchString != '')
-        filtered = filtered.where((v) {
-          if (v.brand.toLowerCase().contains(searchString.toLowerCase()))
-            return true;
-          if (v.model.toLowerCase().contains(searchString.toLowerCase()))
-            return true;
-          return false;
-        }).toList();
-    });
-    doSort(sort);
-  }
-
-  doSort(Sort s) {
-    setState(() {
-      sort = s;
-      switch (sort) {
-        case Sort.lowPrice:
-          filtered.sort((a, b) {
-            return a.price - b.price;
-          });
-          break;
-        case Sort.highPrice:
-          filtered.sort((a, b) {
-            return b.price - a.price;
-          });
-          break;
-        case Sort.latest:
-          filtered.sort((a, b) {
-            return b.id - a.id;
-          });
-          break;
-        default:
-      }
-    });
-  }
-
-  showMessage(String txt) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: Text(txt),
-      duration: Duration(seconds: 1),
-    ));
+    cpuState.loadData();
   }
 
   @override
@@ -163,6 +41,23 @@ class _CpuPageState extends State<CpuPage> {
     );
   }
 
+  searchListener() {
+    if (searchController.text != null) {
+      if (searchController.text.length > 1) {
+        cpuState.doSearch(searchController.text);
+      } else {
+        cpuState.doSearch('');
+      }
+    }
+  }
+
+  toggleSearch() {
+    setState(() {
+      showSearch = !showSearch;
+      if (!showSearch) cpuState.doSearch('');
+    });
+  }
+
   AppBar appBarBuilder(BuildContext context) {
     return AppBar(
       title: Text('CPU'),
@@ -171,21 +66,13 @@ class _CpuPageState extends State<CpuPage> {
           icon: Icon(Icons.search),
           tooltip: 'Search',
           onPressed: () {
-            setState(() {
-              showSearch = !showSearch;
-              if (!showSearch) {
-                lastSearchString = searchString;
-                searchController.clear();
-              } else {
-                searchController.text = lastSearchString;
-              }
-            });
+            toggleSearch();
           },
         ),
         IconButton(
           icon: Icon(
             Icons.tune,
-            color: filtered.length == all.length ? Colors.white : Colors.pink,
+            // color: filtered.length == all.length ? Colors.white : Colors.pink,
           ),
           tooltip: 'Filter',
           onPressed: () {
@@ -193,7 +80,7 @@ class _CpuPageState extends State<CpuPage> {
           },
         ),
         PopupMenuButton(
-          onSelected: (v) => doSort(v),
+          onSelected: (v) => cpuState.doSort(v),
           icon: Icon(Icons.sort),
           itemBuilder: (context) {
             return [
@@ -216,27 +103,13 @@ class _CpuPageState extends State<CpuPage> {
     );
   }
 
-  navigate2filterPage(BuildContext context) async {
-    CpuFilter result = await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => CpuFilterPage(
-                  selectedFilter: filter,
-                  all: all,
-                )));
-    if (result != null) {
-      setState(() {
-        filter = result;
-      });
-      doFilter();
-    }
-  }
-
   Widget bodyBuilder() {
     return Column(
       children: <Widget>[
         showSearch
-            ? SearchField(searchController: searchController)
+            ? SearchField(
+                searchController: searchController,
+              )
             : SizedBox(),
         Expanded(
           child: listBuilder(),
@@ -248,24 +121,49 @@ class _CpuPageState extends State<CpuPage> {
   Widget listBuilder() {
     return RefreshIndicator(
       key: _refreshIndicatorKey,
-      onRefresh: loadData,
-      child: ListView.builder(
-        itemCount: filtered.length,
-        itemBuilder: (context, i) {
-          var v = filtered[i];
-          return PartTile(
-            image: v.picture,
-            url: v.path ?? '',
-            title: v.brand,
-            subTitle: v.model,
-            price: v.price,
-            index: i,
-            onAdd: (i) {
-              Navigator.pop(context, v);
-            },
-          );
+      onRefresh: cpuState.loadData,
+      child: StreamBuilder<List<Part>>(
+        stream: cpuState.list,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, i) {
+                var v = snapshot.data[i];
+                return PartTile(
+                  image: v.picture,
+                  url: v.path ?? '',
+                  title: v.brand,
+                  subTitle: v.model,
+                  price: v.price,
+                  index: i,
+                  onAdd: (i) {
+                    Navigator.pop(context, v);
+                  },
+                );
+              },
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
         },
       ),
     );
+  }
+
+  navigate2filterPage(BuildContext context) async {
+    CpuFilter result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CpuFilterPage(
+                  selectedFilter: cpuState.filter,
+                  all: cpuState.all,
+                )));
+    if (result != null) {
+      cpuState.setFilter = result;
+      cpuState.doFilter();
+    }
   }
 }
