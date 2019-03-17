@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:pc_build/models/part.dart';
-import 'package:pc_build/models/cpu.dart';
 import 'package:pc_build/widgets/widgets.dart';
 
 import 'cpu_state.dart';
@@ -27,6 +26,13 @@ class _CpuPage2State extends State<CpuPage2> {
     cpuState.loadData();
   }
 
+  showMessage(String txt) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text(txt),
+      duration: Duration(seconds: 1),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     myTextStyle.init(); // call reinit text style to work with hot reload
@@ -44,9 +50,9 @@ class _CpuPage2State extends State<CpuPage2> {
   searchListener() {
     if (searchController.text != null) {
       if (searchController.text.length > 1) {
-        cpuState.doSearch(searchController.text);
+        cpuState.search(searchController.text);
       } else {
-        cpuState.doSearch('');
+        cpuState.search('');
       }
     }
   }
@@ -54,7 +60,7 @@ class _CpuPage2State extends State<CpuPage2> {
   toggleSearch() {
     setState(() {
       showSearch = !showSearch;
-      if (!showSearch) cpuState.doSearch('');
+      if (!showSearch) cpuState.search('');
     });
   }
 
@@ -72,7 +78,6 @@ class _CpuPage2State extends State<CpuPage2> {
         IconButton(
           icon: Icon(
             Icons.tune,
-            // color: filtered.length == all.length ? Colors.white : Colors.pink,
           ),
           tooltip: 'Filter',
           onPressed: () {
@@ -80,21 +85,21 @@ class _CpuPage2State extends State<CpuPage2> {
           },
         ),
         PopupMenuButton(
-          onSelected: (v) => cpuState.doSort(v),
+          onSelected: (v) => cpuState.sort(v),
           icon: Icon(Icons.sort),
           itemBuilder: (context) {
             return [
               PopupMenuItem(
                 child: Text('Latest'),
-                value: Sort.latest,
+                value: PartSort.latest,
               ),
               PopupMenuItem(
                 child: Text('Low price'),
-                value: Sort.lowPrice,
+                value: PartSort.lowPrice,
               ),
               PopupMenuItem(
                 child: Text('High price'),
-                value: Sort.highPrice,
+                value: PartSort.highPrice,
               ),
             ];
           },
@@ -154,16 +159,9 @@ class _CpuPage2State extends State<CpuPage2> {
   }
 
   navigate2filterPage(BuildContext context) async {
-    CpuFilter result = await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => CpuFilterPage(
-                  selectedFilter: cpuState.filter,
-                  all: cpuState.all,
-                )));
-    if (result != null) {
-      cpuState.setFilter = result;
-      cpuState.doFilter();
-    }
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CpuFilterPage()),
+    );
   }
 }

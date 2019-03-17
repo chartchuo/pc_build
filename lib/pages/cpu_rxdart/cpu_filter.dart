@@ -5,11 +5,11 @@ import 'package:pc_build/widgets/widgets.dart';
 
 import 'package:pc_build/models/cpu.dart';
 
-class CpuFilterPage extends StatefulWidget {
-  final CpuFilter selectedFilter;
-  final List<Cpu> all;
+import 'cpu_state.dart';
 
-  CpuFilterPage({Key key, this.selectedFilter, this.all}) : super(key: key);
+class CpuFilterPage extends StatefulWidget {
+  final CpuFilter selectedFilter = cpuState.filter;
+  final List<Cpu> all = cpuState.all;
 
   @override
   _CpuFilterPageState createState() => _CpuFilterPageState();
@@ -102,6 +102,7 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
             icon: Icon(Icons.check),
             tooltip: 'OK',
             onPressed: () {
+              cpuState.setFilter(selectedFilter);
               Navigator.pop(context, selectedFilter);
             },
           ),
@@ -112,8 +113,8 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
         child: ListView(
           children: <Widget>[
             ListTile(
-              title: Text('ราคา'),
-              trailing: Text(
+              title: titleText('ราคา'),
+              trailing: titleText(
                   '${selectedFilter.minPrice}-${selectedFilter.maxPrice} \u{0e3f}'),
             ),
             RangeSlider(
@@ -138,15 +139,36 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
                 selectedFilter.socket),
             filterChipMaker('Series', allFilter.series, validFilter.series,
                 selectedFilter.series),
+            Container(
+              margin: EdgeInsets.all(8),
+              child: RaisedButton(
+                child: Text('OK'),
+                color: Colors.blueAccent,
+                onPressed: () {
+                  cpuState.setFilter(selectedFilter);
+                  Navigator.pop(context, selectedFilter);
+                },
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
+  Text titleText(String txt) {
+    return Text(
+      txt,
+      style: TextStyle(color: Colors.white),
+    );
+  }
+
   Widget clearAllMaker(Set<String> selected) {
     return FlatButton(
-      child: Text('clear'),
+      child: Text(
+        'clear',
+        style: TextStyle(color: Colors.white),
+      ),
       onPressed: selected.length == 0
           ? null
           : () {
@@ -167,7 +189,7 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
     return Column(
       children: <Widget>[
         ListTile(
-          title: Text(label),
+          title: titleText(label),
           trailing: clearAllMaker(selected),
         ),
         FilterChips(

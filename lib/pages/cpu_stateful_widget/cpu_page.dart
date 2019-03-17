@@ -123,19 +123,13 @@ class _CpuPageState extends State<CpuPage> {
       sort = s;
       switch (sort) {
         case Sort.lowPrice:
-          filtered.sort((a, b) {
-            return a.price - b.price;
-          });
+          filtered.sort((a, b) => a.price - b.price);
           break;
         case Sort.highPrice:
-          filtered.sort((a, b) {
-            return b.price - a.price;
-          });
+          filtered.sort((a, b) => b.price - a.price);
           break;
         case Sort.latest:
-          filtered.sort((a, b) {
-            return b.id - a.id;
-          });
+          filtered.sort((a, b) => b.id - a.id);
           break;
         default:
       }
