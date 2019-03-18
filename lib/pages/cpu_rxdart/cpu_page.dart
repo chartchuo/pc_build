@@ -26,6 +26,7 @@ class _CpuPage2State extends State<CpuPage2> {
     cpuState.loadData();
     showSearch = cpuState.searchEnable;
     searchController.text = cpuState.searchString;
+    print('init ${cpuState.searchEnable} ${cpuState.searchString}');
   }
 
   showMessage(String txt) {
@@ -50,12 +51,8 @@ class _CpuPage2State extends State<CpuPage2> {
   }
 
   searchListener() {
-    if (searchController.text != null) {
-      if (searchController.text.length > 1) {
-        cpuState.search(searchController.text, true);
-      } else {
-        cpuState.search(searchController.text, false);
-      }
+    if (showSearch) {
+      cpuState.search(searchController.text, true);
     }
   }
 
