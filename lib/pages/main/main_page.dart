@@ -6,15 +6,15 @@ import 'package:pc_build/models/pc.dart';
 
 import 'package:pc_build/widgets/widgets.dart';
 import 'package:pc_build/pages/cpu_rxdart/cpu_page.dart';
-import 'package:pc_build/pages/mb/mb_page.dart';
-import 'package:pc_build/pages/vga/vga_page.dart';
-import 'package:pc_build/pages/ram/ram_page.dart';
-import 'package:pc_build/pages/hdd/hdd_page.dart';
-import 'package:pc_build/pages/ssd/ssd_page.dart';
-import 'package:pc_build/pages/psu/psu_page.dart';
-import 'package:pc_build/pages/case/case_page.dart';
-import 'package:pc_build/pages/cooling/cooling_page.dart';
-import 'package:pc_build/pages/mon/mon_page.dart';
+import 'package:pc_build/pages/mb_rxdart/mb_page.dart';
+import 'package:pc_build/pages/vga_rxdart/vga_page.dart';
+import 'package:pc_build/pages/ram_rxdart/ram_page.dart';
+import 'package:pc_build/pages/hdd_rxdart/hdd_page.dart';
+import 'package:pc_build/pages/ssd_rxdart/ssd_page.dart';
+import 'package:pc_build/pages/psu_rxdart/psu_page.dart';
+import 'package:pc_build/pages/case_rxdart/case_page.dart';
+import 'package:pc_build/pages/cooling_rxdart/cooling_page.dart';
+import 'package:pc_build/pages/mon_rxdart/mon_page.dart';
 
 import 'pc_part.dart';
 
@@ -285,7 +285,7 @@ class _MainPageState extends State<MainPage> {
 
   navigate2CpuPage(BuildContext context) async {
     Cpu result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => CpuPage2()));
+        context, MaterialPageRoute(builder: (context) => CpuPage()));
     if (result != null) {
       setState(() {
         var part = PcPart();

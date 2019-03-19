@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:pc_build/models/part.dart';
 import 'package:pc_build/widgets/widgets.dart';
 
-import 'cpu_state.dart';
-import 'cpu_filter.dart';
+import 'mon_state.dart';
+import 'mon_filter.dart';
 
-class CpuPage extends StatefulWidget {
+class MonPage extends StatefulWidget {
   @override
-  _CpuPageState createState() => _CpuPageState();
+  _MonPageState createState() => _MonPageState();
 }
 
-class _CpuPageState extends State<CpuPage> {
+class _MonPageState extends State<MonPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -23,10 +23,10 @@ class _CpuPageState extends State<CpuPage> {
   void initState() {
     super.initState();
     searchController.addListener(searchListener);
-    cpuState.loadData();
-    showSearch = cpuState.searchEnable;
-    searchController.text = cpuState.searchString;
-    print('init ${cpuState.searchEnable} ${cpuState.searchString}');
+    monState.loadData();
+    showSearch = monState.searchEnable;
+    searchController.text = monState.searchString;
+    print('init ${monState.searchEnable} ${monState.searchString}');
   }
 
   showMessage(String txt) {
@@ -52,14 +52,14 @@ class _CpuPageState extends State<CpuPage> {
 
   searchListener() {
     if (showSearch) {
-      cpuState.search(searchController.text, true);
+      monState.search(searchController.text, true);
     }
   }
 
   toggleSearch() {
     setState(() {
       showSearch = !showSearch;
-      if (!showSearch) cpuState.search(searchController.text, false);
+      if (!showSearch) monState.search(searchController.text, false);
     });
   }
 
@@ -84,7 +84,7 @@ class _CpuPageState extends State<CpuPage> {
           },
         ),
         PopupMenuButton(
-          onSelected: (v) => cpuState.sort(v),
+          onSelected: (v) => monState.sort(v),
           icon: Icon(Icons.sort),
           itemBuilder: (context) {
             return [
@@ -125,9 +125,9 @@ class _CpuPageState extends State<CpuPage> {
   Widget listBuilder() {
     return RefreshIndicator(
       key: _refreshIndicatorKey,
-      onRefresh: cpuState.loadData,
+      onRefresh: monState.loadData,
       child: StreamBuilder<List<Part>>(
-        stream: cpuState.list,
+        stream: monState.list,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -160,7 +160,7 @@ class _CpuPageState extends State<CpuPage> {
   navigate2filterPage(BuildContext context) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => CpuFilterPage()),
+      MaterialPageRoute(builder: (context) => MonFilterPage()),
     );
   }
 }
