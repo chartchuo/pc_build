@@ -26,7 +26,6 @@ class _CasePageState extends State<CasePage> {
     caseState.loadData();
     showSearch = caseState.searchEnable;
     searchController.text = caseState.searchString;
-    print('init ${caseState.searchEnable} ${caseState.searchString}');
   }
 
   showMessage(String txt) {

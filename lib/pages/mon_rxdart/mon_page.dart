@@ -26,7 +26,6 @@ class _MonPageState extends State<MonPage> {
     monState.loadData();
     showSearch = monState.searchEnable;
     searchController.text = monState.searchString;
-    print('init ${monState.searchEnable} ${monState.searchString}');
   }
 
   showMessage(String txt) {

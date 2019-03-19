@@ -26,7 +26,6 @@ class _RamPageState extends State<RamPage> {
     ramState.loadData();
     showSearch = ramState.searchEnable;
     searchController.text = ramState.searchString;
-    print('init ${ramState.searchEnable} ${ramState.searchString}');
   }
 
   showMessage(String txt) {

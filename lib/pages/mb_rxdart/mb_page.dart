@@ -26,7 +26,6 @@ class _MbPageState extends State<MbPage> {
     mbState.loadData();
     showSearch = mbState.searchEnable;
     searchController.text = mbState.searchString;
-    print('init ${mbState.searchEnable} ${mbState.searchString}');
   }
 
   showMessage(String txt) {

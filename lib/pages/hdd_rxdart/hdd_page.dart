@@ -26,7 +26,6 @@ class _HddPageState extends State<HddPage> {
     hddState.loadData();
     showSearch = hddState.searchEnable;
     searchController.text = hddState.searchString;
-    print('init ${hddState.searchEnable} ${hddState.searchString}');
   }
 
   showMessage(String txt) {

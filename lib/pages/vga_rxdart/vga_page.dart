@@ -26,7 +26,6 @@ class _VgaPageState extends State<VgaPage> {
     vgaState.loadData();
     showSearch = vgaState.searchEnable;
     searchController.text = vgaState.searchString;
-    print('init ${vgaState.searchEnable} ${vgaState.searchString}');
   }
 
   showMessage(String txt) {

@@ -49,7 +49,6 @@ class CpuState {
     _searchString = txt;
     _searchEnabled = enable;
     _update();
-    print('set $_searchEnabled $_searchString');
   }
 
   sort(PartSort s) {

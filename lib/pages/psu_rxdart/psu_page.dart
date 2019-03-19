@@ -26,7 +26,6 @@ class _PsuPageState extends State<PsuPage> {
     psuState.loadData();
     showSearch = psuState.searchEnable;
     searchController.text = psuState.searchString;
-    print('init ${psuState.searchEnable} ${psuState.searchString}');
   }
 
   showMessage(String txt) {

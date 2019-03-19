@@ -26,7 +26,6 @@ class _CpuPageState extends State<CpuPage> {
     cpuState.loadData();
     showSearch = cpuState.searchEnable;
     searchController.text = cpuState.searchString;
-    print('init ${cpuState.searchEnable} ${cpuState.searchString}');
   }
 
   showMessage(String txt) {

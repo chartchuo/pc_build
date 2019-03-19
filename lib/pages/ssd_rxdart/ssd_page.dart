@@ -26,7 +26,6 @@ class _SsdPageState extends State<SsdPage> {
     ssdState.loadData();
     showSearch = ssdState.searchEnable;
     searchController.text = ssdState.searchString;
-    print('init ${ssdState.searchEnable} ${ssdState.searchString}');
   }
 
   showMessage(String txt) {

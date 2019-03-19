@@ -26,7 +26,6 @@ class _CoolingPageState extends State<CoolingPage> {
     coolingState.loadData();
     showSearch = coolingState.searchEnable;
     searchController.text = coolingState.searchString;
-    print('init ${coolingState.searchEnable} ${coolingState.searchString}');
   }
 
   showMessage(String txt) {
