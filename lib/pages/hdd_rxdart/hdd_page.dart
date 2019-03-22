@@ -64,7 +64,7 @@ class _HddPageState extends State<HddPage> {
 
   AppBar appBarBuilder(BuildContext context) {
     return AppBar(
-      title: Text('CPU'),
+      title: Text('Harddisk'),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),

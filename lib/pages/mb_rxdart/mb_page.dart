@@ -64,7 +64,7 @@ class _MbPageState extends State<MbPage> {
 
   AppBar appBarBuilder(BuildContext context) {
     return AppBar(
-      title: Text('CPU'),
+      title: Text('Mainboard'),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),

@@ -64,7 +64,7 @@ class _VgaPageState extends State<VgaPage> {
 
   AppBar appBarBuilder(BuildContext context) {
     return AppBar(
-      title: Text('CPU'),
+      title: Text('VGA Card'),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),

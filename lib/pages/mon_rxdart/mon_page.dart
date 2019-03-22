@@ -64,7 +64,7 @@ class _MonPageState extends State<MonPage> {
 
   AppBar appBarBuilder(BuildContext context) {
     return AppBar(
-      title: Text('CPU'),
+      title: Text('Monitor'),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),

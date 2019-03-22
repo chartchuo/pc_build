@@ -64,7 +64,7 @@ class _PsuPageState extends State<PsuPage> {
 
   AppBar appBarBuilder(BuildContext context) {
     return AppBar(
-      title: Text('CPU'),
+      title: Text('Power Supply'),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),

@@ -64,7 +64,7 @@ class _SsdPageState extends State<SsdPage> {
 
   AppBar appBarBuilder(BuildContext context) {
     return AppBar(
-      title: Text('CPU'),
+      title: Text('Solid State Drive'),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),

@@ -64,7 +64,7 @@ class _CoolingPageState extends State<CoolingPage> {
 
   AppBar appBarBuilder(BuildContext context) {
     return AppBar(
-      title: Text('CPU'),
+      title: Text('Cooling'),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),

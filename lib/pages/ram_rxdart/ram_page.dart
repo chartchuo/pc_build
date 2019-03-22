@@ -64,7 +64,7 @@ class _RamPageState extends State<RamPage> {
 
   AppBar appBarBuilder(BuildContext context) {
     return AppBar(
-      title: Text('CPU'),
+      title: Text('Memory'),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),
