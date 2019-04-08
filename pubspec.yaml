@@ -26,11 +26,11 @@ dependencies:
   shared_preferences: ^0.4.0
   flutter_money_formatter: ^0.7.3
   flutter_webview_plugin: ^0.3.0+2
-  rxdart: ^0.18.1
+  rxdart: ^0.21.0
   get_it: ^1.0.3
-  bloc: ^0.9.3
+  bloc: ^0.11.0
+  flutter_bloc: ^0.9.0
   equatable: ^0.2.3
-  flutter_bloc: ^0.7.1
 
 dev_dependencies:
   flutter_test:
