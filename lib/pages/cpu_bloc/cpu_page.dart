@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pc_build/models/cpu.dart';
-
 import 'package:pc_build/models/part.dart';
 import 'package:pc_build/widgets/widgets.dart';
 
-import 'cpu_state.dart';
+import 'cpu_bloc.dart';
 import 'cpu_filter.dart';
 
 class CpuPage extends StatefulWidget {
@@ -16,7 +16,7 @@ class _CpuPageState extends State<CpuPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  bool showSearch;
+  bool showSearch = false;
 
   final searchController = TextEditingController();
 
@@ -24,9 +24,7 @@ class _CpuPageState extends State<CpuPage> {
   void initState() {
     super.initState();
     searchController.addListener(searchListener);
-    cpuState.loadData();
-    showSearch = cpuState.searchEnable;
-    searchController.text = cpuState.searchString;
+    cpuBloc.dispatch(FetchCpuEvent());
   }
 
   showMessage(String txt) {
@@ -52,14 +50,17 @@ class _CpuPageState extends State<CpuPage> {
 
   searchListener() {
     if (showSearch) {
-      cpuState.search(searchController.text, true);
+      cpuBloc
+          .dispatch(SearchCpuEvent(text: searchController.text, enable: true));
     }
   }
 
   toggleSearch() {
     setState(() {
       showSearch = !showSearch;
-      if (!showSearch) cpuState.search(searchController.text, false);
+      if (!showSearch)
+        cpuBloc.dispatch(
+            SearchCpuEvent(text: searchController.text, enable: false));
     });
   }
 
@@ -84,7 +85,7 @@ class _CpuPageState extends State<CpuPage> {
           },
         ),
         PopupMenuButton(
-          onSelected: (v) => cpuState.sort(v),
+          onSelected: (v) => cpuBloc.dispatch(SortCpuEvent(sort: v)),
           icon: Icon(Icons.sort),
           itemBuilder: (context) {
             return [
@@ -125,15 +126,15 @@ class _CpuPageState extends State<CpuPage> {
   Widget listBuilder() {
     return RefreshIndicator(
       key: _refreshIndicatorKey,
-      onRefresh: cpuState.loadData,
-      child: StreamBuilder<List<Part>>(
-        stream: cpuState.list,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
+      onRefresh: () async => cpuBloc.dispatch(FetchCpuEvent()),
+      child: BlocBuilder(
+        bloc: cpuBloc,
+        builder: (context, state) {
+          if (state is CpuUpdatedState) {
             return ListView.builder(
-              itemCount: snapshot.data.length,
+              itemCount: state.list.length,
               itemBuilder: (context, i) {
-                var v = snapshot.data[i];
+                var v = state.list[i];
                 return PartTile(
                   image: v.picture,
                   url: v.path ?? '',
@@ -164,7 +165,7 @@ class _CpuPageState extends State<CpuPage> {
     );
 
     if (filter != null) {
-      cpuState.setFilter(filter);
+      cpuBloc.dispatch(FilterCpuEvent(filter: filter));
     }
   }
 }

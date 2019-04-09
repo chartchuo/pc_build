@@ -5,7 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pc_build/models/pc.dart';
 
 import 'package:pc_build/widgets/widgets.dart';
-import 'package:pc_build/pages/cpu_rxdart/cpu_page.dart';
+// import 'package:pc_build/pages/cpu_rxdart/cpu_page.dart';
+import 'package:pc_build/pages/cpu_bloc/cpu_page.dart';
 import 'package:pc_build/pages/mb_rxdart/mb_page.dart';
 import 'package:pc_build/pages/vga_rxdart/vga_page.dart';
 import 'package:pc_build/pages/ram_rxdart/ram_page.dart';
