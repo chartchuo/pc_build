@@ -5,9 +5,12 @@ import 'package:pc_build/widgets/widgets.dart';
 
 import 'package:pc_build/models/cpu.dart';
 
+// import 'cpu_state.dart';
 import 'cpu_bloc.dart';
 
 class CpuFilterPage extends StatefulWidget {
+  // final CpuFilter selectedFilter = cpuState.filter;
+  // final List<Cpu> all = cpuState.all;
   final CpuFilter selectedFilter = cpuBloc.filter;
   final List<Cpu> all = cpuBloc.all;
 
@@ -87,6 +90,7 @@ class _CpuFilterPageState extends State<CpuFilterPage> {
 
   @override
   Widget build(BuildContext context) {
+    // List<String> allBrandList = allFilter.vgaBrand.toList()..sort();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange,

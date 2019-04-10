@@ -5,17 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pc_build/models/pc.dart';
 
 import 'package:pc_build/widgets/widgets.dart';
-// import 'package:pc_build/pages/cpu_rxdart/cpu_page.dart';
-import 'package:pc_build/pages/cpu_bloc/cpu_page.dart';
-import 'package:pc_build/pages/mb_rxdart/mb_page.dart';
-import 'package:pc_build/pages/vga_rxdart/vga_page.dart';
-import 'package:pc_build/pages/ram_rxdart/ram_page.dart';
-import 'package:pc_build/pages/hdd_rxdart/hdd_page.dart';
-import 'package:pc_build/pages/ssd_rxdart/ssd_page.dart';
-import 'package:pc_build/pages/psu_rxdart/psu_page.dart';
-import 'package:pc_build/pages/case_rxdart/case_page.dart';
-import 'package:pc_build/pages/cooling_rxdart/cooling_page.dart';
-import 'package:pc_build/pages/mon_rxdart/mon_page.dart';
 
 import 'pc_part.dart';
 
@@ -285,8 +274,8 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2CpuPage(BuildContext context) async {
-    Cpu result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => CpuPage()));
+    Cpu result = await Navigator.of(context)
+        .pushNamed<dynamic>('/cpu'); //workaround by insert dynamic type
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -302,8 +291,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2MbPage(BuildContext context) async {
-    Mb result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => MbPage()));
+    Mb result = await Navigator.of(context).pushNamed<dynamic>('/mb');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -319,8 +307,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2VgaPage(BuildContext context) async {
-    Vga result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => VgaPage()));
+    Vga result = await Navigator.of(context).pushNamed<dynamic>('/vga');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -336,8 +323,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2RamPage(BuildContext context) async {
-    Ram result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => RamPage()));
+    Ram result = await Navigator.of(context).pushNamed<dynamic>('/ram');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -353,8 +339,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2HddPage(BuildContext context) async {
-    Hdd result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HddPage()));
+    Hdd result = await Navigator.of(context).pushNamed<dynamic>('/hdd');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -370,8 +355,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2SsdPage(BuildContext context) async {
-    Ssd result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SsdPage()));
+    Ssd result = await Navigator.of(context).pushNamed<dynamic>('/ssd');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -387,8 +371,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2PsuPage(BuildContext context) async {
-    Psu result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => PsuPage()));
+    Psu result = await Navigator.of(context).pushNamed<dynamic>('/psu');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -404,8 +387,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2CasePage(BuildContext context) async {
-    Case result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => CasePage()));
+    Case result = await Navigator.of(context).pushNamed<dynamic>('/case');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -421,8 +403,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2CoolingPage(BuildContext context) async {
-    Cooling result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => CoolingPage()));
+    Cooling result = await Navigator.of(context).pushNamed<dynamic>('/cooling');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -438,8 +419,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2MonPage(BuildContext context) async {
-    Mon result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => MonPage()));
+    Mon result = await Navigator.of(context).pushNamed<dynamic>('/mon');
     if (result != null) {
       setState(() {
         var part = PcPart();

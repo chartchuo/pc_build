@@ -1,14 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:bloc/bloc.dart';
 import 'package:flutter_cache_store/flutter_cache_store.dart';
 import 'package:meta/meta.dart';
-
 import 'package:pc_build/models/cpu.dart';
 import 'package:pc_build/models/part.dart';
-
 
 abstract class CpuEvent extends Equatable {
   CpuEvent([List props = const []]) : super(props);
@@ -25,8 +23,8 @@ class SearchCpuEvent extends CpuEvent {
 }
 
 class SortCpuEvent extends CpuEvent {
-  final PartSort sort;
-  SortCpuEvent({@required this.sort}) : super([sort]);
+  final PartSort sortBy;
+  SortCpuEvent({@required this.sortBy}) : super([sortBy]);
 }
 
 class SetFilterCpuEvent extends CpuEvent {
@@ -38,33 +36,36 @@ abstract class CpuState extends Equatable {
   CpuState([List props = const []]) : super(props);
 }
 
-class CpuLoadingState extends CpuState {}
+class LoadingCpuState extends CpuState {}
 
-class CpuUpdatedState extends CpuState {
+class UpdatedCpuState extends CpuState {
   final List<Cpu> list;
-  CpuUpdatedState({@required this.list})
+  UpdatedCpuState({@required this.list})
       : assert(list != null),
         super([list]);
 }
 
 class CpuBloc extends Bloc<CpuEvent, CpuState> {
   var _all = List<Cpu>();
-  var _list = List<Cpu>();
   var _sort = PartSort.latest;
   String _searchString = '';
   bool _searchEnabled = false;
   CpuFilter _filter = CpuFilter();
 
   @override
-  CpuState get initialState => CpuLoadingState();
+  CpuState get initialState => LoadingCpuState();
 
-  List<Cpu> get all => _all.toList();
+  bool get searchEnable => _searchEnabled;
+  String get searchString => _searchString;
+
   CpuFilter get filter => CpuFilter.clone(_filter);
+  List<Cpu> get all => _all.toList();
 
   @override
   Stream<CpuState> mapEventToState(CpuEvent event) async* {
     if (event is LoadDataCpuEvent) {
-      if (currentState is CpuLoadingState) yield CpuLoadingState();
+      yield LoadingCpuState();
+
       final store = await CacheStore.getInstance();
       File file =
           await store.getFile('https://www.advice.co.th/pc/get_comp/cpu');
@@ -75,28 +76,26 @@ class CpuBloc extends Bloc<CpuEvent, CpuState> {
         _all.add(cpu);
       });
 
-      yield CpuUpdatedState(list: _updatedList());
+      yield UpdatedCpuState(list: _updatedList());
     }
 
     if (event is SearchCpuEvent) {
       _searchString = event.text;
       _searchEnabled = event.enable;
-      yield CpuUpdatedState(list: _updatedList());
+      yield UpdatedCpuState(list: _updatedList());
     }
-
     if (event is SortCpuEvent) {
-      _sort = event.sort;
-      yield CpuUpdatedState(list: _updatedList());
+      _sort = event.sortBy;
+      yield UpdatedCpuState(list: _updatedList());
     }
-
     if (event is SetFilterCpuEvent) {
       _filter = event.filter;
-      yield CpuUpdatedState(list: _updatedList());
+      yield UpdatedCpuState(list: _updatedList());
     }
   }
 
   List<Cpu> _updatedList() {
-    _list = _filter.filters(_all);
+    var _list = _filter.filters(_all);
     if (_searchEnabled) _list = partSearchMap(_list, _searchString);
     _list = partSortMap(_list, _sort);
     return _list;
