@@ -202,7 +202,7 @@ class PcPartCard extends StatelessWidget {
     await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => Webview(
+            builder: (context) => WebviewPage(
                   title: part.brandModel,
                   url: part.url,
                 )));

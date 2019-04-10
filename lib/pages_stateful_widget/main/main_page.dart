@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pc_build/models/pc.dart';
 
 import 'package:pc_build/widgets/widgets.dart';
-import 'package:pc_build/pages/cpu_rxdart/cpu_page.dart';
 import 'package:pc_build/pages/mb_rxdart/mb_page.dart';
 import 'package:pc_build/pages/vga_rxdart/vga_page.dart';
 import 'package:pc_build/pages/ram_rxdart/ram_page.dart';
@@ -284,8 +283,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2CpuPage(BuildContext context) async {
-    Cpu result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => CpuPage()));
+    Cpu result = await Navigator.of(context).pushNamed('/cpu');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -301,8 +299,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2MbPage(BuildContext context) async {
-    Mb result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => MbPage()));
+    Mb result = await Navigator.of(context).pushNamed('/mb');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -318,8 +315,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2VgaPage(BuildContext context) async {
-    Vga result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => VgaPage()));
+    Vga result = await Navigator.of(context).pushNamed('/vga');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -335,8 +331,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2RamPage(BuildContext context) async {
-    Ram result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => RamPage()));
+    Ram result = await Navigator.of(context).pushNamed('/ram');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -352,8 +347,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2HddPage(BuildContext context) async {
-    Hdd result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HddPage()));
+    Hdd result = await Navigator.of(context).pushNamed('/hdd');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -369,8 +363,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2SsdPage(BuildContext context) async {
-    Ssd result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SsdPage()));
+    Ssd result = await Navigator.of(context).pushNamed('/ssd');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -386,8 +379,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2PsuPage(BuildContext context) async {
-    Psu result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => PsuPage()));
+    Psu result = await Navigator.of(context).pushNamed('/psu');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -403,8 +395,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2CasePage(BuildContext context) async {
-    Case result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => CasePage()));
+    Case result = await Navigator.of(context).pushNamed('/case');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -420,8 +411,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2CoolingPage(BuildContext context) async {
-    Cooling result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => CoolingPage()));
+    Cooling result = await Navigator.of(context).pushNamed('/cooling');
     if (result != null) {
       setState(() {
         var part = PcPart();
@@ -437,8 +427,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   navigate2MonPage(BuildContext context) async {
-    Mon result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => MonPage()));
+    Mon result = await Navigator.of(context).pushNamed('/mon');
     if (result != null) {
       setState(() {
         var part = PcPart();
