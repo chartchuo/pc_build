@@ -68,10 +68,10 @@ class PsuFilter {
     }
   }
   PsuFilter.clone(PsuFilter filter) {
-    brand = Set<String>()..addAll(filter.brand);
-    modular = Set<String>()..addAll(filter.modular);
-    energyEff = Set<String>()..addAll(filter.energyEff);
-    maxPw = Set<String>()..addAll(filter.maxPw);
+    brand = filter.brand.toSet();
+    modular = filter.modular.toSet();
+    energyEff = filter.energyEff.toSet();
+    maxPw = filter.maxPw.toSet();
     minPrice = filter.minPrice;
     maxPrice = filter.maxPrice;
   }

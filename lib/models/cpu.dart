@@ -62,9 +62,9 @@ class CpuFilter {
     }
   }
   CpuFilter.clone(CpuFilter filter) {
-    brand = Set<String>()..addAll(filter.brand);
-    series = Set<String>()..addAll(filter.series);
-    socket = Set<String>()..addAll(filter.socket);
+    brand = filter.brand.toSet();
+    series = filter.series.toSet();
+    socket = filter.socket.toSet();
     minPrice = filter.minPrice;
     maxPrice = filter.maxPrice;
   }

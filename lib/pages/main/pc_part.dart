@@ -41,7 +41,7 @@ class PcPartCard extends StatelessWidget {
         // qty(),
         add(),
         sub(),
-        // urlIcon(context),
+        urlIcon(context),
       ],
     ));
   }

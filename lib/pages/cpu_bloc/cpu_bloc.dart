@@ -5,8 +5,10 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_cache_store/flutter_cache_store.dart';
 import 'package:meta/meta.dart';
+
 import 'package:pc_build/models/cpu.dart';
 import 'package:pc_build/models/part.dart';
+
 
 abstract class CpuEvent extends Equatable {
   CpuEvent([List props = const []]) : super(props);
@@ -56,8 +58,8 @@ class CpuBloc extends Bloc<CpuEvent, CpuState> {
   @override
   CpuState get initialState => CpuLoadingState();
 
-  List<Cpu> get all => _all;
-  CpuFilter get filter => _filter;
+  List<Cpu> get all => _all.toList();
+  CpuFilter get filter => CpuFilter.clone(_filter);
 
   @override
   Stream<CpuState> mapEventToState(CpuEvent event) async* {

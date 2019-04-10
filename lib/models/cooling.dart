@@ -56,8 +56,8 @@ class CoolingFilter {
     }
   }
   CoolingFilter.clone(CoolingFilter filter) {
-    brand = Set<String>()..addAll(filter.brand);
-    type = Set<String>()..addAll(filter.type);
+    brand = filter.brand.toSet();
+    type = filter.type.toSet();
     minPrice = filter.minPrice;
     maxPrice = filter.maxPrice;
   }

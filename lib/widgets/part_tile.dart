@@ -35,7 +35,7 @@ class PartTile extends StatelessWidget {
             deviceCard(),
             deviceThumbnail(context),
             addIcon(),
-            // urlIcon(context),
+            urlIcon(context),
           ],
         ));
   }

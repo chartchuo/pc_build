@@ -70,9 +70,9 @@ class CaseFilter {
     }
   }
   CaseFilter.clone(CaseFilter filter) {
-    brand = Set<String>()..addAll(filter.brand);
-    type = Set<String>()..addAll(filter.type);
-    mbSize = Set<String>()..addAll(filter.mbSize);
+    brand = filter.brand.toSet();
+    type = filter.type.toSet();
+    mbSize = filter.mbSize.toSet();
     minPrice = filter.minPrice;
     maxPrice = filter.maxPrice;
   }

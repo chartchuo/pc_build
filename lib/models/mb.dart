@@ -70,10 +70,10 @@ class MbFilter {
     }
   }
   MbFilter.clone(MbFilter filter) {
-    brand = Set<String>()..addAll(filter.brand);
-    factor = Set<String>()..addAll(filter.factor);
-    chipset = Set<String>()..addAll(filter.chipset);
-    socket = Set<String>()..addAll(filter.socket);
+    brand = filter.brand.toSet();
+    factor = filter.factor.toSet();
+    chipset = filter.chipset.toSet();
+    socket = filter.socket.toSet();
     minPrice = filter.minPrice;
     maxPrice = filter.maxPrice;
   }

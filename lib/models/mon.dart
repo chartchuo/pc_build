@@ -62,9 +62,9 @@ class MonFilter {
     }
   }
   MonFilter.clone(MonFilter filter) {
-    brand = Set<String>()..addAll(filter.brand);
-    panel = Set<String>()..addAll(filter.panel);
-    size = Set<String>()..addAll(filter.size);
+    brand = filter.brand.toSet();
+    panel = filter.panel.toSet();
+    size = filter.size.toSet();
     minPrice = filter.minPrice;
     maxPrice = filter.maxPrice;
   }

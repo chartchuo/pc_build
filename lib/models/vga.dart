@@ -62,9 +62,9 @@ class VgaFilter {
     }
   }
   VgaFilter.clone(VgaFilter vgaFilter) {
-    brand = Set<String>()..addAll(vgaFilter.brand);
-    chipset = Set<String>()..addAll(vgaFilter.chipset);
-    series = Set<String>()..addAll(vgaFilter.series);
+    brand = vgaFilter.brand.toSet();
+    chipset = vgaFilter.chipset.toSet();
+    series = vgaFilter.series.toSet();
     minPrice = vgaFilter.minPrice;
     maxPrice = vgaFilter.maxPrice;
   }

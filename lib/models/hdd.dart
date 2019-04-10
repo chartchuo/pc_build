@@ -60,9 +60,9 @@ class HddFilter {
     }
   }
   HddFilter.clone(HddFilter filter) {
-    brand = Set<String>()..addAll(filter.brand);
-    capa = Set<String>()..addAll(filter.capa);
-    rpm = Set<String>()..addAll(filter.rpm);
+    brand = filter.brand.toSet();
+    capa = filter.capa.toSet();
+    rpm = filter.rpm.toSet();
     minPrice = filter.minPrice;
     maxPrice = filter.maxPrice;
   }

@@ -69,10 +69,10 @@ class RamFilter {
     }
   }
   RamFilter.clone(RamFilter filter) {
-    brand = Set<String>()..addAll(filter.brand);
-    type = Set<String>()..addAll(filter.type);
-    capa = Set<String>()..addAll(filter.capa);
-    bus = Set<String>()..addAll(filter.bus);
+    brand = filter.brand.toSet();
+    type = filter.type.toSet();
+    capa = filter.capa.toSet();
+    bus = filter.bus.toSet();
     minPrice = filter.minPrice;
     maxPrice = filter.maxPrice;
   }

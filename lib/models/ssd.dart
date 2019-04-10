@@ -62,9 +62,9 @@ class SsdFilter {
     }
   }
   SsdFilter.clone(SsdFilter filter) {
-    brand = Set<String>()..addAll(filter.brand);
-    interface = Set<String>()..addAll(filter.interface);
-    capa = Set<String>()..addAll(filter.capa);
+    brand = filter.brand.toSet();
+    interface = filter.interface.toSet();
+    capa = filter.capa.toSet();
     minPrice = filter.minPrice;
     maxPrice = filter.maxPrice;
   }
