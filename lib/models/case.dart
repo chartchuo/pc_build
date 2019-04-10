@@ -11,7 +11,7 @@ class Case extends Part {
 
     var tmp = json['case_picture'];
     if (tmp != null) picture = 'https://www.advice.co.th/pic-pc/case/$tmp';
-    path = json['adv_path'];
+    tmp = json['adv_path'];
     if (tmp != null) path = 'https://www.advice.co.th/$tmp';
     price = json['price_adv'] ?? json['lowest_price'] ?? 0;
 
