@@ -12,7 +12,7 @@ abstract class CpuEvent extends Equatable {
   CpuEvent([List props = const []]) : super(props);
 }
 
-class FetchCpuEvent extends CpuEvent {}
+class LoadDataCpuEvent extends CpuEvent {}
 
 class SearchCpuEvent extends CpuEvent {
   final String text;
@@ -27,9 +27,9 @@ class SortCpuEvent extends CpuEvent {
   SortCpuEvent({@required this.sort}) : super([sort]);
 }
 
-class FilterCpuEvent extends CpuEvent {
+class SetFilterCpuEvent extends CpuEvent {
   final CpuFilter filter;
-  FilterCpuEvent({@required this.filter}) : super([filter]);
+  SetFilterCpuEvent({@required this.filter}) : super([filter]);
 }
 
 abstract class CpuState extends Equatable {
@@ -61,7 +61,7 @@ class CpuBloc extends Bloc<CpuEvent, CpuState> {
 
   @override
   Stream<CpuState> mapEventToState(CpuEvent event) async* {
-    if (event is FetchCpuEvent) {
+    if (event is LoadDataCpuEvent) {
       if (currentState is CpuLoadingState) yield CpuLoadingState();
       final store = await CacheStore.getInstance();
       File file =
@@ -87,7 +87,7 @@ class CpuBloc extends Bloc<CpuEvent, CpuState> {
       yield CpuUpdatedState(list: _updatedList());
     }
 
-    if (event is FilterCpuEvent) {
+    if (event is SetFilterCpuEvent) {
       _filter = event.filter;
       yield CpuUpdatedState(list: _updatedList());
     }

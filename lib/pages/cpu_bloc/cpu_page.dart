@@ -24,7 +24,7 @@ class _CpuPageState extends State<CpuPage> {
   void initState() {
     super.initState();
     searchController.addListener(searchListener);
-    cpuBloc.dispatch(FetchCpuEvent());
+    cpuBloc.dispatch(LoadDataCpuEvent());
   }
 
   showMessage(String txt) {
@@ -126,7 +126,7 @@ class _CpuPageState extends State<CpuPage> {
   Widget listBuilder() {
     return RefreshIndicator(
       key: _refreshIndicatorKey,
-      onRefresh: () async => cpuBloc.dispatch(FetchCpuEvent()),
+      onRefresh: () async => cpuBloc.dispatch(LoadDataCpuEvent()),
       child: BlocBuilder(
         bloc: cpuBloc,
         builder: (context, state) {
@@ -165,7 +165,7 @@ class _CpuPageState extends State<CpuPage> {
     );
 
     if (filter != null) {
-      cpuBloc.dispatch(FilterCpuEvent(filter: filter));
+      cpuBloc.dispatch(SetFilterCpuEvent(filter: filter));
     }
   }
 }
