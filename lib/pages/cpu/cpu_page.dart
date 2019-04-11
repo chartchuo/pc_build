@@ -138,11 +138,7 @@ class _CpuPageState extends State<CpuPage> {
   Widget listBuilder() {
     return RefreshIndicator(
       key: _refreshIndicatorKey,
-      onRefresh:
-          //cpuState.loadData,
-          () {
-        cpuBloc.dispatch(LoadDataCpuEvent());
-      },
+      onRefresh: () async => cpuBloc.dispatch(LoadDataCpuEvent()),
       child: BlocBuilder(
         bloc: cpuBloc,
         builder: (context, state) {
