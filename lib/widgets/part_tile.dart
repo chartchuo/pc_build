@@ -61,24 +61,24 @@ class PartTile extends StatelessWidget {
     );
   }
 
-  Widget urlIcon(BuildContext context) {
-    if (url == null || url == '') return SizedBox();
-    return Container(
-      height: 140,
-      alignment: FractionalOffset.bottomLeft,
-      child: IconButton(
-        // iconSize: 32,
-        tooltip: 'Web',
-        icon: Icon(
-          Icons.public,
-          color: Colors.white54,
-        ),
-        onPressed: () {
-          navigate2Webview(context);
-        },
-      ),
-    );
-  }
+  // Widget urlIcon(BuildContext context) {
+  //   if (url == null || url == '') return SizedBox();
+  //   return Container(
+  //     height: 140,
+  //     alignment: FractionalOffset.bottomLeft,
+  //     child: IconButton(
+  //       // iconSize: 32,
+  //       tooltip: 'Web',
+  //       icon: Icon(
+  //         Icons.public,
+  //         color: Colors.white54,
+  //       ),
+  //       onPressed: () {
+  //         navigate2Webview(context);
+  //       },
+  //     ),
+  //   );
+  // }
 
   Widget addIcon() {
     return Container(
@@ -151,14 +151,14 @@ class PartTile extends StatelessWidget {
     );
   }
 
-  navigate2Webview(BuildContext context) async {
-    if (url == null || url == '') return;
-    await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => WebviewPage(
-                  title: subTitle,
-                  url: url,
-                )));
-  }
+  // navigate2Webview(BuildContext context) async {
+  //   if (url == null || url == '') return;
+  //   await Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => WebviewPage(
+  //                 title: subTitle,
+  //                 url: url,
+  //               )));
+  // }
 }

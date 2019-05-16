@@ -41,27 +41,27 @@ class PcPartCard extends StatelessWidget {
         // qty(),
         add(),
         sub(),
-        urlIcon(context),
+        // urlIcon(context),
       ],
     ));
   }
 
-  Widget urlIcon(BuildContext context) {
-    if (part.url == null || part.url == '') return SizedBox();
-    return Container(
-      alignment: FractionalOffset.centerRight,
-      child: IconButton(
-        tooltip: 'Web',
-        icon: Icon(
-          Icons.public,
-          color: Colors.white54,
-        ),
-        onPressed: () {
-          navigate2Webview(context);
-        },
-      ),
-    );
-  }
+  // Widget urlIcon(BuildContext context) {
+  //   if (part.url == null || part.url == '') return SizedBox();
+  //   return Container(
+  //     alignment: FractionalOffset.centerRight,
+  //     child: IconButton(
+  //       tooltip: 'Web',
+  //       icon: Icon(
+  //         Icons.public,
+  //         color: Colors.white54,
+  //       ),
+  //       onPressed: () {
+  //         navigate2Webview(context);
+  //       },
+  //     ),
+  //   );
+  // }
 
   Widget deleteIcon() {
     return Container(
@@ -197,14 +197,14 @@ class PcPartCard extends StatelessWidget {
     );
   }
 
-  navigate2Webview(BuildContext context) async {
-    if (part.url == null || part.url == '') return;
-    await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => WebviewPage(
-                  title: part.brandModel,
-                  url: part.url,
-                )));
-  }
+  // navigate2Webview(BuildContext context) async {
+  //   if (part.url == null || part.url == '') return;
+  //   await Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => WebviewPage(
+  //                 title: part.brandModel,
+  //                 url: part.url,
+  //               )));
+  // }
 }
