@@ -56,6 +56,8 @@ class MyApp extends StatelessWidget {
           case '/mon':
             return SlideRightRoute(widget: MonPage());
             break;
+          default:
+            return SlideRightRoute(widget: MainPage());
         }
       },
     );

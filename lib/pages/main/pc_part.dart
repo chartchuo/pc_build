@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 import 'package:pc_build/widgets/widgets.dart';
@@ -150,7 +150,8 @@ class PcPartCard extends StatelessWidget {
       margin: EdgeInsets.fromLTRB(16, 20, 16, 48),
       child: part.picture == null
           ? null
-          : CachedNetworkImage(imageUrl: part.picture),
+          // : CachedNetworkImage(imageUrl: part.picture),
+          : Image.network(part.picture, fit: BoxFit.contain),
     );
   }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_range_slider/flutter_range_slider.dart';
+import 'package:flutter_range_slider/flutter_range_slider.dart' as rs;
 
 import 'package:pc_build/widgets/widgets.dart';
 
@@ -115,7 +115,7 @@ class _HddFilterPageState extends State<HddFilterPage> {
               trailing: titleText(
                   '${selectedFilter.minPrice}-${selectedFilter.maxPrice} \u{0e3f}'),
             ),
-            RangeSlider(
+            rs.RangeSlider(
               min: allFilter.minPrice.toDouble(),
               max: allFilter.maxPrice.toDouble(),
               lowerValue: selectedFilter.minPrice.toDouble(),

@@ -1,0 +1,6 @@
+# Generated code do not commit.
+export FLUTTER_ROOT=/home/chartchuo/flutter
+export BUILD=debug
+export TRACK_WIDGET_CREATION=true
+export FLUTTER_TARGET=/home/chartchuo/workspace/tmp/pc_build/lib/main.dart
+export PROJECT_DIR=/home/chartchuo/workspace/tmp/pc_build

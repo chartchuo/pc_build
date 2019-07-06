@@ -86,8 +86,12 @@ class _MainPageState extends State<MainPage> {
         children: <Widget>[
           Expanded(
             child: GridView(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+              // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              //   crossAxisCount: 2,
+              //   childAspectRatio: 0.7,
+              // ),
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 300,
                 childAspectRatio: 0.7,
               ),
               children: <Widget>[

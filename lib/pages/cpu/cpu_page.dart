@@ -164,6 +164,7 @@ class _CpuPageState extends State<CpuPage> {
               },
             );
           }
+          return Center(child: CircularProgressIndicator());
         },
       ),
       // child: StreamBuilder<List<Part>>(

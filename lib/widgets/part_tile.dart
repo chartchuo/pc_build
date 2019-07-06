@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 import 'package:pc_build/widgets/widgets.dart';
@@ -103,11 +103,13 @@ class PartTile extends StatelessWidget {
       child: Container(
         height: 140,
         alignment: FractionalOffset.centerLeft,
-        child: CachedNetworkImage(
-          imageUrl: image,
-          height: 120,
-          width: 120,
-        ),
+        // child: CachedNetworkImage(
+        //   imageUrl: image,
+        //   height: 120,
+        //   width: 120,
+        // ),
+        child:
+            Image.network(image, fit: BoxFit.contain, height: 120, width: 120),
       ),
       onTap: () {
         // navigate2Webview(context);
