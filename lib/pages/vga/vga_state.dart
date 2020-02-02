@@ -15,7 +15,7 @@ class VgaState {
   VgaFilter _filter = VgaFilter();
   var _list = BehaviorSubject<List<Vga>>();
 
-  Observable<List<Part>> get list => _list.stream
+  Stream<List<Part>> get list => _list.stream
       .map((e) => _filter.filters(e))
       .map((e) => _searchEnabled ? partSearchMap(e, _searchString) : e)
       .map((e) => partSortMap(e, _sort));

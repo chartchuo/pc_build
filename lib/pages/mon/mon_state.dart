@@ -15,7 +15,7 @@ class MonState {
   MonFilter _filter = MonFilter();
   var _list = BehaviorSubject<List<Mon>>();
 
-  Observable<List<Part>> get list => _list.stream
+  Stream<List<Part>> get list => _list.stream
       .map((e) => _filter.filters(e))
       .map((e) => _searchEnabled ? partSearchMap(e, _searchString) : e)
       .map((e) => partSortMap(e, _sort));

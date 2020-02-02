@@ -28,7 +28,7 @@ class _CpuPageState extends State<CpuPage> {
     super.initState();
     searchController.addListener(searchListener);
     // cpuState.loadData();
-    cpuBloc.dispatch(LoadDataCpuEvent());
+    cpuBloc.add(LoadDataCpuEvent());
     // showSearch = cpuState.searchEnable;
     showSearch = cpuBloc.searchEnable;
     // searchController.text = cpuState.searchString;
@@ -59,8 +59,7 @@ class _CpuPageState extends State<CpuPage> {
   searchListener() {
     if (showSearch) {
       // cpuState.search(searchController.text, true);
-      cpuBloc
-          .dispatch(SearchCpuEvent(text: searchController.text, enable: true));
+      cpuBloc.add(SearchCpuEvent(text: searchController.text, enable: true));
     }
   }
 
@@ -69,8 +68,7 @@ class _CpuPageState extends State<CpuPage> {
       showSearch = !showSearch;
       if (!showSearch)
         //cpuState.search(searchController.text, false);
-        cpuBloc.dispatch(
-            SearchCpuEvent(text: searchController.text, enable: false));
+        cpuBloc.add(SearchCpuEvent(text: searchController.text, enable: false));
     });
   }
 
@@ -97,7 +95,7 @@ class _CpuPageState extends State<CpuPage> {
         PopupMenuButton(
           onSelected: (v) =>
               //cpuState.sort(v),
-              cpuBloc.dispatch(SortCpuEvent(sortBy: v)),
+              cpuBloc.add(SortCpuEvent(sortBy: v)),
           icon: Icon(Icons.sort),
           itemBuilder: (context) {
             return [
@@ -138,7 +136,7 @@ class _CpuPageState extends State<CpuPage> {
   Widget listBuilder() {
     return RefreshIndicator(
       key: _refreshIndicatorKey,
-      onRefresh: () async => cpuBloc.dispatch(LoadDataCpuEvent()),
+      onRefresh: () async => cpuBloc.add(LoadDataCpuEvent()),
       child: BlocBuilder(
         bloc: cpuBloc,
         builder: (context, state) {
@@ -206,7 +204,7 @@ class _CpuPageState extends State<CpuPage> {
 
     if (filter != null) {
       // cpuState.setFilter(filter);
-      cpuBloc.dispatch(SetFilterCpuEvent(filter: filter));
+      cpuBloc.add(SetFilterCpuEvent(filter: filter));
     }
   }
 }

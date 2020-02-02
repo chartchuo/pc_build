@@ -15,7 +15,7 @@ class RamState {
   RamFilter _filter = RamFilter();
   var _list = BehaviorSubject<List<Ram>>();
 
-  Observable<List<Part>> get list => _list.stream
+  Stream<List<Part>> get list => _list.stream
       .map((e) => _filter.filters(e))
       .map((e) => _searchEnabled ? partSearchMap(e, _searchString) : e)
       .map((e) => partSortMap(e, _sort));

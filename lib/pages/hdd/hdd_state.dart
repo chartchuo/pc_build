@@ -15,7 +15,7 @@ class HddState {
   HddFilter _filter = HddFilter();
   var _list = BehaviorSubject<List<Hdd>>();
 
-  Observable<List<Part>> get list => _list.stream
+  Stream<List<Part>> get list => _list.stream
       .map((e) => _filter.filters(e))
       .map((e) => _searchEnabled ? partSearchMap(e, _searchString) : e)
       .map((e) => partSortMap(e, _sort));
