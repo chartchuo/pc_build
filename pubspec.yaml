@@ -4,7 +4,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -15,7 +15,7 @@ dependencies:
   flutter_range_slider: ^1.1.0
   shared_preferences: ^0.4.0
   flutter_money_formatter: ^0.7.3
-  webview_flutter: ^0.3.7+1
+  webview_flutter: ^0.3.19+5
   rxdart: ^0.23.1
   get_it: ^1.0.3
   bloc: ^3.0.0

@@ -42,7 +42,7 @@ class UpdatedCpuState extends CpuState {
   final List<Cpu> list;
   UpdatedCpuState({@required this.list})
       : assert(list != null),
-        super([list]);
+        super([list.length, ...list.map((i) => i.id)]);
 }
 
 class CpuBloc extends Bloc<CpuEvent, CpuState> {
