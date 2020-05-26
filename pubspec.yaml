@@ -11,9 +11,10 @@ dependencies:
     sdk: flutter
 
   # cached_network_image: ^0.5.1
-  flutter_cache_store: ^0.4.0
+  # flutter_cache_store: ^0.7.2
+  http:
   flutter_range_slider: ^1.1.0
-  shared_preferences: ^0.4.0
+  shared_preferences: ^0.5.7+3
   flutter_money_formatter: ^0.7.3
   webview_flutter: ^0.3.19+5
   rxdart: ^0.23.1

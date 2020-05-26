@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
-import 'package:flutter_cache_store/flutter_cache_store.dart';
 import 'package:meta/meta.dart';
 import 'package:pc_build/models/cpu.dart';
 import 'package:pc_build/models/part.dart';
@@ -66,10 +65,8 @@ class CpuBloc extends Bloc<CpuEvent, CpuState> {
     if (event is LoadDataCpuEvent) {
       yield LoadingCpuState();
 
-      final store = await CacheStore.getInstance();
-      File file =
-          await store.getFile('https://www.advice.co.th/pc/get_comp/cpu');
-      final jsonString = json.decode(file.readAsStringSync());
+      var data = await http.get('https://www.advice.co.th/pc/get_comp/cpu');
+      final jsonString = json.decode(data.body);
       _all.clear();
       jsonString.forEach((v) {
         final cpu = Cpu.fromJson(v);

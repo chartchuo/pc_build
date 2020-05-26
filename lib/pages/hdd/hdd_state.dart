@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:rxdart/rxdart.dart';
-import 'package:flutter_cache_store/flutter_cache_store.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:pc_build/models/hdd.dart';
 import 'package:pc_build/models/part.dart';
@@ -29,9 +29,8 @@ class HddState {
   _update() => _list.add(_all);
 
   Future<void> loadData() async {
-    final store = await CacheStore.getInstance();
-    File file = await store.getFile('https://www.advice.co.th/pc/get_comp/hdd');
-    final jsonString = json.decode(file.readAsStringSync());
+    var data = await http.get('https://www.advice.co.th/pc/get_comp/hdd');
+    final jsonString = json.decode(data.body);
     _all.clear();
     jsonString.forEach((v) {
       final hdd = Hdd.fromJson(v);

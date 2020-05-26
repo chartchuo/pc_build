@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:pc_build/models/pc.dart';
 
@@ -15,7 +15,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   Pc pc = Pc();
-  SharedPreferences prefs;
+  // SharedPreferences prefs;
 
   @override
   void initState() {
@@ -31,41 +31,41 @@ class _MainPageState extends State<MainPage> {
 
   saveData() {
     pc.init();
-    prefs.setString('pc.cpu', jsonEncode(pc.cpu));
-    prefs.setString('pc.mb', jsonEncode(pc.mb));
-    prefs.setString('pc.vga', jsonEncode(pc.vga));
-    prefs.setString('pc.ram', jsonEncode(pc.ram));
-    prefs.setString('pc.hdd', jsonEncode(pc.hdd));
-    prefs.setString('pc.ssd', jsonEncode(pc.ssd));
-    prefs.setString('pc.psu', jsonEncode(pc.psu));
-    prefs.setString('pc.cas', jsonEncode(pc.cas));
-    prefs.setString('pc.cooling', jsonEncode(pc.cooling));
-    prefs.setString('pc.mon', jsonEncode(pc.mon));
+    // prefs.setString('pc.cpu', jsonEncode(pc.cpu));
+    // prefs.setString('pc.mb', jsonEncode(pc.mb));
+    // prefs.setString('pc.vga', jsonEncode(pc.vga));
+    // prefs.setString('pc.ram', jsonEncode(pc.ram));
+    // prefs.setString('pc.hdd', jsonEncode(pc.hdd));
+    // prefs.setString('pc.ssd', jsonEncode(pc.ssd));
+    // prefs.setString('pc.psu', jsonEncode(pc.psu));
+    // prefs.setString('pc.cas', jsonEncode(pc.cas));
+    // prefs.setString('pc.cooling', jsonEncode(pc.cooling));
+    // prefs.setString('pc.mon', jsonEncode(pc.mon));
   }
 
-  PcPart loadPart(SharedPreferences prefs, String key) {
-    String str;
-    str = prefs.getString(key);
-    if (str == null) {
-      return PcPart();
-    } else {
-      return PcPart.fromJson(jsonDecode(str));
-    }
-  }
+  // PcPart loadPart(SharedPreferences prefs, String key) {
+  //   String str;
+  //   str = prefs.getString(key);
+  //   if (str == null) {
+  //     return PcPart();
+  //   } else {
+  //     return PcPart.fromJson(jsonDecode(str));
+  //   }
+  // }
 
   loadData() async {
-    prefs = await SharedPreferences.getInstance();
+    // prefs = await SharedPreferences.getInstance();
     setState(() {
-      pc.cpu = loadPart(prefs, 'pc.cpu');
-      pc.mb = loadPart(prefs, 'pc.mb');
-      pc.vga = loadPart(prefs, 'pc.vga');
-      pc.ram = loadPart(prefs, 'pc.ram');
-      pc.hdd = loadPart(prefs, 'pc.hdd');
-      pc.ssd = loadPart(prefs, 'pc.ssd');
-      pc.psu = loadPart(prefs, 'pc.psu');
-      pc.cas = loadPart(prefs, 'pc.cas');
-      pc.cooling = loadPart(prefs, 'pc.cooling');
-      pc.mon = loadPart(prefs, 'pc.mon');
+      // pc.cpu = loadPart(prefs, 'pc.cpu');
+      // pc.mb = loadPart(prefs, 'pc.mb');
+      // pc.vga = loadPart(prefs, 'pc.vga');
+      // pc.ram = loadPart(prefs, 'pc.ram');
+      // pc.hdd = loadPart(prefs, 'pc.hdd');
+      // pc.ssd = loadPart(prefs, 'pc.ssd');
+      // pc.psu = loadPart(prefs, 'pc.psu');
+      // pc.cas = loadPart(prefs, 'pc.cas');
+      // pc.cooling = loadPart(prefs, 'pc.cooling');
+      // pc.mon = loadPart(prefs, 'pc.mon');
 
       pc.init();
     });
