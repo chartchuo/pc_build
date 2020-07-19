@@ -6,41 +6,51 @@ import 'package:meta/meta.dart';
 import 'package:pc_build/models/cpu.dart';
 import 'package:pc_build/models/part.dart';
 
-abstract class CpuEvent extends Equatable {
-  CpuEvent([List props = const []]) : super(props);
-}
+abstract class CpuEvent extends Equatable {}
 
-class LoadDataCpuEvent extends CpuEvent {}
+class LoadDataCpuEvent extends CpuEvent {
+  @override
+  List<Object> get props => const [];
+}
 
 class SearchCpuEvent extends CpuEvent {
   final String text;
   final bool enable;
   SearchCpuEvent({@required this.text, @required this.enable})
-      : assert(text != null),
-        super([text, enable]);
+      : assert(text != null);
+  @override
+  List<Object> get props => [text];
 }
 
 class SortCpuEvent extends CpuEvent {
   final PartSort sortBy;
-  SortCpuEvent({@required this.sortBy}) : super([sortBy]);
+  SortCpuEvent({@required this.sortBy});
+
+  @override
+  List<Object> get props => [sortBy];
 }
 
 class SetFilterCpuEvent extends CpuEvent {
   final CpuFilter filter;
-  SetFilterCpuEvent({@required this.filter}) : super([filter]);
+  SetFilterCpuEvent({@required this.filter});
+
+  @override
+  List<Object> get props => [filter];
 }
 
-abstract class CpuState extends Equatable {
-  CpuState([List props = const []]) : super(props);
-}
+abstract class CpuState extends Equatable {}
 
-class LoadingCpuState extends CpuState {}
+class LoadingCpuState extends CpuState {
+  @override
+  List<Object> get props => [];
+}
 
 class UpdatedCpuState extends CpuState {
   final List<Cpu> list;
-  UpdatedCpuState({@required this.list})
-      : assert(list != null),
-        super([list.length, ...list.map((i) => i.id)]);
+  UpdatedCpuState({@required this.list}) : assert(list != null);
+
+  @override
+  List<Object> get props => [list.length, ...list.map((i) => i.id)];
 }
 
 class CpuBloc extends Bloc<CpuEvent, CpuState> {
@@ -50,7 +60,8 @@ class CpuBloc extends Bloc<CpuEvent, CpuState> {
   bool _searchEnabled = false;
   CpuFilter _filter = CpuFilter();
 
-  @override
+  CpuBloc(CpuState initialState) : super(initialState);
+
   CpuState get initialState => LoadingCpuState();
 
   bool get searchEnable => _searchEnabled;
@@ -98,4 +109,4 @@ class CpuBloc extends Bloc<CpuEvent, CpuState> {
   }
 }
 
-var cpuBloc = CpuBloc();
+var cpuBloc = CpuBloc(LoadingCpuState());
