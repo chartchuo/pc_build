@@ -29,34 +29,37 @@ class MyBackgroundDecoration extends BoxDecoration {
   MyBackgroundDecoration()
       : super(
             gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-              Colors.pink.shade700,
-              Colors.purple.shade700,
-            ]));
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          //     colors: [
+          //   Colors.pink.shade700,
+          //   Colors.purple.shade700,
+          // ],
+        ));
 }
 
 class MyBackgroundDecoration2 extends BoxDecoration {
   MyBackgroundDecoration2()
       : super(
             gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-              Colors.green.shade700,
-              Colors.blue.shade700,
-            ]));
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          // colors: [
+          //   Colors.green.shade700,
+          //   Colors.blue.shade700,
+          // ],
+        ));
 }
 
 class MyBackgroundDecoration3 extends BoxDecoration {
   MyBackgroundDecoration3()
       : super(
             gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-              Colors.red.shade700,
-              Colors.yellow.shade700,
-            ]));
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          // colors: [
+          //   Colors.red.shade700,
+          //   Colors.yellow.shade700,
+          // ],
+        ));
 }

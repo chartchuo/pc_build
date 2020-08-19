@@ -19,7 +19,7 @@ dependencies:
   webview_flutter: 
   rxdart: 
   get_it: 
-  bloc: 
+  bloc: 5.0.1
   flutter_bloc: 
   equatable: 
 
